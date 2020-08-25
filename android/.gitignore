@@ -1,0 +1,9 @@
+gradle-wrapper.jar
+gradle-6.5-bin.zip
+*.zip
+/.gradle
+/captures/
+/gradlew
+/gradlew.bat
+/local.properties
+GeneratedPluginRegistrant.java
