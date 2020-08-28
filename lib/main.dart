@@ -1,6 +1,6 @@
-import 'package:destock_app/loginscreen1.dart';
+import 'package:destock/loginscreen1.dart';
 import 'package:flutter/material.dart';
-import 'package:destock_app/getstarted.dart';
+import 'package:destock/getstarted.dart';
 
 void main() => runApp(MyApp());
 
