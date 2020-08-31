@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 class getstarted extends StatefulWidget {
   getstarted({Key key, this.title}) : super(key: key);
   final String title;
   @override
   _getstartedState createState() => _getstartedState();
 }
+
 class _getstartedState extends State<getstarted> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -30,6 +35,7 @@ class _getstartedState extends State<getstarted> {
       ),
     );
   }
+
   Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
