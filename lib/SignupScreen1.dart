@@ -61,7 +61,7 @@ class _SignupState extends State<Signup> {
           ),
           TextField(
               obscureText: isPassword,
-              controller: isReEnterField ? passwordController : rePasswordController,
+              controller: isReEnterField ? rePasswordController : passwordController,
               decoration: InputDecoration(
                   border: InputBorder.none,
                   fillColor: Color(0xffffffff),

@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void verifyCredentials() async {
     print(emailController.text + "," + passwordController.text);
-    var url = 'http://192.168.43.101:5000/login/in'; //replace '192.168.43.101' with your ip adrress
+    var url = 'http://192.168.43.167:5000/login/in'; //replace '192.168.43.101' with your ip adrress
     var response = await http.post(url, body: {
       'email_id': emailController.text,
       'password': passwordController.text
