@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
+
+//Just a test comment
+//another one
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
   final String title;
   @override
   _LoginPageState createState() => _LoginPageState();
 }
+
 class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  TextEditingController returnController(isPass) {
+    return isPass ? passwordController : emailController;
+  }
+
+  void verifyCredentials() async {
+    print(emailController.text + "," + passwordController.text);
+    var url = 'http://192.168.43.101:5000/login/in'; //replace '192.168.43.101' with your ip adrress
+    var response = await http.post(url, body: {'email_id': emailController.text,'password': passwordController.text});
+    print(response.body);
+  }
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -30,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
   Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -45,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           TextField(
               obscureText: isPassword,
+              controller: returnController(isPassword),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   fillColor: Color(0xffffffff),
@@ -69,9 +91,11 @@ class _LoginPageState extends State<LoginPage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      child: Column(
+      child: GestureDetector
+      (
+        onTap: verifyCredentials,
+        child: Column(
         children: <Widget>[
-
           Expanded(
             flex: 1,
             child: Container(
@@ -88,12 +112,12 @@ class _LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.w400)),
             ),
           ),
-
-
         ],
       ),
+      )
     );
   }
+
   Widget _loginAccountLabel() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
@@ -125,6 +149,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
   Widget _title() {
     return RichText(
       textAlign: TextAlign.center,
