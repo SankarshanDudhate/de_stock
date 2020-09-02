@@ -23,7 +23,7 @@ class _SignupState extends State<Signup> {
     }
   }
 
-  Widget _backButton() {
+  Widget _logobutton() {
     return InkWell(
       onTap: () {
         Navigator.pop(context);
@@ -111,7 +111,7 @@ class _SignupState extends State<Signup> {
       ),
     );
   }
-  Widget _loginAccountLabel() {
+  Widget _subtitle() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       alignment: Alignment.bottomCenter,
@@ -221,7 +221,7 @@ class _SignupState extends State<Signup> {
                         _emailPasswordWidget(),
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: _loginAccountLabel(),
+                          child: _subtitle(),
                         ),
                         _submitButton(),
                         Expanded(
@@ -232,7 +232,7 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
 
-                  Positioned(top: 40, left: 0, child: _backButton()),
+                  Positioned(top: 40, left: 0, child: _logobutton()),
 
                 ],
               ),

@@ -8,7 +8,7 @@ class getstarted extends StatefulWidget {
   _getstartedState createState() => _getstartedState();
 }
 class _getstartedState extends State<getstarted> {
-  Widget _backButton() {
+  Widget _logobutton() {
     return InkWell(
       onTap: () {
         Navigator.pop(context);
@@ -172,7 +172,7 @@ class _getstartedState extends State<getstarted> {
                     ),
                   ),
 
-                  Positioned(top: 40, left: 0, child: _backButton()),
+                  Positioned(top: 40, left: 0, child: _logobutton()),
 
                 ],
               ),
