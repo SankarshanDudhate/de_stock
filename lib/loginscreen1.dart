@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 class LoginPage extends StatefulWidget {
@@ -8,7 +9,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 class _LoginPageState extends State<LoginPage> {
-  Widget _backButton() {
+  Widget _logobutton() {
     return InkWell(
       onTap: () {
         Navigator.pop(context);
@@ -44,6 +45,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 10,
           ),
           TextField(
+
               obscureText: isPassword,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -94,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  Widget _loginAccountLabel() {
+  Widget _subtitle() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       alignment: Alignment.bottomCenter,
@@ -202,9 +204,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: _loginAccountLabel(),
+                    child: _subtitle(),
                   ),
-                  Positioned(top: 40, left: 0, child: _backButton()),
+                  Positioned(top: 40, left: 0, child: _logobutton()),
 
                 ],
               ),

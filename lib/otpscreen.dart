@@ -11,7 +11,7 @@ class OtpPage extends StatefulWidget {
   _OtpPageState createState() => _OtpPageState();
 }
 class _OtpPageState extends State<OtpPage> {
-  Widget _backButton() {
+  Widget _logobutton() {
     return InkWell(
       onTap: () {
         Navigator.pop(context);
@@ -69,7 +69,7 @@ class _OtpPageState extends State<OtpPage> {
       ),
     );
   }
-  Widget _loginAccountLabel() {
+  Widget _subtitle2() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       alignment: Alignment.bottomCenter,
@@ -194,7 +194,7 @@ class _OtpPageState extends State<OtpPage> {
                         ),
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: _loginAccountLabel(),
+                          child: _subtitle2(),
                         ),
                         _submitButton(),
                         Expanded(
@@ -205,7 +205,7 @@ class _OtpPageState extends State<OtpPage> {
                     ),
                   ),
 
-                  Positioned(top: 40, left: 0, child: _backButton()),
+                  Positioned(top: 40, left: 0, child: _logobutton()),
 
                 ],
               ),
