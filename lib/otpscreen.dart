@@ -188,8 +188,8 @@ class _OtpPageState extends State<OtpPage> {
                         SizedBox(
                           height: 20,
                         ),
-                        PinEntryTextField(
-                          showFieldAsBox: true,
+                        TextField(
+                          keyboardType: TextInputType.number,
                            // end onSubmit
                         ),
                         Align(
