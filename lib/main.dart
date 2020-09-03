@@ -1,4 +1,5 @@
 import 'package:destock/postAd.dart';
+import 'package:destock/postAd_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -42,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                   context,
                   new MaterialPageRoute(
-                      builder: (BuildContext context) => PostAd()));
+                      builder: (BuildContext context) => postAd_2()));
             },
             child: Text(
               'POST AN AD',
