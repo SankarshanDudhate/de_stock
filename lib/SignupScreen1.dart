@@ -8,7 +8,21 @@ class Signup extends StatefulWidget {
   @override
   _SignupState createState() => _SignupState();
 }
+
 class _SignupState extends State<Signup> {
+  final passwordController = TextEditingController();
+  final rePasswordController = TextEditingController();
+
+  void verifyOTP() {
+    print(passwordController.text + "," + rePasswordController.text);
+    if( passwordController.text == rePasswordController.text ) {
+      //TODO send password to db
+      print('Yay! Passswords match...!');
+    } else {
+      print("Passwords don't match!");
+    }
+  }
+
   Widget _logobutton() {
     return InkWell(
       onTap: () {
@@ -31,7 +45,8 @@ class _SignupState extends State<Signup> {
       ),
     );
   }
-  Widget _entryField(String title, {bool isPassword = false}) {
+
+  Widget _entryField(String title, bool isPassword, bool isReEnterField) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -46,6 +61,7 @@ class _SignupState extends State<Signup> {
           ),
           TextField(
               obscureText: isPassword,
+              controller: isReEnterField ? rePasswordController : passwordController,
               decoration: InputDecoration(
                   border: InputBorder.none,
                   fillColor: Color(0xffffffff),
@@ -57,8 +73,8 @@ class _SignupState extends State<Signup> {
 
   Widget _emailPasswordWidget() {
     return Column(children: <Widget>[
-      _entryField("Set password",isPassword: true),
-      _entryField("Re-enter Password", isPassword: true),
+      _entryField("Set password", true, false),
+      _entryField("Re-enter Password", true, true),
     ]);
   }
 
@@ -70,28 +86,28 @@ class _SignupState extends State<Signup> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      child: Column(
-        children: <Widget>[
-
-          Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              decoration: BoxDecoration(
-                color: Color(0xffFC0151),
-                borderRadius: BorderRadius.all(Radius.circular(40)),
+      child: GestureDetector(
+        onTap: verifyOTP,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                decoration: BoxDecoration(
+                  color: Color(0xffFC0151),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                ),
+                alignment: Alignment.center,
+                child: Text('SIGN UP',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600)),
               ),
-              alignment: Alignment.center,
-              child: Text('SIGN UP',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600)),
             ),
-          ),
-
-
-        ],
+          ],
+        ),
       ),
     );
   }
