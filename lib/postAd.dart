@@ -10,14 +10,17 @@ class PostAd extends StatefulWidget {
 class _PostAdState extends State<PostAd> {
 
   final GlobalKey<FormState> _formKeyPostAd = GlobalKey<FormState>();
-  String productName;
-  String productQuantity;
-  String productDescription;
-  String selectedUnit;
-  String productDimension;
-  String productWeight;
-  String productMaterial;
-  String pickupLocation;
+
+  //---------------------All these variables to be added in db
+  String productName;   //Required
+  String productQuantity;  //Required
+  String productDescription; //Required
+  String selectedUnit;  //Required
+  String productDimension;  //Optional
+  String productWeight;  //Optional
+  String productMaterial;  //Optional
+  String pickupLocation; //Required
+  //-----------------------------------------------------------
 
   var _selectUnit = {
     "kg",
@@ -227,7 +230,7 @@ class _PostAdState extends State<PostAd> {
     return Scaffold(
           body: Form(
             key: _formKeyPostAd,
-                      child: ListView(children: [
+        child: ListView(children: [
         SizedBox(
             height: 40,
         ),
@@ -560,7 +563,7 @@ class _PostAdState extends State<PostAd> {
                                 return;
                               }
                               _formKeyPostAd.currentState.save();
-                              //Fluttertoast.showToast(msg: "Registered!");
+                              //Save all data here!!!!!
                               Navigator.push(context, new MaterialPageRoute(
                                   builder: (BuildContext context) => new postAd_2() ),
                               );

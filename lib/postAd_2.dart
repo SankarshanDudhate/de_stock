@@ -18,8 +18,8 @@ class postAd_2 extends StatefulWidget {
 class _postAd_2State extends State<postAd_2> {
 
   File _image;
-  List<File> allFiles;
-  List<File> files;
+  List<File> allFiles = new List();
+  List<File> files = new List();
 
   _fileOpener() async {
     files = await FilePicker.getMultiFile( type: FileType.custom, allowedExtensions: ['jpg','png','jpeg'],);
@@ -34,11 +34,11 @@ class _postAd_2State extends State<postAd_2> {
       allFiles.add(_image);
       print(allFiles);
     });
-    Navigator.of(context).pop();
+    //Navigator.of(context).pop();
   }
 
   Widget _showSelectedImages(BuildContext context) {
-    if(files == null || _image == null){
+    if(allFiles.isEmpty){
       return _chooseMethod();
     }
     else {
@@ -53,7 +53,7 @@ class _postAd_2State extends State<postAd_2> {
         SizedBox(height: 20,),
         GestureDetector(
           onTap: () {
-            
+              _getImage(context);
             },
           child: Text('Add More..',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold))),
 
@@ -194,10 +194,15 @@ class _postAd_2State extends State<postAd_2> {
             SizedBox(height:30),
             GestureDetector(
                     onTap: () {
-                              //Fluttertoast.showToast(msg: "Registered!");
+                      if(allFiles.isNotEmpty && allFiles.length <10){
+                              //Use allFiles to store into database
                               Navigator.pushReplacement(context, new MaterialPageRoute(
                                   builder: (BuildContext context) => new postAd_3() ),
                               );
+                      }
+                      else{
+                        
+                      }
                     },
                         child: Container(
                             height: 50,

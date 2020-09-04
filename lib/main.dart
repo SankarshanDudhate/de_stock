@@ -1,3 +1,9 @@
+/*-------------------------------------------------
+All the data from postAd,postAd_2,postAd_3 to be added in db
+---------------------------------------------------*/
+
+
+import 'package:destock/manageProducts.dart';
 import 'package:destock/postAd.dart';
 import 'package:destock/postAd_2.dart';
 import 'package:flutter/material.dart';
@@ -38,17 +44,34 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Container(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (BuildContext context) => postAd_2()));
-            },
-            child: Text(
-              'POST AN AD',
-              style: TextStyle(fontSize: 30),
-            ),
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (BuildContext context) => postAd_2()));
+                },
+                child: Text(
+                  'POST AN AD',
+                  style: TextStyle(fontSize: 30),
+                ),
+              ),
+              SizedBox(height:20),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (BuildContext context) => manageProducts()));
+                },
+                child: Text(
+                  'Manage Products',
+                  style: TextStyle(fontSize: 30),
+                ),
+              ),
+            ],
           ),
         ));
   }
