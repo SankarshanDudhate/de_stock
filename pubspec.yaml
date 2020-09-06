@@ -36,7 +36,8 @@ dependencies:
   pin_entry_text_field: ^0.1.4
   pin_input_text_field: ^3.0.7
   pin_code_text_field: ^1.7.1
-
+  shared_preferences: '>=0.5.10 <2.0.0'
+  fluttertoast: ^7.0.4
 
 
 dev_dependencies:

@@ -1,3 +1,4 @@
+import 'package:destock/SignupScreen1.dart';
 import 'package:destock/loginscreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/getstarted.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: "Poppins",
           ),
-      home: LoginPage(),
+      home: getstarted(),
     );
   }
 }

@@ -1,13 +1,76 @@
+import 'dart:convert';
+
+import 'package:destock/SignupScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'validatons.dart';
+import 'otpscreen.dart';
+
 class getstarted extends StatefulWidget {
   getstarted({Key key, this.title}) : super(key: key);
   final String title;
   @override
   _getstartedState createState() => _getstartedState();
 }
+
 class _getstartedState extends State<getstarted> {
+  final nameController = new TextEditingController();
+  final emailController = new TextEditingController();
+  final phoneNoController = new TextEditingController();
+
+  void validateData() {
+    //bool flag = true;
+    String name = nameController.text;
+    String email = emailController.text.toLowerCase();
+    String phoneNo = phoneNoController.text;
+
+    bool isNameValid = validateName(name);
+    if( !isNameValid ) {
+      print("Please enter a valid name!");
+      return;
+    }
+
+    bool isEmailValid = validateEmail(email);
+    if( !isEmailValid ) {
+      print("Please enter a valid email address!");
+      return;
+    }
+
+    bool isPhoneNoValid = validatePhoneNo(phoneNo);
+    if( !isPhoneNoValid ) {
+      print("Please enter a valid number!");
+      return;
+    }
+
+    toOTPScreen();
+  }
+
+  void toOTPScreen() async {
+    //print(nameController.text+","+emailController.text+","+phoneNoController.text);
+
+    //send the resp date to otpscreen through shared preferences
+    Map<String,String> dataMap = {
+      "name":nameController.text,
+      "email_id":emailController.text,
+      "phone_no":phoneNoController.text
+    };
+    String dataString = jsonEncode(dataMap);
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString("signupData", dataString);
+
+    Navigator.of(context).push(
+      new MaterialPageRoute(builder: (BuildContext context) {
+        return OtpPage(signup: true);
+        //return Signup(); //use this if you wanna skip otp
+      })
+    );
+  }
+
   Widget _logobutton() {
     return InkWell(
       onTap: () {
@@ -30,7 +93,8 @@ class _getstartedState extends State<getstarted> {
       ),
     );
   }
-  Widget _entryField(String title, {bool isPassword = false}) {
+
+  Widget _entryField(String title, TextEditingController controller) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -44,7 +108,7 @@ class _getstartedState extends State<getstarted> {
             height: 10,
           ),
           TextField(
-              obscureText: isPassword,
+              controller: controller,
               decoration: InputDecoration(
                   border: InputBorder.none,
                   fillColor: Color(0xffffffff),
@@ -56,9 +120,9 @@ class _getstartedState extends State<getstarted> {
 
   Widget _emailPasswordWidget() {
     return Column(children: <Widget>[
-      _entryField("Enter full name"),
-      _entryField("Enter email ID"),
-      _entryField("Enter phone number"),
+      _entryField("Enter full name", nameController),
+      _entryField("Enter email ID", emailController),
+      _entryField("Enter phone number", phoneNoController),
     ]);
   }
 
@@ -70,29 +134,29 @@ class _getstartedState extends State<getstarted> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      child: Column(
-        children: <Widget>[
-
-          Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              decoration: BoxDecoration(
-                color: Color(0xffFC0151),
-                borderRadius: BorderRadius.all(Radius.circular(40)),
+      child: GestureDetector(
+        onTap: validateData,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                decoration: BoxDecoration(
+                  color: Color(0xffFC0151),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                ),
+                alignment: Alignment.center,
+                child: Text('REQUEST OTP',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400)),
               ),
-              alignment: Alignment.center,
-              child: Text('REQUEST OTP',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
             ),
-          ),
-
-
-        ],
-      ),
+          ],
+        ),
+      )
     );
   }
 
@@ -126,7 +190,6 @@ class _getstartedState extends State<getstarted> {
     return Scaffold(
         body: SingleChildScrollView(
             child:Container(
-
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 color: Color(0xfff3f3f3),
@@ -141,7 +204,6 @@ class _getstartedState extends State<getstarted> {
                     top:250,
                     right: -MediaQuery.of(context).size.width * .2,
                     child: SvgPicture.asset("assets/icons/bg_circle_stroke.svg"), width: 350, height: 350,),
-
                   Positioned(
                     top:500,
                     right: -MediaQuery.of(context).size.width * .15,
@@ -157,8 +219,6 @@ class _getstartedState extends State<getstarted> {
                           child: SizedBox(),
                         ),
                         _title(),
-
-
                         SizedBox(
                           height: 20,
                         ),
@@ -171,9 +231,7 @@ class _getstartedState extends State<getstarted> {
                       ],
                     ),
                   ),
-
                   Positioned(top: 40, left: 0, child: _logobutton()),
-
                 ],
               ),
             )

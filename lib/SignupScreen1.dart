@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:destock/loginscreen1.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'loginscreen1.dart';
+
 class Signup extends StatefulWidget {
+  //TODO show an 'i' after Password TextFeild label to show instructions for password(min length and all)
   Signup({Key key, this.title}) : super(key: key);
   final String title;
   @override
@@ -13,13 +20,47 @@ class _SignupState extends State<Signup> {
   final passwordController = TextEditingController();
   final rePasswordController = TextEditingController();
 
-  void verifyOTP() {
+  void verifyPassword() {
     print(passwordController.text + "," + rePasswordController.text);
     if( passwordController.text == rePasswordController.text ) {
       //TODO send password to db
       print('Yay! Passswords match...!');
+
+    saveData();
     } else {
-      print("Passwords don't match!");
+      Fluttertoast.showToast(msg: "Passwords don't match!");
+    }
+  }
+
+  void saveData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String data = await sharedPreferences.getString('signupData');
+    var dataJson = jsonDecode(data);
+    print(data);
+
+    // Scaffold.of(context).showSnackBar(SnackBar(content:Text(data)));
+
+    var url = 'http://192.168.43.167:5000/signup/'; //replace '192.168.43.101' with your ip adrress
+    var response = await http.post(url, body: {
+      'email_id': dataJson["email_id"],
+      'password': passwordController.text,
+      "name": dataJson["name"],
+      "phone_no": dataJson["phone_no"]
+    });
+    print(response.body);
+
+    Map<String, dynamic> resp = jsonDecode(response.body);
+
+    if(resp["Status"] == "Success") {
+      print("Details:\n"+resp["Details"]);
+      //TODO send user to homepage/dashboard
+    }
+    else{
+      //show unsuccessful message
+      Fluttertoast.showToast(
+        msg: "Signup unsuccessul!",
+        toastLength: Toast.LENGTH_LONG,
+      );
     }
   }
 
@@ -87,7 +128,7 @@ class _SignupState extends State<Signup> {
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: GestureDetector(
-        onTap: verifyOTP,
+        onTap: verifyPassword,
         child: Column(
           children: <Widget>[
             Expanded(
