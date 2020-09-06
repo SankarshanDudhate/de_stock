@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'validatons.dart';
 import 'otpscreen.dart';
@@ -30,19 +31,19 @@ class _getstartedState extends State<getstarted> {
 
     bool isNameValid = validateName(name);
     if( !isNameValid ) {
-      print("Please enter a valid name!");
+      Fluttertoast.showToast(msg: "Please enter a valid name!", toastLength: Toast.LENGTH_LONG);
       return;
     }
 
     bool isEmailValid = validateEmail(email);
     if( !isEmailValid ) {
-      print("Please enter a valid email address!");
+      Fluttertoast.showToast(msg: "Please enter a valid email address!", toastLength: Toast.LENGTH_LONG);
       return;
     }
 
     bool isPhoneNoValid = validatePhoneNo(phoneNo);
     if( !isPhoneNoValid ) {
-      print("Please enter a valid number!");
+      Fluttertoast.showToast(msg: "Please enter a valid phone number!", toastLength: Toast.LENGTH_LONG);
       return;
     }
 

@@ -53,6 +53,7 @@ class _SignupState extends State<Signup> {
 
     if(resp["Status"] == "Success") {
       print("Details:\n"+resp["Details"]);
+      Fluttertoast.showToast(msg: "Signed up successfully!");
       //TODO send user to homepage/dashboard
     }
     else{
