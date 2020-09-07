@@ -38,3 +38,4 @@ lib/generated_plugin_registrant.dart
 
 android/gradle/wrapper/gradle-6.5-bin.zip
 android/app/build.gradle
+pubspec.lock
