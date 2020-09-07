@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:ilx/profile/utils/input_card.dart';
+import 'utils/input_card.dart';
 
 import 'utils/bg_clip.dart';
 import 'utils/profile_header.dart';

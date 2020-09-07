@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ilx/profile/utils/bg_clip.dart';
-import 'package:ilx/profile/utils/input_card.dart';
-import 'package:ilx/profile/utils/profile_header.dart';
-import 'package:ilx/profile/utils/raised_container.dart';
+import 'utils/bg_clip.dart';
+import 'utils/input_card.dart';
+import 'utils/profile_header.dart';
+import 'utils/raised_container.dart';
 
 class EditCompanyDetails extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();

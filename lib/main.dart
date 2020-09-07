@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ilx/profile/edit_company_details.dart';
-import 'package:ilx/profile/edit_contact_person_details.dart';
-import 'package:ilx/profile/edit_personal_details.dart';
-import 'package:ilx/profile/my_profile.dart';
+import 'profile/edit_company_details.dart';
+import 'profile/edit_contact_person_details.dart';
+import 'profile/edit_personal_details.dart';
+import 'profile/my_profile.dart';
 
 void main() => runApp(MyApp());
 
