@@ -1,16 +1,79 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
 import 'otpscreen.dart';
+import 'package:destock/SignupScreen1.dart';
+
 class OtpPage extends StatefulWidget {
-  OtpPage({Key key, this.title}) : super(key: key);
-  final String title;
+  //OtpPage({Key key, this.title}) : super(key: key);
+  //final String title;
+  bool signup;
+  bool login;
+  OtpPage({bool this.signup=false, bool this.login=false});
   @override
   _OtpPageState createState() => _OtpPageState();
 }
+
 class _OtpPageState extends State<OtpPage> {
+  final otpController = new TextEditingController();
+  String sessionId;
+  @override
+  void initState() {
+    super.initState();
+    sendOTP();
+  }
+
+  void sendOTP() async {
+    if(widget.signup == true) {
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      String data = await sharedPreferences.getString("signupData");
+      var dataJson = jsonDecode(data);
+      print(data);
+
+      var url = 'http://192.168.43.167:5000/otp/send'; //replace '192.168.43.101' with your ip adrress
+      var response = await http.post(url, body: {
+        'phone_no': dataJson["phone_no"]
+      });
+      Map<String, dynamic> resp = jsonDecode(response.body);
+
+      if(resp["Status"] == "Success") {
+        print("Details:\n"+resp["Details"]);
+        sessionId = resp["Details"];
+      }
+      else{
+        //show unsuccessful message
+      }
+    } else {
+      //TODO: Login otp flow
+    }
+  }
+
+  void verifyOTP() async {
+    var verifyUrl = 'http://192.168.43.167:5000/otp/verify'; //replace '192.168.43.101' with your ip adrress
+    var verifyResp = await http.post(verifyUrl, body: {
+      'otp': otpController.text,
+      'session_id': sessionId
+    });
+    print(verifyResp.body);
+    Map<String, dynamic> verifyRespJson = jsonDecode(verifyResp.body);
+    if(verifyRespJson["Status"] == "Success") {
+      Navigator.of(context).push(
+          new MaterialPageRoute(builder: (BuildContext context) {
+            return Signup();
+          })
+      );
+    } else {
+      print("Wrong OTP! Please enter OTP again...");
+    }
+  }
+
   Widget _logobutton() {
     return InkWell(
       onTap: () {
@@ -44,28 +107,28 @@ class _OtpPageState extends State<OtpPage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      child: Column(
-        children: <Widget>[
-
-          Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              decoration: BoxDecoration(
-                color: Color(0xffFC0151),
-                borderRadius: BorderRadius.all(Radius.circular(40)),
-              ),
-              alignment: Alignment.center,
-              child: Text('CONTINUE',
+      child: GestureDetector(
+        onTap: verifyOTP,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                decoration: BoxDecoration(
+                  color: Color(0xffFC0151),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                ),
+                alignment: Alignment.center,
+                child: Text('CONTINUE',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600)),
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600)),
+              ),
             ),
-          ),
-
-
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -111,8 +174,6 @@ class _OtpPageState extends State<OtpPage> {
             "Enter 4 digit OTP sent on xxxxx - xx898",
             style: TextStyle(fontSize: 13, fontWeight: FontWeight.w900,color: Colors.black45),
           ),
-
-
         ],
       ),
     );
@@ -190,6 +251,7 @@ class _OtpPageState extends State<OtpPage> {
                         ),
                         TextField(
                           keyboardType: TextInputType.number,
+                          controller: otpController,
                            // end onSubmit
                         ),
                         Align(

@@ -37,12 +37,4 @@ lib/generated_plugin_registrant.dart
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 android/gradle/wrapper/gradle-6.5-bin.zip
-android/gradle/wrapper/gradle-wrapper.properties
-android/gradle.properties
-
-
-#New Config files
-build.gradle
-MainActivity.java
 android/app/build.gradle
-android/app/src/main/java/com/destock/destock/MainActivity.java
