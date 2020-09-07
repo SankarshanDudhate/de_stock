@@ -81,6 +81,10 @@ class _dashboardState extends State<dashboard> {
                         product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                         product_price: "7000",
                         image: "assets/images/product image.png",
+                        user_image: "assets/images/user_image.png",
+                        user_name: "Tanmay Patil",
+                        user_enquiry: "I wanted to enquire about the price of this product",
+                        quantity: "300",
                       ),
 
 
@@ -91,13 +95,14 @@ class _dashboardState extends State<dashboard> {
                       ),
                       SizedBox(height: 20,),
 
+                  renewal_card(
+                    product_id: "#786GFHDR",
+                    renew_edit: "EDIT",
+                    status: "August 19,2020",
+                    image: "assets/images/product image.png",
+                  ),
 
-                      Text("Post your first ad",textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xffD84764)),),
-                      SizedBox(height: 20,),
-                      submitButton(
-                        title: "VIEW ALL PLANS",
-                      ),
+
                       SizedBox(height: 40,),
                     ],
                   ),
@@ -263,8 +268,12 @@ class enquiry_card extends StatelessWidget {
   final String product_name;
   final String product_price;
   final String image;
+  final String user_name;
+  final String user_enquiry;
+  final String user_image;
+  final String quantity;
 
-  const enquiry_card({Key key, this.product_id,this.product_name,this.product_price,this.image})
+  const enquiry_card({Key key, this.product_id,this.product_name,this.product_price,this.image,this.user_name,this.quantity,this.user_enquiry,this.user_image})
       : super(key: key);
 
   @override
@@ -344,14 +353,15 @@ class enquiry_card extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(20.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(50),),
-                    child: Image.asset(image, height: 60,)),
+                    child: Image.asset(user_image, height: 50,)),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.symmetric(horizontal:10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -361,24 +371,77 @@ class enquiry_card extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(product_id,
+                            Text(user_name,
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: Color(0xff6e6e6e)),),
+                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.black),),
 
-                            Text(product_price,
+                            Text("QTY "+quantity+" kg",
                               textAlign: TextAlign.right,
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
+                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
                           ],
                         ),
                       ),
+                      SizedBox(height: 10,),
 
                       Container(
                         width: 190,
-                        child: Text(product_name,
+                        child: Text(user_enquiry,
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),),
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xff6F6F6F)),),
                       ),
-                      SizedBox(height: 5,),
+                      SizedBox(height: 10,),
+                      Text("Reply",
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff4DA4D6)),),
+
+
+
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(50),),
+                    child: Image.asset(user_image, height: 50,)),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal:10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      Container(
+                        width: 240,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(user_name,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.black),),
+
+                            Text("QTY "+quantity+" kg",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+
+                      Container(
+                        width: 190,
+                        child: Text(user_enquiry,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xff6F6F6F)),),
+                      ),
+                      SizedBox(height: 10,),
+                      Text("Reply",
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff4DA4D6)),),
+
 
 
                     ],
@@ -393,7 +456,153 @@ class enquiry_card extends StatelessWidget {
   }
 }
 
+class renewal_card extends StatelessWidget {
+  final String product_id;
+  final String image;
+  final String status;
+  final String renew_edit;
 
+  const renewal_card(
+      {Key key, this.product_id, this.image,this.status,this.renew_edit})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20),),
+        color: Color(0xffffffff),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 4),
+            blurRadius: 40,
+            color: Colors.black.withOpacity(.16),
+          ),
+        ],
+      ),
+      child: Container(
+
+        padding: EdgeInsets.all(10),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20),),
+          color: Color(0xffffffff),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 4),
+              blurRadius: 10,
+              color: Colors.black.withOpacity(.16),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Image.asset(image, height: 60,),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      Container(
+                        width: 190,
+                        child: Text(product_id,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),),
+                      ),
+                      SizedBox(height: 5,),
+
+                      Container(
+                        width: 240,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Auto-renewal on",
+                                  style: TextStyle(fontSize: 10, fontWeight: FontWeight
+                                      .w400, color: Color(0xff6e6e6e)),),
+                                Text(status,
+                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight
+                                      .w400, color: Color(0xff6e6e6e)),),
+                              ],
+                            ),
+
+                            Text(renew_edit,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xff2DDDB7)),),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Image.asset(image, height: 60,),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      Container(
+                        width: 190,
+                        child: Text(product_id,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),),
+                      ),
+                      SizedBox(height: 5,),
+
+                      Container(
+                        width: 240,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Auto-renewal on",
+                                  style: TextStyle(fontSize: 10, fontWeight: FontWeight
+                                      .w400, color: Color(0xff6e6e6e)),),
+                                Text(status,
+                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight
+                                      .w400, color: Color(0xff6e6e6e)),),
+                              ],
+                            ),
+
+                            Text(renew_edit,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xff2DDDB7)),),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 
 
