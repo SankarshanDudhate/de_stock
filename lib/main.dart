@@ -1,4 +1,7 @@
+import 'package:destock/account_setting/account_setting.dart';
+import 'package:destock/account_setting/change_password.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'profile/edit_company_details.dart';
 import 'profile/edit_contact_person_details.dart';
 import 'profile/edit_personal_details.dart';
@@ -14,9 +17,9 @@ class MyApp extends StatelessWidget {
       // home: EditPersonalProfile(),
       // home: EditCompanyDetails(),
       // home: ContactPersonDetails(),
-      home: Profile(
-        type: "buyer",
-      ),
+      // home: Profile(type: "buyer"),
+      home: ChangePassword(),
+      // home: AccountSettings(),
     );
   }
 }
