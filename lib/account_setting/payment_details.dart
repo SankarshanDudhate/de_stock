@@ -63,15 +63,15 @@ class PaymentDetails extends StatelessWidget {
 }
 
 class SavedCard extends StatelessWidget {
-  void _showDialog(context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        // return ConfirmLogout();
-        return ConfirmDeactivateAccount();
-      },
-    );
-  }
+  // void _showDialog(context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       // return ConfirmLogout();
+  //       return ConfirmDeactivateAccount();
+  //     },
+  //   );
+  // }
 
   const SavedCard({
     Key key,
