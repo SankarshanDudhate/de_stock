@@ -21,8 +21,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: "Poppins",
       ),
-      home: MyHomePage(title: 'De-Stock App'),
+      home: manageProducts(),
     );
   }
 }
@@ -43,36 +44,38 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Container(
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (BuildContext context) => postAd_2()));
-                },
-                child: Text(
-                  'POST AN AD',
-                  style: TextStyle(fontSize: 30),
-                ),
-              ),
-              SizedBox(height:20),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (BuildContext context) => manageProducts()));
-                },
-                child: Text(
-                  'Manage Products',
-                  style: TextStyle(fontSize: 30),
-                ),
-              ),
-            ],
-          ),
-        ));
+        // body: 
+        //  Container(
+        //   child: Column(
+        //     children: [
+        //       GestureDetector(
+        //         onTap: () {
+        //           Navigator.push(
+        //               context,
+        //               new MaterialPageRoute(
+        //                   builder: (BuildContext context) => postAd_2()));
+        //         },
+        //         child: Text(
+        //           'POST AN AD',
+        //           style: TextStyle(fontSize: 30),
+        //         ),
+        //       ),
+        //       SizedBox(height:20),
+        //       GestureDetector(
+        //         onTap: () {
+        //           Navigator.push(
+        //               context,
+        //               new MaterialPageRoute(
+        //                   builder: (BuildContext context) => manageProducts()));
+        //         },
+        //         child: Text(
+        //           'Manage Products',
+        //           style: TextStyle(fontSize: 30),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // )
+        );
   }
 }

@@ -78,10 +78,11 @@ class _postAd_2State extends State<postAd_2> {
                                 borderRadius: BorderRadius.circular(60),
                                 color: Colors.white,
                                 boxShadow: [
-                                              BoxShadow(
-                                    color: Colors.grey[200],
-                                    blurRadius: 2.0,
-                                    offset: Offset(0, 5))
+                                  BoxShadow(
+                                    offset: Offset(0, 4),
+                                    blurRadius: 40,
+                                    color: Colors.black.withOpacity(.16),
+                                  ),
                                     ],
                             ),
                             child: Row(
@@ -123,10 +124,11 @@ class _postAd_2State extends State<postAd_2> {
                                 borderRadius: BorderRadius.circular(60),
                                 color: Colors.white,
                                  boxShadow: [
-                                              BoxShadow(
-                                    color: Colors.grey[200],
-                                    blurRadius: 2.0,
-                                    offset: Offset(0, 5))
+                                    BoxShadow(
+                                      offset: Offset(0, 4),
+                                      blurRadius: 40,
+                                      color: Colors.black.withOpacity(.16),
+                                    ),
                                     ],
                             ),
                             child: Row(

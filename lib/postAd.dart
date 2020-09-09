@@ -300,10 +300,10 @@ class _PostAdState extends State<PostAd> {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-            color: Colors.grey[400],
-            blurRadius: 2.0,
-            offset: Offset(0, 5))
-                    ],
+                          offset: Offset(0, 4),
+                          blurRadius: 40,
+                          color: Colors.black.withOpacity(.16),
+                        ),]
                   ),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(22, 22, 22, 12),
@@ -371,9 +371,10 @@ class _PostAdState extends State<PostAd> {
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                  color: Colors.grey[400],
-                  blurRadius: 2.0,
-                  offset: Offset(0, 5))
+              offset: Offset(0, 4),
+              blurRadius: 40,
+              color: Colors.black.withOpacity(.16),
+            ),
             ],
             ),
             child: Padding(
@@ -415,9 +416,10 @@ class _PostAdState extends State<PostAd> {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-            color: Colors.grey[400],
-            blurRadius: 2.0,
-            offset: Offset(0, 5))
+                        offset: Offset(0, 4),
+                        blurRadius: 40,
+                        color: Colors.black.withOpacity(.16),
+                      ),
                     ],
                   ),
                   child: Padding(
@@ -468,9 +470,10 @@ class _PostAdState extends State<PostAd> {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-            color: Colors.grey[400],
-            blurRadius: 2.0,
-            offset: Offset(0, 5))
+                        offset: Offset(0, 4),
+                        blurRadius: 40,
+                        color: Colors.black.withOpacity(.16),
+                      ),
                     ],
                   ),
                   child: Padding(
@@ -509,9 +512,10 @@ class _PostAdState extends State<PostAd> {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-            color: Colors.grey[400],
-            blurRadius: 2.0,
-            offset: Offset(0, 5))
+                        offset: Offset(0, 4),
+                        blurRadius: 40,
+                        color: Colors.black.withOpacity(.16),
+                      ),
                     ],
                   ),
                   child: Padding(
