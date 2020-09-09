@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:destock/otpscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'validatons.dart';
 
 //Just a test comment
 //another one
@@ -23,13 +30,51 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void verifyCredentials() async {
-    print(emailController.text + "," + passwordController.text);
+    String email, phoneNo;
+    String password = passwordController.text;
+    // print(emailController.text + "," + passwordController.text);
+
+    var formData = {
+      'password': password
+    };
+
+    RegExp phoneNoMatcher = RegExp(r'[^0-9]+'); //checks if string has anything other than a number
+    if( phoneNoMatcher.hasMatch(emailController.text) ) {
+      email = emailController.text;
+      if( !validateEmail(email) ) {
+        Fluttertoast.showToast(msg: "Please enter a valid email address!");
+        return;
+      }
+      formData["email_id"] = email;
+    } else {
+      phoneNo = emailController.text;
+      if( !validatePhoneNo(phoneNo) ) {
+        Fluttertoast.showToast(msg: "Please enter a valid Phone Number!");
+        return;
+      }
+      formData["phone_no"] = phoneNo;
+    }
+
+    // print(formData);
+
     var url = 'http://192.168.43.167:5000/login/'; //replace '192.168.43.101' with your ip adrress
-    var response = await http.post(url, body: {
-      'email_id': emailController.text,
-      'password': passwordController.text
-    });
+    var response = await http.post(url, body: formData);
     print(response.body);
+
+    var respJson = jsonDecode(response.body);
+    if( respJson["Status"] == "Success" ) {
+      Fluttertoast.showToast(msg: respJson["Details"]);
+      print(respJson["userData"]["address"]);
+
+      String dataString = jsonEncode(respJson["userData"]);
+
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      await sharedPreferences.setString("userData", dataString);
+
+      //TODO Navigate to homescreen
+    } else {
+      Fluttertoast.showToast(msg: respJson["Details"]);
+    }
   }
 
   Widget _logobutton() {
@@ -138,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
             InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
+                    MaterialPageRoute(builder: (context) => OtpPage(login: true)));
               },
               child: Text(
                 'Send me OTP',

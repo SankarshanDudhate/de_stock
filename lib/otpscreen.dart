@@ -31,9 +31,8 @@ class _OtpPageState extends State<OtpPage> {
   }
 
   void sendOTP() async {
-    if(widget.signup == true) {
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      String data = await sharedPreferences.getString("signupData");
+      String data = await sharedPreferences.getString("userData");
       var dataJson = jsonDecode(data);
       print(data);
 
@@ -50,9 +49,6 @@ class _OtpPageState extends State<OtpPage> {
       else{
         //show unsuccessful message
       }
-    } else {
-      //TODO: Login otp flow
-    }
   }
 
   void verifyOTP() async {
@@ -64,11 +60,15 @@ class _OtpPageState extends State<OtpPage> {
     print(verifyResp.body);
     Map<String, dynamic> verifyRespJson = jsonDecode(verifyResp.body);
     if(verifyRespJson["Status"] == "Success") {
-      Navigator.of(context).push(
+      if(widget.signup) {
+        Navigator.of(context).push(
           new MaterialPageRoute(builder: (BuildContext context) {
             return Signup();
           })
-      );
+        );
+      } else {
+        //TODO navigate to homescreen because user has logged in successfully...
+      }
     } else {
       print("Wrong OTP! Please enter OTP again...");
     }
@@ -149,7 +149,7 @@ class _OtpPageState extends State<OtpPage> {
           InkWell(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => OtpPage()));
+                  MaterialPageRoute(builder: (context) => OtpPage(signup: widget.signup, login: widget.login,)));
             },
             child: Text(
               'Resent OTP',
