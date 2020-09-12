@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:destock/account_setting/confirm_logout.dart';
-import 'package:destock/profile/utils/raised_container.dart';
+import 'package:destock/utils/raised_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -192,7 +192,7 @@ class SavedCard extends StatelessWidget {
           children: [
             FlatButton(
               onPressed: () {
-                _showDialog(context);
+                // _showDialog(context);
               },
               child: Text(
                 "DELETE CARD",
