@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -576,11 +578,11 @@ class _PostAdState extends State<PostAd> {
                         "name": productName,
                         "description": productDescription,
                         "dimensions": productDimension,
-                        "mateiral": productMaterial,
+                        "material": productMaterial,
                         "quantity": productQuantity,
                         "weight": productWeight
                       };
-                      await prefs.setString("postAnAdData", adData.toString());
+                      await prefs.setString("postAnAdData", jsonEncode(adData));
                       Navigator.push(context, new MaterialPageRoute(
                           builder: (BuildContext context) => new postAd_2() ),
                       );

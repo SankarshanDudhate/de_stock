@@ -6,6 +6,7 @@ All the data from postAd,postAd_2,postAd_3 to be added in db
 import 'package:destock/manageProducts.dart';
 import 'package:destock/postAd.dart';
 import 'package:destock/postAd_2.dart';
+import 'package:destock/postAd_3.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: "Poppins",
       ),
-      home: postAd_2(),
+      home: PostAd(),
     );
   }
 }
