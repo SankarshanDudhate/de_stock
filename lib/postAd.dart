@@ -1,6 +1,8 @@
-import 'package:destock/postAd_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:destock/postAd_2.dart';
 
 class PostAd extends StatefulWidget {
   @override
@@ -522,67 +524,78 @@ class _PostAdState extends State<PostAd> {
                     padding: const EdgeInsets.fromLTRB(22, 22, 22, 12),
                     child: Column(
                       children: <Widget>[
-            SizedBox(
-            height: 10.0,
-            ),
-            Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                "ENTER PICKUP LOCATION",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.0,
-                    fontFamily: "Arial",
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-            ),
-            SizedBox(
-            height: 10.0,
-            ),
-            _buildPickupLocation(),
-            SizedBox(
-            height: 10,
-            ),
-             Row(
-            children: [
-              Text(
-                "Address from where the user can pick up",
-                style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10.0,
-                    fontFamily: "Arial",
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-            ),
+                        SizedBox(
+                        height: 10.0,
+                        ),
+                        Row(
+                          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            "ENTER PICKUP LOCATION",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontFamily: "Arial",
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        _buildPickupLocation(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Address from where the user can pick up",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 10.0,
+                                  fontFamily: "Arial",
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   )),
                    SizedBox(height: 20,),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       if(!_formKeyPostAd.currentState.validate()){
-                                return;
-                              }
-                              _formKeyPostAd.currentState.save();
-                              //Save all data here!!!!!
-                              Navigator.push(context, new MaterialPageRoute(
-                                  builder: (BuildContext context) => new postAd_2() ),
-                              );
+                        return;
+                      }
+                      _formKeyPostAd.currentState.save();
+                      //Save all data here!!!!!
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      var adData = {
+                        "unit": selectedUnit,
+                        "name": productName,
+                        "description": productDescription,
+                        "dimensions": productDimension,
+                        "mateiral": productMaterial,
+                        "quantity": productQuantity,
+                        "weight": productWeight
+                      };
+                      await prefs.setString("postAnAdData", adData.toString());
+                      Navigator.push(context, new MaterialPageRoute(
+                          builder: (BuildContext context) => new postAd_2() ),
+                      );
                     },
-                        child: Container(
-                            height: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 50),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.redAccent,
-                            ),
-                            child: Center(
-                              child: Text("NEXT", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
-                            ),
-                          ),
+                    child: Container(
+                        height: 50,
+                        margin: EdgeInsets.symmetric(horizontal: 50),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.redAccent,
+                        ),
+                        child: Center(
+                          child: Text("NEXT", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
+                        ),
+                      ),
                   ),
                   SizedBox(height:30)
                   ],
