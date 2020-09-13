@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: "Poppins",
       ),
-      home: PostAd(),
+      home: postAd_2(),
     );
   }
 }
