@@ -182,7 +182,6 @@ class _manageProductsState extends State<manageProducts> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                // print("dumb-fucking state!");
                                 this.loadActiveProds = true;
                               });
                             },
@@ -200,7 +199,7 @@ class _manageProductsState extends State<manageProducts> {
                                   children: [
                                     Text("Active Products",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                                     SizedBox(width:5),
-                                    Text("(3)",style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+                                    Text("(" + activeCount.toString() + ")",style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
                                   ],
                                 )),
                           )),
@@ -209,7 +208,6 @@ class _manageProductsState extends State<manageProducts> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                // print("dumb-fucking state!");
                                 this.loadActiveProds = false;
                               });
                             },
@@ -227,7 +225,7 @@ class _manageProductsState extends State<manageProducts> {
                               children: [
                                 Text("Inactive Products",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                                 SizedBox(width:5),
-                                Text("(3)",style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+                                Text("(" + inactiveCount.toString() + ")",style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
                               ],
                             )),
                           )),
