@@ -1,5 +1,6 @@
 //import 'dart:html';
 
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -7,6 +8,7 @@ import 'package:destock/postAd_3.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 // ignore: camel_case_types
@@ -17,16 +19,23 @@ class postAd_2 extends StatefulWidget {
 
 // ignore: camel_case_types
 class _postAd_2State extends State<postAd_2> {
+  SharedPreferences prefs;
 
   File _image;
   final _picker = ImagePicker();
-  List<File> allFiles = new List();
-  List<File> files = new List();
+  List<String> allFiles = new List();
+  Map<String, String> filePathsMap;
+  List<String> filePaths = new List();
 
   _fileOpener() async {
-    files = await FilePicker.getMultiFile( type: FileType.custom, allowedExtensions: ['jpg','png','jpeg'],);
+    filePathsMap = await FilePicker.getMultiFilePath( type: FileType.custom, allowedExtensions: ['jpg','png','jpeg'],);
+    // print(files.toString());
+    for(var filePath in filePathsMap.values ) {
+      filePaths.add(filePath);
+    }
+    print(filePaths.toString());
     setState(() {
-      this.allFiles.addAll(files);
+      this.allFiles.addAll(filePaths);
     });
     //print(allFiles);
     //Navigator.of(context).pop();
@@ -35,8 +44,9 @@ class _postAd_2State extends State<postAd_2> {
   Future _getImage(BuildContext context) async {
     PickedFile image = await _picker.getImage(source: ImageSource.camera);
     setState(() {
-      _image = File(image.path);
-      this.allFiles.add(_image);
+      // _image = File(image.path);
+      // this.allFiles.add(_image);
+      this.allFiles.add(image.path);
       //print(allFiles);
     });
     //Navigator.of(context).pop();
@@ -76,8 +86,16 @@ class _postAd_2State extends State<postAd_2> {
             ],
           ),
       shape: RoundedRectangleBorder(
-                   borderRadius: BorderRadius.all(Radius.circular(10.0))
-               ),
+               borderRadius: BorderRadius.all(Radius.circular(10.0))
+           ),
+      // actions: <Widget>[
+      //   FlatButton(
+      //       onPressed: () {
+      //         Navigator.of(context).pop();
+      //       },
+      //       child: Icon(Icons.cancel)
+      //   )
+      // ],
     );
 
     showDialog(
@@ -200,7 +218,7 @@ class _postAd_2State extends State<postAd_2> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-              child: Image.file(allFiles[index],height: 60, width:60),
+              child: Image.file(File(allFiles[index]),height: 60, width:60),
             ),
             //SizedBox(width: 10,),
             Text("PIC" + (index+1).toString(), style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
@@ -284,12 +302,20 @@ class _postAd_2State extends State<postAd_2> {
           ),
           SizedBox(height:30),
           GestureDetector(
-              onTap: () {
+              onTap: () async {
                 if(allFiles.isNotEmpty && allFiles.length<=10){
-                        //Use allFiles to store into database
-                        Navigator.pushReplacement(context, new MaterialPageRoute(
-                            builder: (BuildContext context) => new postAd_3() ),
-                        );
+                  //Use allFiles to store image paths into database
+                  prefs = await SharedPreferences.getInstance();
+                  var adData = prefs.getString("postAnAdData");
+                  //print(adData);
+                  var adDataJson = jsonDecode(adData);
+                  adDataJson["images"] = jsonEncode(allFiles);
+                  print(adDataJson);
+                  adData = jsonEncode(adDataJson);
+                  prefs.setString("postAnAdData", adData);
+                  Navigator.push(context, new MaterialPageRoute(
+                      builder: (BuildContext context) => new postAd_3() ),
+                  );
                 }
                 else{
                   _buildErrorDialogue(context);

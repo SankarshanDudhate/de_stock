@@ -7,6 +7,7 @@ import 'package:destock/enquiries.dart';
 import 'package:destock/manageProducts.dart';
 import 'package:destock/postAd.dart';
 import 'package:destock/postAd_2.dart';
+import 'package:destock/postAd_3.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,7 +25,11 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: "Poppins",
       ),
+<<<<<<< HEAD
       home: Enquiries(),
+=======
+      home: PostAd(),
+>>>>>>> aa1884c3a56e0854e09280306c2063792e037fa6
     );
   }
 }
