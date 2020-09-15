@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:destock/utils/bg_clip.dart';
 import 'package:destock/utils/input_card.dart';
 import 'package:destock/utils/raised_container.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class EditCompanyDetails extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -12,6 +13,15 @@ class EditCompanyDetails extends StatelessWidget {
   final _factoryAddressController = TextEditingController();
   final _officeAddressController = TextEditingController();
   final _sellController = TextEditingController();
+
+  GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,6 +106,13 @@ class EditCompanyDetails extends StatelessWidget {
                                 Container(
                                   height: 300,
                                   color: Colors.amber,
+                                  child: GoogleMap(
+                                    onMapCreated: _onMapCreated,
+                                    initialCameraPosition: CameraPosition(
+                                      target: _center,
+                                      zoom: 11.0,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 32,
