@@ -62,7 +62,7 @@ class _getstartedState extends State<getstarted> {
     String dataString = jsonEncode(dataMap);
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString("signupData", dataString);
+    await sharedPreferences.setString("userData", dataString);
 
     Navigator.of(context).push(
       new MaterialPageRoute(builder: (BuildContext context) {
