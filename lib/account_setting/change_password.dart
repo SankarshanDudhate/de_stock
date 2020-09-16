@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
 
 class ChangePassword extends StatefulWidget {
   @override
@@ -178,11 +179,37 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ),
                             ),
                             SizedBox(
-                              height: 160,
+                              height: 100,
                             ),
                             FlatButton(
                                 color: Color(0xffFC0151),
-                                onPressed: () {},
+                                onPressed: () async {
+                                  print("fukcing print man!");
+                                  String currentPass = _currentPasswordController.text;
+                                  String newPass = _newPasswordController.text;
+                                  String rePass = _reenterPasswordController.text;
+
+
+                                  //TODO use validate.dart file to validate password
+                                  if( newPass != rePass ) {
+                                    print("Passwords don't match!");
+                                    return;
+                                  } else if( newPass.length < 8 ) {
+                                    print("Password should at least be 8 characters long...");
+                                    return;
+                                  } else if( newPass == currentPass ) {
+                                    print("Current and new passwords can't be same!");
+                                    return;
+                                  }
+
+                                  //Change 3 with user_id
+                                  String url = 'http://192.168.43.167:5000/users/3/setPassword';
+                                  var resp = await http.post(url, body: {
+                                    "currentPassword": currentPass,
+                                    "newPassword": newPass
+                                  });
+                                  print(resp.body);
+                                },
                                 padding: EdgeInsets.symmetric(vertical: 16),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
