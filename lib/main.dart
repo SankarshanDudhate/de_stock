@@ -25,11 +25,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: "Poppins",
       ),
-<<<<<<< HEAD
       home: Enquiries(),
-=======
-      home: PostAd(),
->>>>>>> aa1884c3a56e0854e09280306c2063792e037fa6
     );
   }
 }

@@ -253,7 +253,7 @@ class enquiry_card extends StatelessWidget {
                       SizedBox(height: 10,),
                       GestureDetector(
                         onTap: () {
-                          _buildReply(context);
+                          _buildReply(context,user_image,user_name,user_enquiry,product_name,quantity,image);
                         },  
                         child: Text("Reply",
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff4DA4D6)),),
@@ -305,7 +305,7 @@ class enquiry_card extends StatelessWidget {
                       SizedBox(height: 10,),
                       GestureDetector(
                         onTap: () {
-                          _buildReply(context);
+                          _buildReply(context,user_image,user_name,user_enquiry,product_name,quantity,image);
                         },
                         child: Text("Reply",
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xff4DA4D6)),),
@@ -324,15 +324,90 @@ class enquiry_card extends StatelessWidget {
 }
 
 
- void _buildReply(BuildContext context) {
+ void _buildReply(BuildContext context,String user_image,String user_name,String user_enquiry,String product_name,String quantity,String image) {
 
+   TextEditingController replyController = new TextEditingController();
     var alertDialog = AlertDialog(
       content :
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Reply Dialog')
-            ],
+          Container(
+            width: MediaQuery.of(context).size.width*0.8,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(30),),
+                        child: Image.asset(image, height: 50,)),
+                    SizedBox(width:20),
+                    Flexible(child: Text(user_name + ' has requested a quote for your product',textAlign: TextAlign.left,style: TextStyle(fontSize:16),))
+                  ],
+                ),
+                SizedBox(height: 20,),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(5),
+                     border: Border.all(
+                    color: Colors.grey[400],
+                    )
+                  ),
+                  child: Row(
+                    children: [
+                      Flexible(child: Text(product_name,maxLines: 2,style: TextStyle(color:Colors.grey,fontSize: 14),)),
+                      ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5),),
+                        child: Image.asset(image, height: 50,)),
+                    ]
+                  ),
+                ),
+                SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('ENQUIRY',style: TextStyle(color:Colors.grey[400],fontWeight: FontWeight.bold,fontSize: 14),),
+                    Text('Qty  ' + quantity, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),)
+                  ],
+                ),
+                SizedBox(height:10),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(5),
+                     color: const Color(0xFFFFF1F6),
+                  ),
+                  child: Flexible(child: Text(user_enquiry, style: TextStyle(fontSize:16),)),
+                ),
+                SizedBox(height: 20,),
+                Row(
+                  children: [
+                    Text('Enter your reply', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                  ],
+                ),
+                SizedBox(height:10),
+                TextField(
+                  maxLines: 4,
+                  controller: replyController,
+                  decoration: new InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  )
+                  ),
+                ),
+                SizedBox(height:20),
+                Container(
+                  height: 50,
+                  margin: EdgeInsets.symmetric(horizontal: 80),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(60),
+                      color: Color(0xFFFC0151),
+                  ),
+                  child: Center(
+                    child: Text("REPLY", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
+                  ),
+                ),
+              ],
+            ),
           ),
       shape: RoundedRectangleBorder(
                    borderRadius: BorderRadius.all(Radius.circular(10.0))
