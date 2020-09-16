@@ -1,8 +1,10 @@
+import 'package:destock/home_buyer/home_buyer.dart';
 import 'package:destock/loginscreen1.dart';
-import 'package:destock/dashboard/dashboard.dart';
+import 'package:destock/home_buyer/recently_viewed.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/getstarted.dart';
-import 'package:destock/widgets/home.dart';
+import 'post_an_ad 4.dart';
+import 'widgets/home2.dart';
 
 
 void main() => runApp(MyApp());
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: "Poppins",
           ),
-      home: dashboard(),
+      home: homebuyer(),
     );
   }
 }
