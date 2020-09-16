@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'utils/bg_clip.dart';
-import 'utils/profile_header.dart';
-import 'utils/raised_container.dart';
+import 'package:destock/utils/bg_clip.dart';
+import 'package:destock/utils/profile_header.dart';
+import 'package:destock/utils/raised_container.dart';
 
 class Profile extends StatelessWidget {
   Profile({this.type});

@@ -1,25 +1,30 @@
-import 'dart:ffi';
-
 import 'package:destock/account_setting/confirm_logout.dart';
-import 'package:destock/profile/utils/raised_container.dart';
+import 'package:destock/utils/raised_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'confirm_deactivate_account.dart';
 
-class PaymentDetails extends StatelessWidget {
+class PaymentDetails extends StatefulWidget {
+  @override
+  _PaymentDetailsState createState() => _PaymentDetailsState();
+}
+
+class _PaymentDetailsState extends State<PaymentDetails> {
   final card_details_1 = {
     'card_number': '**** **** **** 1234',
     'card_type': 'visa',
     'card_name': 'Atul Mehra',
     'expiry_date': '06/30'
   };
+
   final card_details_2 = {
     'card_number': '**** **** **** 1234',
     'card_type': 'mastercard',
     'card_name': 'Atul Mehra',
     'expiry_date': '06/30'
   };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +57,10 @@ class PaymentDetails extends StatelessWidget {
             height: 16,
           ),
           SavedCard(card_details: card_details_1),
+          SizedBox(
+            height: 32,
+          ),
+          SavedCard(card_details: card_details_2),
           SizedBox(
             height: 32,
           ),
@@ -192,7 +201,7 @@ class SavedCard extends StatelessWidget {
           children: [
             FlatButton(
               onPressed: () {
-                _showDialog(context);
+                // _showDialog(context);
               },
               child: Text(
                 "DELETE CARD",
