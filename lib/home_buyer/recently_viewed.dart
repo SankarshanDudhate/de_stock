@@ -1,10 +1,7 @@
-import 'package:destock/cards/latest_products.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/cards/product_card_home.dart';
-import 'package:destock/cards/product_card_suggest.dart';
-import 'package:destock/cards/product_near_you.dart';
-import 'package:destock/cards/search_product_card_small.dart';
+
 
 
 class recently_viewed extends StatefulWidget {
@@ -31,35 +28,14 @@ class _recently_viewedState extends State<recently_viewed> {
           child: Column(
 
             children: <Widget>[
-              SizedBox(height: 70,),
-              header(
-                image: "assets/images/destocklogo.png",
-              ),
 
+              header(),
 
-              SizedBox(height: 40,),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Items you viewed recently",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),),
-                ),
-              ),
               SizedBox(height: 20,),
 
               recent_view(),
 
-
               SizedBox(height: 20,),
-
-
-
-
-
-
-
-
 
               footer(),
             ],
@@ -82,49 +58,23 @@ class header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+padding: EdgeInsets.fromLTRB(10,0,0,0),
         width: double.infinity,
-
+        height: 150,
+        decoration:BoxDecoration(
+          color: Color(0xffD84764),
+          borderRadius: BorderRadius.only( bottomRight: Radius.circular(90), ),
+        ) ,
 
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Image.asset(image, height: 50),
-            Container(
-              width: 250,
-              height: 40,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 4),
-                    blurRadius: 40,
-                    color: Colors.black.withOpacity(.16),
-                  ),
-                ],
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(right: 0),
-                      child: SizedBox(
-                          height: 3,
-                          child: Icon(Icons.search)),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(40),
-                      borderSide: BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
-                    ),
-                    filled: true,
-                    hintStyle: new TextStyle(color: Colors.grey,fontSize: 12),
-                    hintText: "Search for pipes, valves etc.",
-                    fillColor: Colors.white),
-              ),
-            )
+          children: [
+            Icon(Icons.arrow_back_ios,color: Colors.white,),
+            SizedBox(width: 10,),
+            Text("Items viewed recently",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),),
           ],
-        )
+        ),
+
     );
   }
 }
@@ -135,8 +85,9 @@ class recent_view extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Column(
-      children: <Widget>[
+    return ListView(
+      shrinkWrap: true,
+      children: [
 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

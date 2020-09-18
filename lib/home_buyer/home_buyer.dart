@@ -175,7 +175,7 @@ class _homebuyerState extends State<homebuyer> {
                         Image.asset("assets/images/become a seller.png"),
 
                         footer(),
-                        
+
                       ],
                     ),
                   ),
