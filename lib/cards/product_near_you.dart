@@ -29,10 +29,11 @@ class product_near_you extends StatelessWidget {
       ),
 
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Image.asset(image, height: 110,),
           Container(
-            width: 190,
+            width: 200,
             padding: const EdgeInsets.only(left:10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

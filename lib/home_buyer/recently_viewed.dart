@@ -18,14 +18,13 @@ class _recently_viewedState extends State<recently_viewed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
+      body:  Container(
 
           decoration: BoxDecoration(
             color: Color(0xF8F9FF),
           ),
 
-          child: Column(
+          child: ListView(
 
             children: <Widget>[
 
@@ -41,7 +40,7 @@ class _recently_viewedState extends State<recently_viewed> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 
@@ -85,8 +84,8 @@ class recent_view extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ListView(
-      shrinkWrap: true,
+    return Column(
+
       children: [
 
         Row(

@@ -1,17 +1,19 @@
+import 'package:destock/cards/pro_card_hor_scroll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:destock/cards/product_near_you.dart';
 import 'package:destock/cards/product_card_suggest_withtag.dart';
-import 'package:destock/cards/search_product_card_small.dart';
+import 'dart:math';
 
 
 
-class suggested_for_you extends StatefulWidget {
-  suggested_for_you({Key key, this.title}) : super(key: key);
+class latest_product extends StatefulWidget {
+  latest_product({Key key, this.title}) : super(key: key);
   final String title;
   @override
-  _suggested_for_youState createState() => _suggested_for_youState();
+  _latest_productState createState() => _latest_productState();
 }
-class _suggested_for_youState extends State<suggested_for_you> {
+class _latest_productState extends State<latest_product> {
 
 
 
@@ -33,7 +35,7 @@ class _suggested_for_youState extends State<suggested_for_you> {
 
             SizedBox(height: 20,),
 
-            category_list_suggest(),
+            category_list_latest(),
 
             SizedBox(height: 20,),
 
@@ -41,7 +43,7 @@ class _suggested_for_youState extends State<suggested_for_you> {
 
             SizedBox(height: 20,),
 
-            category_list_suggest(),
+            category_list_latest(),
 
             footer(),
           ],
@@ -63,20 +65,30 @@ class header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(10,0,0,0),
+      padding: EdgeInsets.fromLTRB(10,0,20,0),
       width: double.infinity,
       height: 150,
       decoration:BoxDecoration(
         color: Color(0xffD84764),
-        borderRadius: BorderRadius.only( bottomRight: Radius.circular(90), ),
+        borderRadius: BorderRadius.only( bottomRight: Radius.circular(70), ),
       ) ,
 
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(Icons.arrow_back_ios,color: Colors.white,),
-          SizedBox(width: 10,),
-          Text("Suggested for you",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),),
+          Row(
+            children: [
+              Icon(Icons.arrow_back_ios,color: Colors.white,),
+
+              SizedBox(width: 10,),
+              Text("Latest products",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),),
+            ],
+          ),
+          Transform.rotate(
+            angle: 90 * pi / 180,
+            child:Icon(Icons.tune,color: Colors.white,),
+          ),
         ],
       ),
 
@@ -85,14 +97,13 @@ class header extends StatelessWidget {
 }
 
 
-class category_list_suggest extends StatelessWidget {
+class category_list_latest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
 
     return Column(
       children: [
-
         product_card_suggest_withtag(
           product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
           product_price: "7000",
@@ -113,8 +124,6 @@ class category_list_suggest extends StatelessWidget {
           description: "A little brief about the product comes brief about",
           image: "assets/images/product image.png",
         ),
-
-
       ],
     );
 
@@ -129,57 +138,65 @@ class horizontal_scroll extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 120,
+          height: 190,
           width: double.infinity,
           margin: EdgeInsets.only(left: 20),
           decoration: BoxDecoration(
-              color: Color(0xff0B868A),
+              color: Color(0xff4B69FF),
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   topLeft: Radius.circular(15))),
           child: Container(
             padding: EdgeInsets.all(16),
-            child: Text(
-                'Because you viewed Cast Iron gears 15 inch 1050 rounded edges- PVC ',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    'Not what you’re looking for ?',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700)),
+                Text(
+                    'Try Recommended for you',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w400)),
+              ],
+            ),
           ),
         ),
         ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 175),
+          constraints: BoxConstraints(maxHeight: 310),
           child: Container(
-            margin: EdgeInsets.only(top: 50,left: 0),
+            margin: EdgeInsets.only(top: 60,left: 30),
 
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                searchcardsmall(
+                pro_card_hor_scroll(
                   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                   product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png" ,
+                  image: "assets/images/product image.png",
                 ),
-                searchcardsmall(
+                pro_card_hor_scroll(
                   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                   product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png" ,
+                  image: "assets/images/product image.png",
                 ),
-                searchcardsmall(
+                pro_card_hor_scroll(
                   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                   product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png" ,
+                  image: "assets/images/product image.png",
                 ),
-                searchcardsmall(
+                pro_card_hor_scroll(
                   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                   product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png" ,
+                  image: "assets/images/product image.png",
                 ),
+
               ],
             ),
           ),
