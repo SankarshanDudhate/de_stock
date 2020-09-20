@@ -3,9 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:destock/utils/bg_clip.dart';
 import 'package:destock/utils/input_card.dart';
 import 'package:destock/utils/raised_container.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class EditCompanyDetails extends StatelessWidget {
+//needed to make maps work
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
+
+
+class EditCompanyDetails extends StatefulWidget {
+  @override
+  _EditCompanyDetailsState createState() => _EditCompanyDetailsState();
+}
+
+class _EditCompanyDetailsState extends State<EditCompanyDetails> {
   final _formKey = GlobalKey<FormState>();
   final _companyNameController = TextEditingController();
   final _panNumberController = TextEditingController();
@@ -14,12 +24,56 @@ class EditCompanyDetails extends StatelessWidget {
   final _officeAddressController = TextEditingController();
   final _sellController = TextEditingController();
 
-  GoogleMapController mapController;
 
+  //map variables
+  LatLng location; //use location.latitude and .longitude to push it into database
+  GoogleMapController mapController;
   final LatLng _center = const LatLng(45.521563, -122.677433);
+  Set<Marker> markerSet = {};
+  String _factoryAddress = "Plot No. - 123, Sector – III, Industrial Area, Pithampur, Dist.: Dhar – 454 775, Madhya Pradesh";
+  Geolocator locator;
+  Marker initMarker;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    locator = Geolocator();
+    initMarker = Marker(position: _center);
+    markerSet.add(initMarker);
+  }
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  Widget renderMap() {
+    return GoogleMap(
+      onMapCreated: _onMapCreated,
+      initialCameraPosition: CameraPosition(
+        target: _center,
+        zoom: 17.0,
+      ),
+      // markers: markerSet, //this throws error so no markers for now
+      onTap: (LatLng latlong) async {
+        LocationResult loc = await showLocationPicker(
+          context, "AIzaSyBc6qcBEICmGINDtMUTqewxzylvhOCw0Eo",
+          initialCenter: LatLng(31.1975844, 29.9598339),
+          myLocationButtonEnabled: true,
+          layersButtonEnabled: true,
+          // countries: ['AE', 'NG'],
+        );
+        print(loc.toString());
+        List<Placemark> currentPlaces = await locator.placemarkFromCoordinates(loc.latLng.latitude, loc.latLng.longitude);
+        Placemark place = currentPlaces[0];
+        await mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: loc.latLng, zoom: 17)));
+        setState(() {
+          //markerSet.add( Marker(markerId: null,position: loc.latLng) );
+          _factoryAddress = "${place.subLocality}, ${place.locality}, ${place.subAdministrativeArea}, ${place.administrativeArea}, - ${place.postalCode}";
+          location = loc.latLng;
+        });
+      },
+    );
   }
 
   @override
@@ -92,7 +146,7 @@ class EditCompanyDetails extends StatelessWidget {
                                   title: "FACTORY ADDRESS*",
                                   controller: _factoryAddressController,
                                   placeholder:
-                                      "Plot No. - 123, Sector – III, Industrial Area, Pithampur, Dist.: Dhar – 454 775, Madhya Pradesh",
+                                      _factoryAddress,
                                   maxlines: 5,
                                   subtitle:
                                       "Enter your registered company name",
@@ -106,13 +160,7 @@ class EditCompanyDetails extends StatelessWidget {
                                 Container(
                                   height: 300,
                                   color: Colors.amber,
-                                  child: GoogleMap(
-                                    onMapCreated: _onMapCreated,
-                                    initialCameraPosition: CameraPosition(
-                                      target: _center,
-                                      zoom: 11.0,
-                                    ),
-                                  ),
+                                  child: renderMap(),
                                 ),
                                 SizedBox(
                                   height: 32,

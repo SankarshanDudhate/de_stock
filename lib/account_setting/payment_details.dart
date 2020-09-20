@@ -11,19 +11,65 @@ class PaymentDetails extends StatefulWidget {
 }
 
 class _PaymentDetailsState extends State<PaymentDetails> {
-  final card_details_1 = {
+  var card_details = [{
     'card_number': '**** **** **** 1234',
     'card_type': 'visa',
     'card_name': 'Atul Mehra',
     'expiry_date': '06/30'
-  };
-
-  final card_details_2 = {
+  },
+  {
     'card_number': '**** **** **** 1234',
     'card_type': 'mastercard',
     'card_name': 'Atul Mehra',
     'expiry_date': '06/30'
-  };
+  }];
+
+  Future<List<Map<String, String>>> fetchCardList() async {
+    await Future.delayed( Duration(seconds: 3) );
+    return card_details;
+  }
+
+  Widget buildCardList() {
+    return FutureBuilder<List<Map<String, String>>>(
+        future: fetchCardList(),
+        builder: (context, snapshot) {
+          if( !snapshot.hasData ) return Center(child:  CircularProgressIndicator(),);
+
+          return Column(
+            children: snapshot.data.map((snap) => cardList(snap)).toList(),
+          );
+        });
+  }
+
+  Widget cardList(var cardData) {
+    return Column(
+        children: [
+          SavedCard(card_details: cardData,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FlatButton(
+                onPressed: () {
+                  // _showDialog(context);
+                  // int index = card_details.indexOf(cardData);
+                  // print(index);
+                  setState(() {
+                    card_details.remove(cardData);
+                  });
+                },
+                child: Text(
+                  "DELETE CARD",
+                  style: TextStyle(color: Color(0XFFD84764), fontSize: 16),
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 32,
+          )
+        ],
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,15 +102,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           SizedBox(
             height: 16,
           ),
-          SavedCard(card_details: card_details_1),
-          SizedBox(
-            height: 32,
-          ),
-          SavedCard(card_details: card_details_2),
-          SizedBox(
-            height: 32,
-          ),
-          SavedCard(card_details: card_details_2)
+          buildCardList(), //returns FutureBuilder widget
         ],
       ),
     );
@@ -196,20 +234,23 @@ class SavedCard extends StatelessWidget {
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FlatButton(
-              onPressed: () {
-                // _showDialog(context);
-              },
-              child: Text(
-                "DELETE CARD",
-                style: TextStyle(color: Color(0XFFD84764), fontSize: 16),
-              ),
-            )
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.end,
+        //   children: [
+        //     FlatButton(
+        //       onPressed: () {
+        //         // _showDialog(context);
+        //       },
+        //       child: Text(
+        //         "DELETE CARD",
+        //         style: TextStyle(color: Color(0XFFD84764), fontSize: 16),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        // SizedBox(
+        //   height: 32,
+        // ),
       ],
     );
   }
