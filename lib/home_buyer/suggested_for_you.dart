@@ -53,12 +53,7 @@ class _suggested_for_youState extends State<suggested_for_you> {
 }
 
 class header extends StatelessWidget {
-  final String headline1;
-  final String headline2;
-  final String headline3;
-  final String image;
-  const header({Key key, this.headline1, this.headline2,this.headline3, this.image})
-      : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {

@@ -32,9 +32,7 @@ class _homebuyerState extends State<homebuyer> {
 
                       children: <Widget>[
                         SizedBox(height: 70,),
-                        header(
-                          image: "assets/images/destocklogo.png",
-                        ),
+                        header(),
                         
                         SizedBox(height: 40,),
                         Row(
@@ -186,12 +184,7 @@ class _homebuyerState extends State<homebuyer> {
 }
 
 class header extends StatelessWidget {
-  final String headline1;
-  final String headline2;
-  final String headline3;
-  final String image;
-  const header({Key key, this.headline1, this.headline2,this.headline3, this.image})
-      : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +196,7 @@ class header extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Image.asset(image, height: 50),
+            Image.asset("assets/images/destocklogo.png", height: 50),
             Container(
               width: 250,
               height: 40,
