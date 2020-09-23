@@ -1,3 +1,4 @@
+//TODO make images work on base64 strings from server
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:developer';
@@ -23,12 +24,12 @@ class _EnquiriesState extends State<Enquiries> {
   }
 
   void returnData() async {
-    print('lol');
+    // print('lol');
     String url = 'http://192.168.43.167:5000/products/enquiries/?user_id=0';
     var result = await http.get(url);
     // log(result.body);
     productEnquiries = await jsonDecode(result.body);
-    print("len"+productEnquiries.length.toString());
+    // print("len"+productEnquiries.length.toString());
     setState(() {
       productEnquiries = productEnquiries;
     });
@@ -81,11 +82,6 @@ class _EnquiriesState extends State<Enquiries> {
 
   Widget enquiryCard(prod) {
     // log("Rebuilding");
-    String dateString = prod["enquiries"][0]["enquiry"]["enquiry_date"];
-    List dateParts = dateString.split("-");
-    DateTime enqDate = DateTime(int.parse(dateParts[0]),int.parse(dateParts[1]),int.parse(dateParts[2]));
-    DateFormat formatter = DateFormat("MMM dd, yyyy");
-    log(formatter.format(enqDate));
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: enquiry_card(
@@ -94,7 +90,6 @@ class _EnquiriesState extends State<Enquiries> {
         product_price: prod["price"].toString(),
         image: prod["image"],
         enquiry_data: prod["enquiries"],
-        formattedDate: formatter.format(enqDate),
         // product_id: "#786GFHDR",
         // product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
         // product_price: "7000",
