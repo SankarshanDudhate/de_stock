@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:convert';
 
 class requestQuote extends StatefulWidget {
   @override
@@ -14,7 +18,7 @@ class _requestQuoteState extends State<requestQuote> {
         padding: EdgeInsets.all(100),
         child:  GestureDetector(
               onTap: (){
-                _buildRequestQuote(context,'adharashive@gmail.com','500');
+                _buildRequestQuote(context,'4','1','adharashive@gmail.com','500','KG');
               },
               child: Text("Request Quote",style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700, color: Color(0xff4DA4D6)),)),    
       ),
@@ -22,7 +26,7 @@ class _requestQuoteState extends State<requestQuote> {
   }
 
 
-  void _buildRequestQuote(BuildContext context,String email,String quantity) {
+  void _buildRequestQuote(BuildContext context, String product_id, String user_id, String email,String maxQuantity, String unit) {
 
    TextEditingController remarkController = new TextEditingController();
    TextEditingController quantityController = new TextEditingController();
@@ -64,7 +68,7 @@ class _requestQuoteState extends State<requestQuote> {
                         ),
                       ),
                       //SizedBox(width:10),
-                      Flexible(child: Text(quantity + ' max quantity',style: TextStyle(color:Colors.grey[400],fontWeight: FontWeight.bold,fontSize: 14),)),
+                      Flexible(child: Text(maxQuantity + unit + ' max quantity',style: TextStyle(color:Colors.grey[400],fontWeight: FontWeight.bold,fontSize: 14),)),
                     ]
                   ),
                   SizedBox(height:20),
@@ -90,15 +94,48 @@ class _requestQuoteState extends State<requestQuote> {
                     ],
                   ),
                   SizedBox(height:20),
-                  Container(
-                    height: 50,
-                    margin: EdgeInsets.symmetric(horizontal: 40),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(60),
-                        color: Color(0xFFFC0151),
-                    ),
-                    child: Center(
-                      child: Text("Send Enquiry", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
+                  GestureDetector(
+                    onTap: () async {
+                      DateTime enqDate = DateTime.now();
+                      DateFormat formatter = DateFormat("yyyy-MM-dd");
+                      String formattedDate = formatter.format(enqDate);
+                      print(formattedDate);
+
+                      String remark = remarkController.text;
+
+                      if( int.parse(quantityController.text) > 500 ) {
+                        Fluttertoast.showToast(msg: "Please enter a valid quantity!", toastLength: Toast.LENGTH_LONG, );
+                        return;
+                      }
+
+                      String url = 'http://192.168.43.167:5000/products/enquiries/enquire/';
+                      var dataObj = {'product_id': product_id, 'date':formattedDate, 'buyer_id':user_id,'enquiry':remark,'quantity':quantityController.text};
+                      var res = await http.post(url, body: dataObj);
+                      var resJson = jsonDecode(res.body);
+                      print(resJson["Status"]);
+
+                      if( resJson["Status"] == "Success" ) {
+                        Fluttertoast.showToast(msg: "Replied Successfully!");
+                        // setState(() {
+                        // Not needed right now... use it to disable the request quote button later on an actual screen
+                        //   widget.enquiry_data[productIndex]["replied"] = true; //this is just an example
+                        // });
+                      } else {
+                        Fluttertoast.showToast(msg: "Error - failed to reply!");
+                      }
+
+                      //TODO close the alertDialog
+                    },
+                    child: Container(
+                      height: 50,
+                      margin: EdgeInsets.symmetric(horizontal: 40),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(60),
+                          color: Color(0xFFFC0151),
+                      ),
+                      child: Center(
+                        child: Text("Send Enquiry", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
+                      ),
                     ),
                   ),
                   SizedBox(height:20),
