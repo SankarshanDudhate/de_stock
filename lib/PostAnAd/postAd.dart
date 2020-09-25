@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:destock/postAd_2.dart';
+import 'package:destock/PostAnAd/postAd_2.dart';
 
 class PostAd extends StatefulWidget {
   @override
@@ -63,6 +63,9 @@ class _PostAdState extends State<PostAd> {
           contentPadding: EdgeInsets.fromLTRB(30, 17, 30, 17),
           filled : true,
           fillColor: Colors.black,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(0),
+          )
         ),
       ),
     );
@@ -93,6 +96,9 @@ class _PostAdState extends State<PostAd> {
     return TextFormField(
       decoration: new InputDecoration(
           labelText: "eg. 450",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(0),
+          )
       ),
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
@@ -152,18 +158,23 @@ class _PostAdState extends State<PostAd> {
     return Column(
       children:[
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children:[
-            Expanded(child: Text("Dimension",style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15.0,
-                        fontFamily: "Arial",
-                        fontWeight: FontWeight.bold),
-                  ),),
-            SizedBox(width:30),
-            Expanded(
+            Container(
+              width: MediaQuery.of(context).size.width*0.3,
+              child: Text("Dimension",style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontFamily: "Arial",
+                          fontWeight: FontWeight.bold),
+                    ),
+            ),
+            //SizedBox(width:30),
+            Container(
+              width: MediaQuery.of(context).size.width*0.5,
               child: TextFormField(
                 //maxLines: 1,
+                //initialValue: productDimension,
                 decoration: new InputDecoration(
                 border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
@@ -179,16 +190,21 @@ class _PostAdState extends State<PostAd> {
         Row(
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           children:[
-            Expanded(child: Text("Weight",style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15.0,
-                        fontFamily: "Arial",
-                        fontWeight: FontWeight.bold),
-                  ),),
-            SizedBox(width:30),
-            Expanded(
+            Container(
+              width: MediaQuery.of(context).size.width*0.3,
+              child: Text("Weight",style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15.0,
+                          fontFamily: "Arial",
+                          fontWeight: FontWeight.bold),
+                    ),
+            ),
+            //SizedBox(width:30),
+            Container(
+              width: MediaQuery.of(context).size.width*0.5,
               child: TextFormField(
                 //maxLines: 1,
+                //initialValue: productWeight,
                 decoration: new InputDecoration(
                 border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
@@ -202,18 +218,23 @@ class _PostAdState extends State<PostAd> {
         ),
         SizedBox(height: 20,),
         Row(
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //mainAxisAlignment: MainAxisAlignment.start,
           children:[
-            Expanded(child: Text("Material",style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15.0,
-                        fontFamily: "Arial",
-                        fontWeight: FontWeight.bold),
-                  ),),
-            SizedBox(width:30),
-            Expanded(
+            Container(
+              width: MediaQuery.of(context).size.width*0.3,
+              child: Text("Material",style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15.0,
+                          fontFamily: "Arial",
+                          fontWeight: FontWeight.bold),
+                    ),
+            ),
+            //SizedBox(width:30),
+            Container(
+              width: MediaQuery.of(context).size.width*0.5,
               child: TextFormField(
                 //maxLines: 1,
+                //initialValue: productMaterial,
                 decoration: new InputDecoration(
                 border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
@@ -305,7 +326,7 @@ class _PostAdState extends State<PostAd> {
                     boxShadow: [
                       BoxShadow(
                           offset: Offset(0, 4),
-                          blurRadius: 40,
+                          blurRadius: 10,
                           color: Colors.black.withOpacity(.16),
                         ),]
                   ),
@@ -376,7 +397,7 @@ class _PostAdState extends State<PostAd> {
             boxShadow: [
               BoxShadow(
               offset: Offset(0, 4),
-              blurRadius: 40,
+              blurRadius: 10,
               color: Colors.black.withOpacity(.16),
             ),
             ],
@@ -406,7 +427,7 @@ class _PostAdState extends State<PostAd> {
                 Row(
                   children: [
                     Flexible(child: _buildQuantity()),
-                    SizedBox(width:5),
+                    //SizedBox(width:5),
                     Flexible(child: _buildUnit())
                   ],
                 ),
@@ -421,7 +442,7 @@ class _PostAdState extends State<PostAd> {
                     boxShadow: [
                       BoxShadow(
                         offset: Offset(0, 4),
-                        blurRadius: 40,
+                        blurRadius: 10,
                         color: Colors.black.withOpacity(.16),
                       ),
                     ],
@@ -475,7 +496,7 @@ class _PostAdState extends State<PostAd> {
                     boxShadow: [
                       BoxShadow(
                         offset: Offset(0, 4),
-                        blurRadius: 40,
+                        blurRadius: 10,
                         color: Colors.black.withOpacity(.16),
                       ),
                     ],
@@ -517,7 +538,7 @@ class _PostAdState extends State<PostAd> {
                     boxShadow: [
                       BoxShadow(
                         offset: Offset(0, 4),
-                        blurRadius: 40,
+                        blurRadius: 10,
                         color: Colors.black.withOpacity(.16),
                       ),
                     ],

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:developer';
-import 'package:destock/postAd_4.dart';
+import 'package:destock/PostAnAd/postAd_4.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -99,7 +99,7 @@ class _postAd_3State extends State<postAd_3> {
               Row(
               children: [
                 Text(
-                  "ENTER PRODUCT NAME",
+                  "ENTER SELLING PRICE",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 14.0,
@@ -112,9 +112,7 @@ class _postAd_3State extends State<postAd_3> {
               height: 10.0,
               ),
               _buildProductPrice(),
-              SizedBox(
-              height: 30,
-              ),
+              SizedBox(height: 30,),
               Row(
               children: [
                 Text(

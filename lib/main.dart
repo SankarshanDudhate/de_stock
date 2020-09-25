@@ -6,12 +6,13 @@ All the data from postAd,postAd_2,postAd_3 to be added in db
 import 'package:destock/ProductPages/editProduct.dart';
 import 'package:destock/enquiries.dart';
 import 'package:destock/manageProducts.dart';
-import 'package:destock/postAd.dart';
-import 'package:destock/postAd_2.dart';
-import 'package:destock/postAd_3.dart';
+import 'package:destock/PostAnAd/postAd.dart';
+import 'package:destock/PostAnAd/postAd_2.dart';
+import 'package:destock/PostAnAd/postAd_3.dart';
 import 'package:destock/ProductPages/productPage.dart';
 import 'package:flutter/material.dart';
 
+import 'ProductPages/editProductSlider.dart';
 import 'ProductPages/productPageSeller.dart';
 
 void main() {

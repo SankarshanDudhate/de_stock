@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:destock/postAd_3.dart';
+import 'package:destock/PostAnAd/postAd_3.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
@@ -125,16 +125,16 @@ class _postAd_2State extends State<postAd_2> {
                                 boxShadow: [
                                   BoxShadow(
                                     offset: Offset(0, 4),
-                                    blurRadius: 40,
+                                    blurRadius: 10,
                                     color: Colors.black.withOpacity(.16),
                                   ),
                                     ],
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                  Icon(Icons.camera_enhance , color: Colors.black,size: 30,),
-                                SizedBox(width:30),
+                                //SizedBox(width:30),
                                 Flexible(child: Text("Take Pictures", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold))),
                               ],
                             ),
@@ -171,16 +171,16 @@ class _postAd_2State extends State<postAd_2> {
                                  boxShadow: [
                                     BoxShadow(
                                       offset: Offset(0, 4),
-                                      blurRadius: 40,
+                                      blurRadius: 10,
                                       color: Colors.black.withOpacity(.16),
                                     ),
                                     ],
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Icon(Icons.photo , color: Colors.black,size: 30,),
-                                SizedBox(width:30),
+                                //SizedBox(width:30),
                                 Flexible(child: Text("Select From Gallery", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold))),
                               ],
                             ),
