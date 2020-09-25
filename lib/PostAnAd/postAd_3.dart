@@ -182,7 +182,7 @@ class _postAd_3State extends State<postAd_3> {
                               margin: EdgeInsets.symmetric(horizontal: 30),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: Colors.redAccent,
+                                  color: Color(0xFFFC0151),
                               ),
                               child: Center(
                                 child: Text("Save and add a new product", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
@@ -206,12 +206,11 @@ class _postAd_3State extends State<postAd_3> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(60),
                                   border: Border.all(
-                                    color: Colors.redAccent,
+                                    color: Color(0xFFFC0151),
                                   )
-                                  //color: Colors.redAccent,
                               ),
                               child: Center(
-                                child: Text("CHECKOUT", style: TextStyle(color: Colors.redAccent, fontSize: 18,fontWeight: FontWeight.bold)),
+                                child: Text("CHECKOUT", style: TextStyle(color:  Color(0xFFFC0151), fontSize: 18,fontWeight: FontWeight.bold)),
                               ),
                             ),
                     ),

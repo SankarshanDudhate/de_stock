@@ -28,14 +28,20 @@ class _editProductState extends State<editProduct> {
   };
 
   Widget _buildProductName() {
-    return TextField(
+    return TextFormField(
       maxLines: 2,
+      initialValue: productName,
       enabled: false,
       decoration: new InputDecoration(
-          labelText: productName,
+          //labelText: productName,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
-          )),
+          ),
+          // disabledBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(5),
+          //   borderSide: BorderSide(color: Color(0xFFFC0151)),
+          // )
+          ),
     );
   }
 
@@ -594,7 +600,7 @@ class _editProductState extends State<editProduct> {
                                           margin: EdgeInsets.all(20),
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(30),
-                                              color: Colors.redAccent,
+                                              color: Color(0xFFFC0151),
                                           ),
                                           child: Center(
                                             child: Text("UPDATE CHANGES", style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold)),

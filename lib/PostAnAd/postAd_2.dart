@@ -326,7 +326,7 @@ class _postAd_2State extends State<postAd_2> {
                       margin: EdgeInsets.symmetric(horizontal: 50),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: Colors.redAccent,
+                          color: Color(0xFFFC0151),
                       ),
                       child: Center(
                         child: Text("NEXT", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),

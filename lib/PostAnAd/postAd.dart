@@ -264,7 +264,7 @@ class _PostAdState extends State<PostAd> {
         margin: EdgeInsets.fromLTRB(0, 0, 80, 0),
         padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
         decoration: BoxDecoration(
-        color: Colors.redAccent,
+        color: Color(0xFFFC0151),
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(20.0),
             bottomRight: Radius.circular(20.0)),
@@ -613,7 +613,7 @@ class _PostAdState extends State<PostAd> {
                         margin: EdgeInsets.symmetric(horizontal: 50),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: Colors.redAccent,
+                            color: Color(0xFFFC0151),
                         ),
                         child: Center(
                           child: Text("NEXT", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
