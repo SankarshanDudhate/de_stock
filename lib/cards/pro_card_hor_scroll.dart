@@ -20,7 +20,7 @@ class pro_card_hor_scroll extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             offset: Offset(0, 4),
-            blurRadius: 40,
+            blurRadius: 10,
             color: Colors.black.withOpacity(.16),
           ),
         ],

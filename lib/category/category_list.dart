@@ -1,18 +1,19 @@
 import 'package:destock/cards/pro_card_hor_scroll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:destock/cards/product_card_suggest_withtag.dart';
+import 'package:destock/cards/latest_products.dart';
+import 'package:destock/cards/category_list_product_card.dart';
 import 'dart:math';
 
 
 
-class latest_product extends StatefulWidget {
-  latest_product({Key key, this.title}) : super(key: key);
+class category_list extends StatefulWidget {
+  category_list({Key key, this.title}) : super(key: key);
   final String title;
   @override
-  _latest_productState createState() => _latest_productState();
+  _category_listState createState() => _category_listState();
 }
-class _latest_productState extends State<latest_product> {
+class _category_listState extends State<category_list> {
 
 
 
@@ -34,7 +35,7 @@ class _latest_productState extends State<latest_product> {
 
             SizedBox(height: 20,),
 
-            category_list_latest(),
+            category_list_gearbox(),
 
             SizedBox(height: 20,),
 
@@ -42,9 +43,9 @@ class _latest_productState extends State<latest_product> {
 
             SizedBox(height: 20,),
 
-            category_list_latest(),
+            category_list_gearbox(),
 
-            footer(),
+
           ],
         ),
       ),
@@ -74,7 +75,7 @@ class header extends StatelessWidget {
               Icon(Icons.arrow_back_ios,color: Colors.white,),
 
               SizedBox(width: 10,),
-              Text("Latest products",
+              Text("Gearbox",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),),
             ],
           ),
@@ -90,28 +91,29 @@ class header extends StatelessWidget {
 }
 
 
-class category_list_latest extends StatelessWidget {
+class category_list_gearbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
 
     return Column(
       children: [
-        product_card_suggest_withtag(
+        category_list_product_card(
+          views: "200",
           product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
           product_price: "7000",
           description: "A little brief about the product comes brief about",
           image: "assets/images/product image.png",
         ),
-
-        product_card_suggest_withtag(
+        category_list_product_card(
+          views: "200",
           product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
           product_price: "7000",
           description: "A little brief about the product comes brief about",
           image: "assets/images/product image.png",
         ),
-
-        product_card_suggest_withtag(
+        category_list_product_card(
+          views: "200",
           product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
           product_price: "7000",
           description: "A little brief about the product comes brief about",
@@ -135,7 +137,7 @@ class horizontal_scroll extends StatelessWidget {
           width: double.infinity,
           margin: EdgeInsets.only(left: 20),
           decoration: BoxDecoration(
-              color: Color(0xff4B69FF),
+              color: Color(0xff0B868A),
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   topLeft: Radius.circular(15))),
@@ -151,7 +153,7 @@ class horizontal_scroll extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w700)),
                 Text(
-                    'Try Recommended for you',
+                    'Try these',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,
@@ -162,12 +164,14 @@ class horizontal_scroll extends StatelessWidget {
           ),
         ),
         ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 310),
+          constraints: BoxConstraints(maxHeight: 300),
           child: Container(
-            margin: EdgeInsets.only(top: 60,left: 30),
+            margin: EdgeInsets.only(top: 50),
+
 
             child: ListView(
               scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.only(left: 30),
               children: [
                 pro_card_hor_scroll(
                   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
@@ -203,45 +207,3 @@ class horizontal_scroll extends StatelessWidget {
 
 
 
-class footer extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(vertical: 60,horizontal: 40),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/footerbg.png"),),
-          color: Color(0xffFFEEF1),
-
-        ),
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("About us",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Pricing Plans",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("FAQs",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Help",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Feedback",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Terms & Conditions",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Refer a friend",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-          ],
-        )
-    );
-  }
-}

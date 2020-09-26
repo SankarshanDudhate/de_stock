@@ -1,7 +1,6 @@
 import 'package:destock/cards/pro_card_hor_scroll.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:destock/cards/product_near_you.dart';
 import 'package:destock/cards/product_card_suggest_withtag.dart';
 import 'dart:math';
 
@@ -75,7 +74,7 @@ class header extends StatelessWidget {
               Icon(Icons.arrow_back_ios,color: Colors.white,),
 
               SizedBox(width: 10,),
-              Text("Latest products",
+              Text("Trending Now",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),),
             ],
           ),
