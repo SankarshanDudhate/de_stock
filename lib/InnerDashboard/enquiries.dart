@@ -45,7 +45,7 @@ class _EnquiriesState extends State<Enquiries> {
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 4),
-              blurRadius: 40,
+              blurRadius: 10,
               color: Colors.black.withOpacity(.16),
             ),
           ],
@@ -116,13 +116,8 @@ class _EnquiriesState extends State<Enquiries> {
           children: [
             Stack(
                   children:[
+                    Image.asset("assets/images/Group_167.png"),
                     Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30.0),
-                          bottomRight: Radius.circular(30.0)),
-                      ),
                       //margin: EdgeInsets.fromLTRB(20,0,50,0),
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 50),
                       child: Row(

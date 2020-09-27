@@ -19,13 +19,34 @@ class _editProductState extends State<editProduct> {
   String productWeight = '365 kg';
   String productMaterial = 'Cast iron';
   String pickupLocation = '103-104 Pithampur main road near indore, MP';
-  String selectedUnit; 
+  String selectedUnit;
+  String newSpec; 
 
   var _selectUnit = {
     "kg",
     "pieces",
     "litre"
   };
+
+List<String> specName = [
+  'Material','Weight','Dimensions'
+];
+
+List<String> specDetails = ['Cast iron','365 kg','46m x 34m x 45m'];
+List<Map<String,String>> _specs= new List();
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+      for(int i=0;i<specName.length;i++){
+        _specs.add({
+          "name":specName[i],
+          "details":specDetails[i],
+        });
+      }
+      print(_specs);
+  }
 
   Widget _buildProductName() {
     return TextFormField(
@@ -151,101 +172,79 @@ class _editProductState extends State<editProduct> {
     );
   }
 
-  Widget _buildSpecification() {
-    return Column(
-      children:[
-        Row(
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children:[
-            Container(
-              width: MediaQuery.of(context).size.width*0.3,
-              child: Text("Dimension",style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                          fontFamily: "Arial",
-                          fontWeight: FontWeight.bold),
-                    ),
-            ),
-            //SizedBox(width:30),
-            Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              child: TextFormField(
-                //maxLines: 1,
-                initialValue: productDimension,
-                decoration: new InputDecoration(
-                border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
-                )),
-                  onSaved: (String str){
-                    productDimension = str;
-                  },
+  Widget _buildSpecification(){
+    return ListView.builder(
+      itemCount: _specs.length,
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, index) => Column(
+        children: [
+          Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width*0.3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(_specs[index]['name'],style: TextStyle(fontWeight: FontWeight.bold,fontSize:16),),
+                  ],
                 ),
-            ),
-          ]
-        ),
-        SizedBox(height: 20,),
-        Row(
-          //mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children:[
-            Container(
-              width: MediaQuery.of(context).size.width*0.3,
-              child: Text("Weight",style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15.0,
-                          fontFamily: "Arial",
-                          fontWeight: FontWeight.bold),
-                    ),
-            ),
-            //SizedBox(width:30),
-            Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              child: TextFormField(
-                //maxLines: 1,
-                initialValue: productWeight,
-                decoration: new InputDecoration(
-                border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
-                )),
-                  onSaved: (String str){
-                    productWeight = str;
-                  },
-                ),
-            ),
-          ]
-        ),
-        SizedBox(height: 20,),
-        Row(
-          //mainAxisAlignment: MainAxisAlignment.start,
-          children:[
-            Container(
-              width: MediaQuery.of(context).size.width*0.3,
-              child: Text("Material",style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15.0,
-                          fontFamily: "Arial",
-                          fontWeight: FontWeight.bold),
-                    ),
-            ),
-            //SizedBox(width:30),
-            Container(
-              width: MediaQuery.of(context).size.width*0.5,
-              child: TextFormField(
-                //maxLines: 1,
-                initialValue: productMaterial,
-                decoration: new InputDecoration(
-                border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
-                )),
-                  onSaved: (String str){
-                    productMaterial = str;
-                  },
-                ),
-            ),
-          ]
-        )
-      ]
+              ),
+              Stack(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.5,
+                    child: TextFormField(
+                      //maxLines: 1,
+                      initialValue: _specs[index]['details'],
+                      decoration: new InputDecoration(
+                      border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      )),
+                        onSaved: (String str){
+                          //productDimension = str;
+                          //this.specDetails.insert(index, str);
+                          _specs[index]['details'] = str;
+                        },
+                      ),
+                  ),
+                  Positioned(
+                            top: -10,
+                            right: -10,
+                            child: IconButton(
+                              onPressed: () {
+                                _removeFromList(context, index);
+                                
+                              },
+                              icon: Icon(Icons.cancel,color: Color(0xFFD3E3FF),size: 24,),
+                            ),
+                          ),
+                ]
+              ),
+            ],
+          ),
+          SizedBox(height: 20,)
+        ],
+      ),
     );
   }
+
+  _addtoList(BuildContext context,String newSpec){
+    setState(() {
+      //_specs[]
+      this._specs.add({
+        "name": newSpec,
+        "details":"",
+      });
+    });
+  }
+
+  _removeFromList(BuildContext context,index){
+    setState(() {
+      this._specs.removeAt(index);
+    });
+  }
+
 
   Widget _buildPickupLocation() {
     return TextFormField(
@@ -533,6 +532,33 @@ class _editProductState extends State<editProduct> {
                                           SizedBox(height: 10.0,),
                                           _buildSpecification(),
                                           SizedBox(height: 10,),
+                                           Row(
+                                            children: [
+                                              Container(
+                                                width: MediaQuery.of(context).size.width*0.4,
+                                                child: TextFormField(
+                                                  decoration: new InputDecoration(
+                                                      hintText: "New Specs",
+                                                  ),
+                                                  onChanged: (String str){
+                                                    newSpec = str;
+                                                  },
+                                                ),
+                                              ),
+                                              IconButton(
+                                                icon: Icon(Icons.add_box),
+                                                color: Color(0xFFD3E3FF), 
+                                                onPressed: () {
+                                                  if(newSpec.isNotEmpty){
+                                                    print(newSpec);
+                                                    _addtoList(context, newSpec);
+                                                  }  
+                                                },
+                                                )
+                                            ],
+                                          ),
+                                          SizedBox(height: 10,)
+                      
                                         ],
                                       ),
                                   )),

@@ -10,7 +10,8 @@ class product_card extends StatelessWidget {
   final String views;
   final String favorite;
   final String enquiries;
-  const product_card({Key key, this.product_id,this.product_name,this.product_price,this.expiry_date, this.views,this.favorite, this.enquiries,this.image="assets/images/product image.png"})
+  final bool productStatus;
+  const product_card({Key key, this.productStatus, this.product_id,this.product_name,this.product_price,this.expiry_date, this.views,this.favorite, this.enquiries,this.image="assets/images/product image.png"})
       : super(key: key);
 
   @override
@@ -88,7 +89,7 @@ class product_card extends StatelessWidget {
             height: 70, //from 80 to 70
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10),),
-              color: Color(0xff0B868A),
+              color: productStatus == true ? Color(0xFF0B868A) : Color(0xFFC4C4C4),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

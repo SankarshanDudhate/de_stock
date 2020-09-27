@@ -22,6 +22,7 @@ class _postAd_2State extends State<postAd_2> {
   SharedPreferences prefs;
 
   File _image;
+  int status;
   final _picker = ImagePicker();
   List<String> allFiles = new List();
   Map<String, String> filePathsMap;
@@ -36,7 +37,9 @@ class _postAd_2State extends State<postAd_2> {
     print(filePaths.toString());
     setState(() {
       this.allFiles.addAll(filePaths);
-    });
+    }
+    );
+    filePaths.clear();
     //print(allFiles);
     //Navigator.of(context).pop();
   }
@@ -230,7 +233,7 @@ class _postAd_2State extends State<postAd_2> {
                     _removeFromList(context,index);
                     print(allFiles);
                   },
-                  child: Icon(Icons.cancel,color: Colors.grey,)
+                  child: Icon(Icons.cancel,color: Color(0xFFD3E3FF),)
                   ),
               ]
             )
@@ -318,14 +321,20 @@ class _postAd_2State extends State<postAd_2> {
                   );
                 }
                 else{
-                  _buildErrorDialogue(context);
+                  if(allFiles.isEmpty){
+                    status = 0;
+                  }
+                  else{
+                    status = 1;
+                  }
+                  _buildErrorDialogue(context,status);
                 }
               },
                   child: Container(
                       height: 50,
-                      margin: EdgeInsets.symmetric(horizontal: 50),
+                      margin: EdgeInsets.symmetric(horizontal: 30),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(30),
                           color: Color(0xFFFC0151),
                       ),
                       child: Center(
@@ -343,10 +352,12 @@ class _postAd_2State extends State<postAd_2> {
 }
 
 
-void _buildErrorDialogue(BuildContext context) {
+void _buildErrorDialogue(BuildContext context,int status) {
 
     var alertDialog = AlertDialog(
-      content : Text("Only 10 Images are Allowed.\n Cancel excess images"),
+      content : status == 0 ? Text("Enter at least 1 image")
+      : status == 1? Text("Only 10 Images are Allowed.\nCancel excess images")
+      : Text(''),
       shape: RoundedRectangleBorder(
                    borderRadius: BorderRadius.all(Radius.circular(10.0))
                ),

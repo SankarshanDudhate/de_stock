@@ -4,29 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 
-class requestQuote extends StatefulWidget {
-  @override
-  _requestQuoteState createState() => _requestQuoteState();
-}
 
-class _requestQuoteState extends State<requestQuote> {
+class requestQuote{
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(100),
-        child:  GestureDetector(
-              onTap: (){
-                _buildRequestQuote(context,'4','1','adharashive@gmail.com','500','KG');
-              },
-              child: Text("Request Quote",style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700, color: Color(0xff4DA4D6)),)),    
-      ),
-    );
-  }
-
-
-  void _buildRequestQuote(BuildContext context, String product_id, String user_id, String email,String maxQuantity, String unit) {
+  _buildRequestQuote(BuildContext context, String product_id, String user_id, String email,String maxQuantity, String unit) {
 
    TextEditingController remarkController = new TextEditingController();
    TextEditingController quantityController = new TextEditingController();
@@ -68,7 +49,7 @@ class _requestQuoteState extends State<requestQuote> {
                         ),
                       ),
                       //SizedBox(width:10),
-                      Flexible(child: Text(maxQuantity + unit + ' max quantity',style: TextStyle(color:Colors.grey[400],fontWeight: FontWeight.bold,fontSize: 14),)),
+                      Flexible(child: Text(maxQuantity + ' ' + unit + ' max quantity',style: TextStyle(color:Colors.grey[400],fontWeight: FontWeight.bold,fontSize: 14),)),
                     ]
                   ),
                   SizedBox(height:20),
@@ -88,11 +69,17 @@ class _requestQuoteState extends State<requestQuote> {
                     ),
                   ),
                   SizedBox(height:20),
-                  Row(
-                    children: [
-                      Flexible(child: Text('Quote will be sent to you as a notification and same on ' + email,textAlign: TextAlign.left,style: TextStyle(fontSize:14),))
-                    ],
+                  RichText(
+                    text: TextSpan(
+                      text: 'Quote will be sent to you as a notification and same on ',
+                      style: TextStyle(color:Colors.black,fontSize: 16),
+                      children: <TextSpan>[
+                        TextSpan(text: email, style: TextStyle(fontWeight: FontWeight.bold)),
+                      ],
+                    ),
                   ),
+                  //Text('Quote will be sent to you as a notification and same on ' + email,textAlign: TextAlign.left,style: TextStyle(fontSize:14),),
+                  SizedBox(height:20),
                   SizedBox(height:20),
                   GestureDetector(
                     onTap: () async {
@@ -156,4 +143,6 @@ class _requestQuoteState extends State<requestQuote> {
       }
     );
 }
+
 }
+

@@ -38,6 +38,7 @@ class _editProductSliderState extends State<editProductSlider> {
     setState(() {
       this.allFiles.addAll(filePaths);
     });
+    filePaths.clear();
   }
 
   Future _getImage(BuildContext context) async {

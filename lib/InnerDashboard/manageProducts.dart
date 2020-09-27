@@ -17,7 +17,7 @@ class _manageProductsState extends State<manageProducts> {
   String searchName;
   int activeCount = 2;
   int inactiveCount = 3;
-  bool productStatus;
+  bool productStatus = true;
   TextEditingController searchController = new TextEditingController();
   List activeProdList = new List();
   List inactiveProdList = new List();
@@ -74,6 +74,7 @@ class _manageProductsState extends State<manageProducts> {
   
   Widget productCard(cardData) {
     return product_card(
+      productStatus: productStatus,
       product_id: "#786GFHDR", //need to add product number
       product_name: cardData["name"],
       product_price: cardData["price"].toString(),
@@ -99,7 +100,7 @@ class _manageProductsState extends State<manageProducts> {
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 4),
-              blurRadius: 40,
+              blurRadius: 10,
               color: Colors.black.withOpacity(.16),
             ),
           ],
@@ -136,15 +137,10 @@ class _manageProductsState extends State<manageProducts> {
             children: [
               Stack(
                   children:[
+                    Image.asset("assets/images/Group_167.png"),
                     Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(30.0),
-                            bottomRight: Radius.circular(30.0)),
-                      ),
                       //margin: EdgeInsets.fromLTRB(20,0,50,0),
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 50),
+                      padding: EdgeInsets.fromLTRB(0, 30, 0, 50),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -157,7 +153,7 @@ class _manageProductsState extends State<manageProducts> {
                           //SizedBox(width: 50,),
                           Column(
                             children: [
-                              Text("Manage your products", style: TextStyle(fontSize: 18),),
+                              Text("Manage your products", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                             ],
                           ),
                           Column(),
@@ -165,7 +161,7 @@ class _manageProductsState extends State<manageProducts> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(40, 75, 40, 0),
+                      padding: const EdgeInsets.fromLTRB(40, 100, 40, 0),
                       child: searchBox(),
                     )
                   ]
@@ -182,52 +178,64 @@ class _manageProductsState extends State<manageProducts> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
+                                this.productStatus = true;
                                 this.loadActiveProds = true;
                               });
                             },
                             child: Container(
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                decoration: BoxDecoration(
+                                decoration: productStatus == true ? BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(
-                                          color: Colors.black
+                                          color: Color(0xFF4B69FF)
                                       )
                                   ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Active Products",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                                    SizedBox(width:5),
-                                    Text("(" + activeCount.toString() + ")",style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
-                                  ],
-                                )),
+                                ): BoxDecoration(),
+                                child:  RichText(
+                                    text: TextSpan(
+                                      text: 'Active Products ',
+                                      style: TextStyle(color: productStatus == true ? Color(0xFF4B69FF) : Color(0xFF9A9B9B),fontSize: 16, fontWeight: FontWeight.bold),
+                                      children: <TextSpan>[
+                                        TextSpan(text: "(", style: TextStyle(fontSize: 12)),
+                                        TextSpan(text: activeCount.toString(), style: TextStyle(fontSize: 12),),
+                                        TextSpan(text: ")", style: TextStyle(fontSize: 12)),
+
+                                      ],
+                                    ),
+                                  ),
+                              ),
                           )),
                       SizedBox(width:20),
                       Flexible(
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
+                                this.productStatus = false;
                                 this.loadActiveProds = false;
                               });
                             },
                             child: Container(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color: Colors.black
-                                  )
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                decoration: productStatus == false ? BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: Color(0xFF4B69FF)
+                                      )
+                                  ),
+                                ): BoxDecoration(),
+                                child:  RichText(
+                                    text: TextSpan(
+                                      text: 'Inactive Products ',
+                                      style: TextStyle(color: productStatus == false ? Color(0xFF4B69FF) : Color(0xFF9A9B9B),fontSize: 16, fontWeight: FontWeight.bold),
+                                      children: <TextSpan>[
+                                        TextSpan(text: "(", style: TextStyle(fontSize: 12)),
+                                        TextSpan(text: inactiveCount.toString(), style: TextStyle(fontSize: 12),),
+                                        TextSpan(text: ")", style: TextStyle(fontSize: 12)),
+
+                                      ],
+                                    ),
+                                  ),
                               ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Inactive Products",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                                SizedBox(width:5),
-                                Text("(" + inactiveCount.toString() + ")",style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
-                              ],
-                            )),
                           )),
                     ],
                   ),

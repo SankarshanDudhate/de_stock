@@ -23,7 +23,7 @@ class _postAd_3State extends State<postAd_3> {
     return TextFormField(
       maxLines: 1,
       decoration: new InputDecoration(
-          labelText: "₹ eg. 45,000",
+          hintText: "₹ eg. 45,000",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           )),
@@ -84,7 +84,7 @@ class _postAd_3State extends State<postAd_3> {
                       boxShadow: [
                         BoxShadow(
                           offset: Offset(0, 4),
-                          blurRadius: 40,
+                          blurRadius: 10,
                           color: Colors.black.withOpacity(.16),
                         ),
                       ],
@@ -102,7 +102,7 @@ class _postAd_3State extends State<postAd_3> {
                   "ENTER SELLING PRICE",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 14.0,
+                      fontSize: 16.0,
                       fontFamily: "Arial",
                       fontWeight: FontWeight.bold),
                 ),
@@ -119,7 +119,7 @@ class _postAd_3State extends State<postAd_3> {
                   "Disclose price to customers?",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 12.0,
+                      fontSize: 16.0,
                       fontFamily: "Arial",
                       fontWeight: FontWeight.bold),
                 ),
@@ -181,7 +181,7 @@ class _postAd_3State extends State<postAd_3> {
                               height: 50,
                               margin: EdgeInsets.symmetric(horizontal: 30),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
+                                  borderRadius: BorderRadius.circular(30),
                                   color: Color(0xFFFC0151),
                               ),
                               child: Center(
