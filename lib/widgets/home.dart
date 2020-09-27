@@ -108,21 +108,22 @@ class _HomeState extends State<Home> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+
                   MaterialButton(
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
                         currentScreen =
-                            Profile(); // if user taps on this dashboard tab will be active
+                            notification_buyer(); // if user taps on this dashboard tab will be active
                         currentTab = 2;
                       });
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        SvgPicture.asset("assets/icons/profile.svg", width: 20,),
+                        currentTab == 2 ? SvgPicture.asset("assets/icons/notification_fill.svg", width: 20,) : SvgPicture.asset("assets/icons/notification_stroke.svg", width: 20,) ,
                         Text(
-                          'Profile',
+                          'Notification',
                           style: TextStyle(
                             fontSize: 10,
                             color: currentTab == 2 ? Color(0xffD84764) : Colors.white,
@@ -131,21 +132,22 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
+
                   MaterialButton(
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
                         currentScreen =
-                            notification_buyer(); // if user taps on this dashboard tab will be active
+                            Profile(); // if user taps on this dashboard tab will be active
                         currentTab = 3;
                       });
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        currentTab == 3 ? SvgPicture.asset("assets/icons/notification_fill.svg", width: 20,) : SvgPicture.asset("assets/icons/notification_stroke.svg", width: 20,) ,
+                        currentTab == 3 ? SvgPicture.asset("assets/icons/profile_fill.svg", width: 20,) : SvgPicture.asset("assets/icons/profile_stroke.svg", width: 20,) ,
                         Text(
-                          'Notification',
+                          'Profile',
                           style: TextStyle(
                             fontSize: 10,
                             color: currentTab == 3 ? Color(0xffD84764) : Colors.white,
@@ -153,7 +155,8 @@ class _HomeState extends State<Home> {
                         ),
                       ],
                     ),
-                  )
+                  ),
+
                 ],
               )
 
