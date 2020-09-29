@@ -1,10 +1,10 @@
 //TODO make images work on base64 strings from server
+import 'package:destock/InnerDashboard/enquiries_enquiry_card.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'enquiries_enquiry_card.dart';
 
 class Enquiries extends StatefulWidget {
   @override
@@ -119,9 +119,9 @@ class _EnquiriesState extends State<Enquiries> {
                     Image.asset("assets/images/Group_167.png"),
                     Container(
                       //margin: EdgeInsets.fromLTRB(20,0,50,0),
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 50),
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 50),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
                               icon: Icon(Icons.arrow_back_ios), onPressed: (){
@@ -132,7 +132,7 @@ class _EnquiriesState extends State<Enquiries> {
                           //SizedBox(width: 50,),
                           Column(
                             children: [
-                              Text("Enquiries", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                              Text("Enquiries", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                             ],
                           ),
                           Column(),
@@ -140,7 +140,7 @@ class _EnquiriesState extends State<Enquiries> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(40, 75, 40, 0),
+                      padding: const EdgeInsets.fromLTRB(40, 100, 40, 0),
                       child: searchBox(),
                     )
                   ]

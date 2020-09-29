@@ -2,7 +2,9 @@
 All the data from postAd,postAd_2,postAd_3 to be added in db
 ---------------------------------------------------*/
 
+import 'package:destock/InnerDashboard/enquiries.dart';
 import 'package:destock/InnerDashboard/manageProducts.dart';
+import 'package:destock/PostAnAd/postAd_4.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: "Poppins",
       ),
-      home: manageProducts()
+      home: PostAd4()
     );
   }
 }

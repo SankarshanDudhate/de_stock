@@ -197,7 +197,7 @@ class _postAd_3State extends State<postAd_3> {
                               }
                               _formKeyProductPrice.currentState.save();
                                 Navigator.pushReplacement(context, new MaterialPageRoute(
-                                    builder: (BuildContext context) => new postAd_4() ),
+                                    builder: (BuildContext context) => new PostAd4() ),
                                 );
                           },
                           child: Container(
