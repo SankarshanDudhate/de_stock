@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:destock/PostAnAd/postAd_2.dart';
@@ -300,6 +301,37 @@ List<Map<String,String>> _specs= new List();
         ),
         )),
         SizedBox(height: 40),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Step 1",
+                      style: TextStyle(
+                          color: Color(0xFF4B69FF),
+                          fontSize: 20.0,
+                          fontFamily: "Arial",
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width:20),
+                    Center(
+                        child: Text(
+                          "(1 Out of 4)",
+                          style: TextStyle(
+                              color: Color(0xff979797),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18),
+                        ),
+                      ),
+                  ],
+                ),
+                  SvgPicture.asset("assets/icons/progress_step_2.svg"),
+              ],
+            ),
+          ),
+            SizedBox(height:20),
         Container(
           margin: EdgeInsets.symmetric(horizontal:10),
             padding: EdgeInsets.symmetric(horizontal: 10),
@@ -372,7 +404,7 @@ List<Map<String,String>> _specs= new List();
               Text(
                 "Please recheck name as it cannot be changed later",
                 style: TextStyle(
-                    color: Colors.blueAccent,
+                    color: Color(0xFF4B69FF),
                     fontSize: 10.0,
                     fontFamily: "Arial",
                     fontWeight: FontWeight.bold),
@@ -628,7 +660,7 @@ List<Map<String,String>> _specs= new List();
                               };
                               await prefs.setString("postAnAdData", jsonEncode(adData));
                               Navigator.push(context, new MaterialPageRoute(
-                                  builder: (BuildContext context) => new postAd_2() ),
+                                  builder: (BuildContext context) => new PostAd2() ),
                               );
                             },
                             child: Container(

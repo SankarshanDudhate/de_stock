@@ -7,18 +7,19 @@ import 'dart:math';
 import 'package:destock/PostAnAd/postAd_3.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 // ignore: camel_case_types
-class postAd_2 extends StatefulWidget {
+class PostAd2 extends StatefulWidget {
   @override
-  _postAd_2State createState() => _postAd_2State();
+  _PostAd2State createState() => _PostAd2State();
 }
 
 // ignore: camel_case_types
-class _postAd_2State extends State<postAd_2> {
+class _PostAd2State extends State<PostAd2> {
   SharedPreferences prefs;
 
   File _image;
@@ -151,7 +152,7 @@ class _postAd_2State extends State<postAd_2> {
               Text(
                 "OR",
                 style: TextStyle(
-                    color: Colors.blueAccent,
+                    color: Color(0xFF4B69FF),
                     fontSize: 20.0,
                     fontFamily: "Arial",
                     fontWeight: FontWeight.bold),
@@ -253,12 +254,23 @@ class _postAd_2State extends State<postAd_2> {
           child: Column(
         children: [
           SizedBox(height:50),
+          Center(
+              child: Text(
+                "2 Out of 4",
+                style: TextStyle(
+                    color: Color(0xff979797),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18),
+              ),
+            ),
+            SvgPicture.asset("assets/icons/progress_step_2.svg"),
+            SizedBox(height:20),
           Row(
           children: [
         Text(
           "Step 2",
           style: TextStyle(
-              color: Colors.blueAccent,
+              color: Color(0xFF4B69FF),
               fontSize: 20.0,
               fontFamily: "Arial",
               fontWeight: FontWeight.bold),
@@ -317,7 +329,7 @@ class _postAd_2State extends State<postAd_2> {
                   adData = jsonEncode(adDataJson);
                   prefs.setString("postAnAdData", adData);
                   Navigator.push(context, new MaterialPageRoute(
-                      builder: (BuildContext context) => new postAd_3() ),
+                      builder: (BuildContext context) => new PostAd3() ),
                   );
                 }
                 else{

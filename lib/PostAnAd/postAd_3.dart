@@ -3,17 +3,18 @@ import 'dart:developer';
 import 'package:destock/PostAnAd/postAd_4.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 // import 'package:file/file.dart';
 
-class postAd_3 extends StatefulWidget {
+class PostAd3 extends StatefulWidget {
   @override
-  _postAd_3State createState() => _postAd_3State();
+  _PostAd3State createState() => _PostAd3State();
 }
 
-class _postAd_3State extends State<postAd_3> {
+class _PostAd3State extends State<PostAd3> {
 
   final GlobalKey<FormState> _formKeyProductPrice = GlobalKey<FormState>();
 
@@ -53,12 +54,23 @@ class _postAd_3State extends State<postAd_3> {
           child: Column(
             children:[
               SizedBox(height:50),
+              Center(
+              child: Text(
+                "3 Out of 4",
+                style: TextStyle(
+                    color: Color(0xff979797),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18),
+              ),
+            ),
+            SvgPicture.asset("assets/icons/progress_step_3.svg"),
+            SizedBox(height:20),
               Row(
               children: [
                 Text(
                   "Step 3",
                   style: TextStyle(
-                      color: Colors.blueAccent,
+                      color: Color(0xFF4B69FF),
                       fontSize: 20.0,
                       fontFamily: "Arial",
                       fontWeight: FontWeight.bold),
@@ -170,7 +182,7 @@ class _postAd_3State extends State<postAd_3> {
                            if( respJson["Status"] == "Success" ) {
                               print("faf");
                              Navigator.pushReplacement(context, new MaterialPageRoute(
-                                 builder: (BuildContext context) => new postAd_3() ),
+                                 builder: (BuildContext context) => new PostAd4() ),
                              );
                            } else {
                              print(respJson["Details"]);
