@@ -33,6 +33,11 @@ dependencies:
   google_maps_flutter: ^0.5.32
   google_map_location_picker:
   geolocator:
+  fluttertoast: ^7.0.4
+  firebase_messaging: ^7.0.0
+  shared_preferences:
+  uni_links:
+  intl:
 
 dev_dependencies:
   flutter_test:

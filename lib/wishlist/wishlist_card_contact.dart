@@ -1,3 +1,6 @@
+//TODO archive this one because wishlist_card_note.dart does all the job
+//don't need this one
+
 import 'package:flutter/material.dart';
 
 class WishlistCardContact extends StatelessWidget {
@@ -101,7 +104,7 @@ class WishlistCardContact extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: 188,
+                          width: 160,
                           padding: EdgeInsets.only(right: 16),
                           child: Text(
                             this.productName,

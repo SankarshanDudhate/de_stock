@@ -1,10 +1,20 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:destock/account_setting/account_setting.dart';
 import 'package:destock/account_setting/change_password.dart';
 import 'package:destock/account_setting/confirm_deactivate_account.dart';
 import 'package:destock/account_setting/payment_details.dart';
 import 'package:destock/post_ad_4.dart';
+import 'package:destock/wishlist/wishlist_and_enquiry.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
+import 'package:flutter/services.dart' show PlatformException;
 import 'profile/edit_company_details.dart';
 import 'profile/edit_contact_person_details.dart';
 import 'profile/edit_personal_details.dart';
@@ -13,13 +23,91 @@ import 'search/search_home.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  StreamSubscription uriStream;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    firebaseMessagingInit();
+    initUniLinks();
+  }
+
+  void initUniLinks() async {
+    try {
+      Uri initUri = await getInitialUri();
+      if(initUri != null)
+      {
+        Fluttertoast.showToast(msg: "Initial Uri: "+initUri.toString());
+        log("Initial: "+initUri.toString());
+      }
+
+      uriStream = getUriLinksStream().listen((Uri newUri) {
+        if(newUri != null) {
+          log("New: "+newUri.toString());
+          Fluttertoast.showToast(msg: "New Uri: "+newUri.toString(), toastLength: Toast.LENGTH_LONG);
+          var queryParameters = newUri.queryParameters;
+          log("Query: $queryParameters");
+          //pass the query parameters user_id and shareableHash to wishlist_shared.dart
+
+        }
+      });
+    } on PlatformException {
+      Fluttertoast.showToast(msg: "Error occured!");
+      log("Platform exception caught while handling app links...");
+    }
+  }
+
+  void firebaseMessagingInit() async {
+    final fbm = FirebaseMessaging();
+    fbm.requestNotificationPermissions();
+    String firebaseToken = await fbm.getToken();
+    log(firebaseToken);
+
+    fbm.subscribeToTopic("testTopic");
+    fbm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        log(message.toString());
+        Fluttertoast.showToast(msg: "onMessage");
+      },
+      // onBackgroundMessage: myBackgroundMessageHandler,
+      onLaunch: (Map<String, dynamic> message) async {
+        // print("onLaunch: $message");
+        Fluttertoast.showToast(msg: "onLaunch: $message", toastLength: Toast.LENGTH_LONG);
+        var alert = AlertDialog(
+          title: Text("Launch Dialog"),
+          content: Text("$message", style: TextStyle(fontStyle: FontStyle.italic ),),
+        );
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("fromNotif", "Yes baby yes!");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        Fluttertoast.showToast(msg: "onResume");
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
       // home: EditPersonalProfile(),
-      home: EditCompanyDetails(),
+      // home: EditCompanyDetails(),
       // home: ContactPersonDetails(),
       // home: Profile(type: "buyer"),
       // home: AccountSettings(),
@@ -28,6 +116,7 @@ class MyApp extends StatelessWidget {
       // home: PostAd4(),
       // home: SearchHome(),
       // home: MyHome(),
+      home: WishlistAndEnquiry()
     );
   }
 }

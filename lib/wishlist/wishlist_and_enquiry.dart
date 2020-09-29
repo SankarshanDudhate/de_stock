@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'enquired_products.dart';
 import 'my_wishlist.dart';
 
-class Wishlist extends StatelessWidget {
+class WishlistAndEnquiry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -61,7 +61,7 @@ class Wishlist extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 24),
+                  margin: EdgeInsets.symmetric(vertical: 16),
                   child: TabBarView(
                     children: [
                       MyWishlist(),

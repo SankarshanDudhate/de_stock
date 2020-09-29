@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class WishlistCardNotes extends StatelessWidget {
-  const WishlistCardNotes({
+  WishlistCardNotes({
     Key key,
     @required this.productImage,
     @required this.views,
@@ -10,7 +12,8 @@ class WishlistCardNotes extends StatelessWidget {
     @required this.productCategory,
     @required this.maxQty,
     @required this.productDescription,
-    @required this.message,
+    @required this.note,
+    this.enquiry="",
     @required ScrollController scrollController,
   })  : _scrollController = scrollController,
         super(key: key);
@@ -23,13 +26,57 @@ class WishlistCardNotes extends StatelessWidget {
   final ScrollController _scrollController;
   final String maxQty;
   final String productDescription;
-  final String message;
+  final String note;
+  String enquiry;
+
+  Widget quotationBox() {
+    if( this.enquiry.isEmpty ) return SizedBox.shrink();
+    else {
+      // print("ENquiry" + this.enquiry);
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Color(0xffD84764).withOpacity(0.2)),
+        padding: EdgeInsets.all(8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Quotation received',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                this.enquiry,
+              ),
+            ),
+            SizedBox(
+              height: 24,
+            ),
+            // SizedBox(
+            //   height: 8,
+            // )
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.fromLTRB(12,12,12,12),
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -54,7 +101,7 @@ class WishlistCardNotes extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
-                      image: AssetImage(this.productImage),
+                      image: MemoryImage(base64Decode(this.productImage)),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -101,24 +148,31 @@ class WishlistCardNotes extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: 188,
-                          padding: EdgeInsets.only(right: 16),
+                          width: 150,
+                          padding: EdgeInsets.only(right: 16, top: 2),
                           child: Text(
                             this.productName,
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
+                                fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                         ),
                         GestureDetector(
                           onTap: () {},
-                          child: Icon(Icons.favorite_border),
+                          child: Container(
+                              padding: EdgeInsets.only(top: 2),
+                              child: Icon(Icons.favorite_border)
+                          ),
                         )
                       ],
                     ),
-                    Text(
-                      "Category : " + this.productCategory,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400, color: Colors.grey),
+                    Container(
+                      width: 150,
+                      child: Text(
+                        "Category : " + this.productCategory,
+                        maxLines: 2,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, color: Colors.grey, fontSize: 13.5),
+                      ),
                     ),
                     SizedBox(
                       height: 16,
@@ -200,7 +254,7 @@ class WishlistCardNotes extends StatelessWidget {
                         padding: EdgeInsets.all(8),
                         children: [
                           Text(
-                            this.message,
+                            this.note,
                           ),
                         ],
                       ),
@@ -210,35 +264,45 @@ class WishlistCardNotes extends StatelessWidget {
               ],
             ),
           ),
+          quotationBox(),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+            margin: EdgeInsets.symmetric(vertical: 32, horizontal: 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FlatButton.icon(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.phone,
+                Container(
+                  width: 147,
+                  padding: EdgeInsets.all(0),
+                  margin: EdgeInsets.all(0),
+                  child: FlatButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.phone,
+                      color: Color(0xff4B69FF),
+                    ),
+                    label: Text(
+                      "Contact Seller",
+                      style: TextStyle(
+                          color: Color(0xff4B69FF), fontWeight: FontWeight.bold, fontSize: 13),
+                    ),
+                    shape:
+                        StadiumBorder(side: BorderSide(color: Color(0xff4B69FF))),
+                  ),
+                ),
+                Container(
+                  width: 147,
+                  padding: EdgeInsets.all(0),
+                  margin: EdgeInsets.fromLTRB(2,0,0,0),
+                  child: FlatButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Request a quote',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    shape: StadiumBorder(),
                     color: Color(0xff4B69FF),
                   ),
-                  label: Text(
-                    "Contact Seller",
-                    style: TextStyle(
-                        color: Color(0xff4B69FF), fontWeight: FontWeight.bold),
-                  ),
-                  shape:
-                      StadiumBorder(side: BorderSide(color: Color(0xff4B69FF))),
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(
-                    'Request a quote',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  shape: StadiumBorder(),
-                  color: Color(0xff4B69FF),
                 )
               ],
             ),

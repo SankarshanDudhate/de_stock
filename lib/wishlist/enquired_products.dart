@@ -1,14 +1,56 @@
 import 'dart:io';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'enquiry_product_card.dart';
 
-class EnquiredProducts extends StatelessWidget {
-  _getEnquiryData() {
-    sleep(Duration(seconds: 1));
-    return get('https://jsonplaceholder.typicode.com/posts');
+class EnquiredProducts extends StatefulWidget {
+  @override
+  _EnquiredProductsState createState() => _EnquiredProductsState();
+}
+
+class _EnquiredProductsState extends State<EnquiredProducts> {
+  List productList = new List();
+
+  _getEnquiryData() async {
+    print("\n\nSOmeStirng\n\n");
+    String url = "http://192.168.43.167:5000/users/enquiries/?user_id=2";
+    var response = await http.get(url);
+    var respJson = jsonDecode(response.body);
+    if( respJson["Status"] == "Failure" ) {
+      print("Failure");
+      Fluttertoast.showToast(msg: "Error occured... Please try again!");
+      return;
+    }
+
+    // print(respJson["products"].length);
+    productList = respJson["products"];
+    // log(productList.toString());
+    return productList;
+  }
+
+  Widget enquiryCard(data) {
+    String replyDate='',replyMesage='';
+    if(data["seller_name"] != null) {
+      replyDate = data["reply"]["date"];
+      replyMesage = data["reply"]["seller_reply"];
+    }
+    return EnquiryProductCard(
+      productName: data["name"],
+      productImage: 'assets/images/product.png',
+      productCategory: data["category"],
+      productCost: data["price"].toString(),
+      profileName: data["seller_name"],
+      profileImage: 'assets/images/product.png',
+      qty: data["quantity"],
+      date: replyDate,
+      message: replyMesage,
+      enquiryMessage: data["enquiry"],
+    );
   }
 
   @override
@@ -18,50 +60,7 @@ class EnquiredProducts extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return ListView(
-            children: [
-              EnquiryProductCard(
-                productName: 'Aluminium Gears 150 pieces and rounded edges',
-                productImage: 'assets/images/product image.png',
-                productCategory: 'GEARBOX',
-                productCost: '7,000',
-                profileImage: 'assets/images/product image.png',
-                profileName: 'Mittal Steels',
-                qty: '30 kg',
-                date: 'Aug 21, 2020',
-                message:
-                    'Hello sir,\nwe have stock of about 100 kgs and you can visit our pithampur based factory on August 21 to pick up the stock. 100 kgs stock would cost you ₹ 50,000',
-                enquiryMessage:
-                    'I wanted to enquire that what would be the price of above mentioned quantity and how can I cone and pickup my order from your site.\nAlso what time will be suitable for you?',
-              ),
-              EnquiryProductCard(
-                productName: 'Aluminium Gears 150 pieces and rounded edges',
-                productImage: 'assets/images/product_1.png',
-                productCategory: 'GEARBOX',
-                productCost: '7,000',
-                profileImage: 'assets/images/product image.png',
-                profileName: 'Mittal Steels',
-                qty: '30 kg',
-                date: 'Aug 21, 2020',
-                message:
-                    'Hello sir,\nwe have stock of about 100 kgs and you can visit our pithampur based factory on August 21 to pick up the stock. 100 kgs stock would cost you ₹ 50,000',
-                enquiryMessage:
-                    'I wanted to enquire that what would be the price of above mentioned quantity and how can I cone and pickup my order from your site.\nAlso what time will be suitable for you?',
-              ),
-              EnquiryProductCard(
-                productName: 'Aluminium Gears 150 pieces and rounded edges',
-                productImage: 'assets/images/product_3.png',
-                productCategory: 'GEARBOX',
-                productCost: '7,000',
-                profileImage: 'assets/images/product image.png',
-                profileName: 'Mittal Steels',
-                qty: '30 kg',
-                date: 'Aug 21, 2020',
-                message:
-                    'Hello sir,\nwe have stock of about 100 kgs and you can visit our pithampur based factory on August 21 to pick up the stock. 100 kgs stock would cost you ₹ 50,000',
-                enquiryMessage:
-                    'I wanted to enquire that what would be the price of above mentioned quantity and how can I cone and pickup my order from your site.\nAlso what time will be suitable for you?',
-              ),
-            ],
+            children: snapshot.data.map<Widget>((snap) => enquiryCard(snap)).toList()
           );
         }
 

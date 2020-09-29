@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:destock/utils/conversions.dart';
 
 class EnquiryProductCard extends StatelessWidget {
   final String productName;
@@ -92,97 +93,111 @@ class EnquiryProductCard extends StatelessWidget {
     String date,
     String message,
   }) {
-    return Container(
-      padding: EdgeInsets.all(12),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                height: 50,
-                width: 50,
-                margin: EdgeInsets.only(right: 16),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(profileImage),
-                    ),
-                    borderRadius: BorderRadius.circular(100)),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RichText(
-                    text: new TextSpan(
-                      style: new TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
+    if (profileName != null) {
+      return Container(
+        padding: EdgeInsets.all(12),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: 50,
+                  width: 50,
+                  margin: EdgeInsets.only(right: 16),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(profileImage),
                       ),
-                      children: <TextSpan>[
-                        new TextSpan(
-                            text: profileName + ' ',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        new TextSpan(
-                            text: 'replied',
-                            style: new TextStyle(fontWeight: FontWeight.w300)),
+                      borderRadius: BorderRadius.circular(100)),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: new TextSpan(
+                        style: new TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          new TextSpan(
+                              text: profileName + ' ',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          new TextSpan(
+                              text: 'replied',
+                              style: new TextStyle(fontWeight: FontWeight.w300)),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        RichText(
+                          text: new TextSpan(
+                            style: new TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.black,
+                            ),
+                            children: <TextSpan>[
+                              new TextSpan(
+                                  text: 'Qty  ',
+                                  style: TextStyle(color: Colors.grey)),
+                              new TextSpan(
+                                  text: qty,
+                                  style:
+                                      new TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 60,
+                        ),
+                        Text(
+                          dateToMMMddyyyy(date),
+                          style: TextStyle(
+                              fontSize: 10, fontStyle: FontStyle.italic),
+                        ),
                       ],
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      RichText(
-                        text: new TextSpan(
-                          style: new TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.black,
-                          ),
-                          children: <TextSpan>[
-                            new TextSpan(
-                                text: 'Qty  ',
-                                style: TextStyle(color: Colors.grey)),
-                            new TextSpan(
-                                text: qty,
-                                style:
-                                    new TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 144,
-                      ),
-                      Text(
-                        date,
-                        style: TextStyle(
-                            fontSize: 10, fontStyle: FontStyle.italic),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              margin: EdgeInsets.fromLTRB(8,16,8,16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: Color(0xffFFDDE9),
               ),
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.all(8),
-            margin: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              color: Color(0xffFFDDE9),
+              child: Text(message, style: TextStyle(
+                fontSize: 18
+              ),
+              maxLines: 5,),
             ),
-            child: Text(message),
-          ),
-          FlatButton(
-            onPressed: () {},
-            shape: StadiumBorder(),
-            color: Color(0xffD84764),
-            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
-            child: Text(
-              'Contact Seller',
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          )
-        ],
-      ),
-    );
+            FlatButton(
+              onPressed: () {},
+              shape: StadiumBorder(),
+              color: Color(0xffD84764),
+              padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+              child: Text(
+                'Contact Seller',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      print("No reply found!");
+      return Container(
+        padding: EdgeInsets.all(12),
+        child: Container(
+            padding: EdgeInsets.only(top: 20),
+            child: Text("No reply yet!", style: TextStyle(fontWeight: FontWeight.bold),) //change this to have an image too
+        ),
+      );
+    }
   }
 
   Container buildHeader({
@@ -204,6 +219,7 @@ class EnquiryProductCard extends StatelessWidget {
             width: 80,
             margin: EdgeInsets.only(right: 8),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
               image: DecorationImage(image: AssetImage(productImage)),
             ),
           ),
@@ -211,7 +227,7 @@ class EnquiryProductCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 240,
+                width: 210,
                 child: Text(
                   productName,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -233,7 +249,8 @@ class EnquiryProductCard extends StatelessWidget {
                           color: Color(0xff626161)),
                     ),
                   ),
-                  SizedBox(width: 132),
+                  SizedBox(width: 70),
+                  //cost text should float right
                   Text(
                     "₹ " + productCost,
                     style: TextStyle(fontSize: 14),
