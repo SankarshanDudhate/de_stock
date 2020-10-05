@@ -163,28 +163,28 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void saveNotification(Map<String, dynamic> message) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String notifString = prefs.getString("notifications");
-    List notifList = [];
-
-    if( notifString != null) {
-      var notifs = jsonDecode(notifString);
-      log("Previous notifs type: "+notifs.runtimeType.toString()+"\n\n");
-      // notifList = notifs;
-    } else {
-      log("It is null");
-      notifString = '';
-    }
-
-    message["read"] = false;
-    message["received_date"] = new DateTime.now().toIso8601String();
-    notifList.insert(0, message);
-    String newNotifString = jsonEncode(notifList).toString();
-    // log(newNotifString);
-    prefs.setString("notifications", newNotifString);
-    log("New notifs: \n\n$newNotifString\n\n");
-  }
+  // void saveNotification(Map<String, dynamic> message) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String notifString = prefs.getString("notifications");
+  //   List notifList = [];
+  //
+  //   if( notifString != null) {
+  //     var notifs = jsonDecode(notifString);
+  //     log("Previous notifs type: "+notifs.runtimeType.toString()+"\n\n");
+  //     // notifList = notifs;
+  //   } else {
+  //     log("It is null");
+  //     notifString = '';
+  //   }
+  //
+  //   message["read"] = false;
+  //   message["received_date"] = new DateTime.now().toIso8601String();
+  //   notifList.insert(0, message);
+  //   String newNotifString = jsonEncode(notifList).toString();
+  //   // log(newNotifString);
+  //   prefs.setString("notifications", newNotifString);
+  //   log("New notifs: \n\n$newNotifString\n\n");
+  // }
 
   //hot restart after writing static functions otherwise they won't work
   static Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
@@ -261,6 +261,28 @@ class _MyAppState extends State<MyApp> {
     //   MaterialPageRoute(builder: (context) => SecondScreen(payload)),
     // );
   }
+}
 
 
+void saveNotification(Map<String, dynamic> message) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String notifString = prefs.getString("notifications");
+  List notifList = [];
+
+  if( notifString != null) {
+    var notifs = jsonDecode(notifString);
+    log("Previous notifs type: "+notifs.runtimeType.toString()+"\n\n");
+    // notifList = notifs;
+  } else {
+    log("It is null");
+    notifString = '';
+  }
+
+  message["read"] = false;
+  message["received_date"] = new DateTime.now().toIso8601String();
+  notifList.insert(0, message);
+  String newNotifString = jsonEncode(notifList).toString();
+  // log(newNotifString);
+  prefs.setString("notifications", newNotifString);
+  log("New notifs: \n\n$newNotifString\n\n");
 }
