@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "7648305906",
+    "firebase_url": "https://de-stock-d9826.firebaseio.com",
+    "project_id": "de-stock-d9826",
+    "storage_bucket": "de-stock-d9826.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7648305906:android:f4b3fd4c0a6deb1dc4266b",
+        "android_client_info": {
+          "package_name": "com.destock.destock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7648305906-h3rsl03n47401j29o4j5d1hurh51j060.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBox4jWREAqRT67heJzdfl2TEfZvC-jgV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7648305906-h3rsl03n47401j29o4j5d1hurh51j060.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
