@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'loginscreen1.dart';
 
@@ -28,7 +28,9 @@ class _SignupState extends State<Signup> {
 
     saveData();
     } else {
-      Fluttertoast.showToast(msg: "Passwords don't match!");
+      Get.snackbar(
+          "Passwords don't match", " Please retry!"
+      );
     }
   }
 
@@ -53,14 +55,15 @@ class _SignupState extends State<Signup> {
 
     if(resp["Status"] == "Success") {
       print("Details:\n"+resp["Details"]);
-      Fluttertoast.showToast(msg: "Signed up successfully!");
+      Get.snackbar(
+          "Yay!", "Signup succesful!"
+      );
       //TODO send user to homepage/dashboard
     }
     else{
       //show unsuccessful message
-      Fluttertoast.showToast(
-        msg: "Signup unsuccessul!",
-        toastLength: Toast.LENGTH_LONG,
+      Get.snackbar(
+        "Error", "Signup failed!"
       );
     }
   }

@@ -39,7 +39,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
     // TODO: implement initState
     super.initState();
     locator = Geolocator();
-    initMarker = Marker(position: _center);
+    initMarker = Marker(markerId: MarkerId("current_location"), position: _center);
     markerSet.add(initMarker);
   }
 

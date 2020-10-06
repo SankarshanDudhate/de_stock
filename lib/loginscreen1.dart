@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:destock/otpscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'validatons.dart';
@@ -42,14 +42,18 @@ class _LoginPageState extends State<LoginPage> {
     if( phoneNoMatcher.hasMatch(emailController.text) ) {
       email = emailController.text;
       if( !validateEmail(email) ) {
-        Fluttertoast.showToast(msg: "Please enter a valid email address!");
+        Get.snackbar(
+            "Invalid email!", "Please enter a valid email address!"
+        );
         return;
       }
       formData["email_id"] = email;
     } else {
       phoneNo = emailController.text;
       if( !validatePhoneNo(phoneNo) ) {
-        Fluttertoast.showToast(msg: "Please enter a valid Phone Number!");
+        Get.snackbar(
+            "Invalid number!", "Please enter a valid email address!"
+        );
         return;
       }
       formData["phone_no"] = phoneNo;
@@ -63,7 +67,9 @@ class _LoginPageState extends State<LoginPage> {
 
     var respJson = jsonDecode(response.body);
     if( respJson["Status"] == "Success" ) {
-      Fluttertoast.showToast(msg: respJson["Details"]);
+      Get.snackbar(
+          "Debugging...!", respJson["Details"]
+      );
       print(respJson["userData"]["address"]);
 
       String dataString = jsonEncode(respJson["userData"]);
@@ -73,7 +79,9 @@ class _LoginPageState extends State<LoginPage> {
 
       //TODO Navigate to homescreen
     } else {
-      Fluttertoast.showToast(msg: respJson["Details"]);
+      Get.snackbar(
+          "Debugging...!", respJson["Details"]
+      );
     }
   }
 

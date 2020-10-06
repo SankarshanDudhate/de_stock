@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:destock/SignupScreen1.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'validatons.dart';
 import 'otpscreen.dart';
@@ -31,19 +31,25 @@ class _getstartedState extends State<getstarted> {
 
     bool isNameValid = validateName(name);
     if( !isNameValid ) {
-      Fluttertoast.showToast(msg: "Please enter a valid name!", toastLength: Toast.LENGTH_LONG);
+      Get.snackbar(
+          "Invalid details", "Please enter a valid name"
+      );
       return;
     }
 
     bool isEmailValid = validateEmail(email);
     if( !isEmailValid ) {
-      Fluttertoast.showToast(msg: "Please enter a valid email address!", toastLength: Toast.LENGTH_LONG);
+      Get.snackbar(
+          "Invalid details", "Please enter a valid email address"
+      );
       return;
     }
 
     bool isPhoneNoValid = validatePhoneNo(phoneNo);
     if( !isPhoneNoValid ) {
-      Fluttertoast.showToast(msg: "Please enter a valid phone number!", toastLength: Toast.LENGTH_LONG);
+      Get.snackbar(
+          "Invalid details", "Please enter a valid phone number"
+      );
       return;
     }
 

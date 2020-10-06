@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'enquiry_product_card.dart';
 
@@ -23,7 +23,9 @@ class _EnquiredProductsState extends State<EnquiredProducts> {
     var respJson = jsonDecode(response.body);
     if( respJson["Status"] == "Failure" ) {
       print("Failure");
-      Fluttertoast.showToast(msg: "Error occured... Please try again!");
+      Get.snackbar(
+          "Unknown Error", "Please try again!"
+      );
       return;
     }
 

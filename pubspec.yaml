@@ -41,7 +41,7 @@ dependencies:
   google_maps_flutter: ^0.5.32
   google_map_location_picker:
   geolocator:
-  fluttertoast: ^7.0.4 #use flushbar instead
+  #fluttertoast: ^7.0.4 #use get.snackbar instead
 #  flushbar: ^1.10.4
   get:
   firebase_messaging: ^7.0.0
