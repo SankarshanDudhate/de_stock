@@ -46,7 +46,7 @@ dependencies:
   get:
   firebase_messaging: ^7.0.0
   uni_links:
-#  cashfree_pg: 0.0.3+5 #causes firebase to not work, presumably
+  cashfree_pg: 0.0.4+9 #causes firebase to not work, presumably
   flutter_local_notifications:
 
 dev_dependencies:

@@ -8,6 +8,7 @@ import io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService;
 import io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin;
 //import io.flutter.plugins.*;
 import com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin;
+import io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin;
 
 
 import io.flutter.embedding.android.FlutterActivity;
@@ -22,9 +23,9 @@ public class Application extends FlutterApplication implements PluginRegistrantC
 
     @Override
     public void registerWith(PluginRegistry registry) {
+        //Register all the plugins you're gonna use when app is closed/in backround...
         FirebaseMessagingPlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin"));
         FlutterLocalNotificationsPlugin.registerWith(registry.registrarFor("com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin"));
-//        GeneratedPluginRegistrant.registerWith((FlutterEngine) registry);
-//        GeneratedPluginRegistrant.registerWith(registry);
+        SharedPreferencesPlugin.registerWith(registry.registrarFor("io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin"));
     }
 }
