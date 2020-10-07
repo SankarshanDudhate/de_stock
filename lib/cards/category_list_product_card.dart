@@ -23,7 +23,7 @@ class category_list_product_card extends StatelessWidget {
           BoxShadow(
             offset: Offset(0, 4),
             blurRadius: 20,
-            color: Colors.black.withOpacity(.16),
+            color: Color(0xffe5e5e5).withOpacity(1),
           ),
         ],
 

@@ -21,9 +21,9 @@ class searchcardsmall extends StatelessWidget {
         color: Color(0xffffffff),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 2),
-            blurRadius: 20,
-            color: Colors.black.withOpacity(.16),
+            offset: Offset(0, 1),
+            blurRadius: 3,
+            color: Color(0xffE3E6EF).withOpacity(1),
           ),
         ],
       ),

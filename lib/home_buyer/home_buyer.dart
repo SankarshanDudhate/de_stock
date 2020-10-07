@@ -5,6 +5,7 @@ import 'package:destock/cards/product_card_home.dart';
 import 'package:destock/cards/product_card_suggest.dart';
 import 'package:destock/cards/product_near_you.dart';
 import 'package:destock/cards/search_product_card_small.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class homebuyer extends StatefulWidget {
@@ -20,6 +21,7 @@ class _homebuyerState extends State<homebuyer> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, width: 1080, height: 1920);
     return Scaffold(
         body: SingleChildScrollView(
           child: Container(
@@ -33,7 +35,7 @@ class _homebuyerState extends State<homebuyer> {
                       children: <Widget>[
                         SizedBox(height: 70,),
                         header(),
-                        
+
                         SizedBox(height: 40,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +75,7 @@ class _homebuyerState extends State<homebuyer> {
                             ),
                           ],
                         ),
-                        
+
                         SizedBox(height: 40,),
 
                         Padding(
@@ -114,22 +116,6 @@ class _homebuyerState extends State<homebuyer> {
                         SizedBox(height: 20,),
 
                         Image.asset("assets/images/pricing plans banner.png"),
-
-                        SizedBox(height: 20,),
-
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Near your location",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
-                          ),
-                        ),
-
-                        SizedBox(height: 20,),
-
-                        near_you(),
 
                         SizedBox(height: 20,),
 
@@ -313,8 +299,8 @@ class suggest_you extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 offset: Offset(0, 4),
-                blurRadius: 20,
-                color: Colors.black.withOpacity(.1),
+                blurRadius: 15,
+                color: Color(0xff9B9B9B).withOpacity(0.5),
               ),
             ],
           ),

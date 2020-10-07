@@ -43,9 +43,20 @@ class _dashboardState extends State<dashboard> {
                         image: "assets/images/product_like.png",
                       ),
                       SizedBox(height: 20,),
-                      Title_with_no(
-                        title: "Your Products",
-                        number: "(0)",
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+
+                            Text("Your Products",
+                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),),
+                            Text("View all",
+                              style: TextStyle(fontSize: 12, color: Colors.blue),),
+                          ],
+
+                        ),
                       ),
                       SizedBox(height: 20,),
                       product_card(
@@ -70,9 +81,20 @@ class _dashboardState extends State<dashboard> {
                         image: "assets/images/product image.png",
                       ),
                       SizedBox(height: 30,),
-                      Title_with_no(
-                        title: "Latest Enquiries",
-                        number: "(0)",
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+
+                            Text("Latest Enquiries",
+                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),),
+                            Text("View all",
+                              style: TextStyle(fontSize: 12, color: Colors.blue),),
+                          ],
+
+                        ),
                       ),
                       SizedBox(height: 20,),
 
@@ -88,10 +110,21 @@ class _dashboardState extends State<dashboard> {
                       ),
 
 
-                      SizedBox(height: 50,),
-                      Title_with_no(
-                        title: "Upcoming Renewals",
-                        number: "(0)",
+                      SizedBox(height: 30,),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+
+                            Text("Upcoming Renewals",
+                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),),
+                            Text("View all",
+                              style: TextStyle(fontSize: 12, color: Colors.blue),),
+                          ],
+
+                        ),
                       ),
                       SizedBox(height: 20,),
 
@@ -148,9 +181,9 @@ class product_card extends StatelessWidget {
           color: Color(0xffffffff),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 4),
+              offset: Offset(0, 0),
               blurRadius: 40,
-              color: Colors.black.withOpacity(.16),
+              color: Color(0xffe5e5e5).withOpacity(1),
             ),
           ],
         ),
@@ -175,14 +208,10 @@ class product_card extends StatelessWidget {
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),),
                       ),
                       SizedBox(height: 5,),
-                      Row(
-                        children: [
-                          Image.asset("assets/images/ruppee.png", height: 13,),
-                          Text(" "+product_price,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
-                        ],
-                      ),
+
+                      Text("₹ "+product_price,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
                       SizedBox(height: 15,),
                       Container(
                         height: 15,
@@ -286,9 +315,9 @@ class enquiry_card extends StatelessWidget {
         color: Color(0xffffffff),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 4),
+            offset: Offset(0, 0),
             blurRadius: 40,
-            color: Colors.black.withOpacity(.16),
+            color: Color(0xffe5e5e5).withOpacity(1),
           ),
         ],
       ),
@@ -303,9 +332,9 @@ class enquiry_card extends StatelessWidget {
               color: Color(0xffffffff),
               boxShadow: [
                 BoxShadow(
-                  offset: Offset(0, 4),
+                  offset: Offset(0, 2),
                   blurRadius: 10,
-                  color: Colors.black.withOpacity(.16),
+                  color: Color(0xffe5e5e5).withOpacity(1),
                 ),
               ],
             ),
@@ -476,9 +505,9 @@ class renewal_card extends StatelessWidget {
         color: Color(0xffffffff),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 4),
+            offset: Offset(0, 0),
             blurRadius: 40,
-            color: Colors.black.withOpacity(.16),
+            color: Color(0xffe5e5e5).withOpacity(1),
           ),
         ],
       ),
@@ -489,13 +518,7 @@ class renewal_card extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20),),
           color: Color(0xffffffff),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 4),
-              blurRadius: 10,
-              color: Colors.black.withOpacity(.16),
-            ),
-          ],
+
         ),
         child: Column(
           children: [
@@ -666,8 +689,8 @@ class options_like extends StatelessWidget {
           color: Color(0xffffffff),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 4),
-              blurRadius: 20,
+              offset: Offset(0, 2),
+              blurRadius: 10,
               color: Color(0xffE5E5E5).withOpacity(1),
             ),
           ],

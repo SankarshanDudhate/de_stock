@@ -20,8 +20,8 @@ class product_card_home extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             offset: Offset(0, 4),
-            blurRadius: 40,
-            color: Colors.black.withOpacity(.16),
+            blurRadius: 20,
+            color: Color(0xffE3E6EF).withOpacity(1),
           ),
         ],
       ),
@@ -73,8 +73,8 @@ class product_card_trending extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             offset: Offset(0, 4),
-            blurRadius: 40,
-            color: Colors.black.withOpacity(.16),
+            blurRadius: 20,
+            color: Color(0xffE3E6EF).withOpacity(1),
           ),
         ],
       ),

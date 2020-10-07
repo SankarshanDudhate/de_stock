@@ -159,8 +159,8 @@ class product_view_card extends StatelessWidget {
           color: Color(0xffffffff),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 4),
-              blurRadius: 40,
+              offset: Offset(0, 2),
+              blurRadius: 20,
               color: Colors.black.withOpacity(.16),
             ),
           ],
@@ -218,8 +218,8 @@ class options_small extends StatelessWidget {
           color: Color(0xffffffff),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 4),
-              blurRadius: 20,
+              offset: Offset(0, 2),
+              blurRadius: 10,
               color: Color(0xffE5E5E5).withOpacity(1),
             ),
           ],
@@ -256,8 +256,8 @@ class options_large extends StatelessWidget {
           color: Color(0xffffffff),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 4),
-              blurRadius: 20,
+              offset: Offset(0, 2),
+              blurRadius: 10,
               color: Color(0xffE5E5E5).withOpacity(1),
             ),
           ],
