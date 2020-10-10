@@ -10,194 +10,247 @@ import 'package:destock/cards/product_near_you.dart';
 import 'package:destock/cards/search_product_card_small.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class homebuyer extends StatefulWidget {
   homebuyer({Key key, this.title}) : super(key: key);
   final String title;
+
   @override
   _homebuyerState createState() => _homebuyerState();
 }
+
 class _homebuyerState extends State<homebuyer> {
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, width: 1080, height: 1920);
+    ScreenUtil.init(context,
+        designSize: Size(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height));
+
     return Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-
-                    decoration: BoxDecoration(
-                      color: Color(0xF8F9FF),
-                    ),
-
-                    child: Column(
-
-                      children: <Widget>[
-                        SizedBox(height: 70,),
-                        header(),
-                        
-                        SizedBox(height: 40,),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                Image.asset("assets/images/cutting_tool.png",height: 60),
-                                SizedBox(height: 10,),
-                                Text("Cutting Tools",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Image.asset("assets/images/pipes.png",height: 60),
-                                SizedBox(height: 10,),
-                                Text("Pipes",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Image.asset("assets/images/measure.png",height: 60),
-                                SizedBox(height: 10,),
-                                Text("Measuring\nInstruments",textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Image.asset("assets/images/tools.png",height: 60),
-                                SizedBox(height: 10,),
-                                Text("Tools",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),),
-                              ],
-                            ),
-                          ],
-                        ),
-                        
-                        SizedBox(height: 40,),
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Items you viewed recently",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),),
-                          ),
-                        ),
-
-                        SizedBox(height: 20,),
-
-                        recent_view(),
-
-                        SizedBox(height: 30,),
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Suggested for you",
-                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
-                                Text("based on your wishlist",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Color(0xff949494),),)
-                              ],
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(height: 20,),
-
-                        suggest_you(),
-
-                        SizedBox(height: 20,),
-
-                        Image.asset("assets/images/pricing plans banner.png"),
-
-                        SizedBox(height: 20,),
-
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Near your location",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
-                          ),
-                        ),
-
-                        SizedBox(height: 20,),
-
-                        near_you(),
-
-                        SizedBox(height: 20,),
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Latest Products",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
-                          ),
-                        ),
-                        SizedBox(height: 20,),
-
-                        latest(),
-
-                        SizedBox(height: 20,),
-
-                        Image.asset("assets/images/refer a friend banner.png"),
-
-                        SizedBox(height: 20,),
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Trending Now",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
-                          ),
-                        ),
-
-                        SizedBox(height: 20,),
-
-                        trending_now(),
-
-                        SizedBox(height: 20,),
-
-                        additional_category(),
-
-                        SizedBox(height: 20,),
-
-                        Image.asset("assets/images/become a seller.png"),
-
-                        footer(),
-
-                      ],
-                    ),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Color(0xF8F9FF),
+          ),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 70,
+              ),
+              header(),
+              SizedBox(
+                height: 40,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Image.asset("assets/images/cutting_tool.png", height: 60),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Cutting Tools",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                    ],
                   ),
+                  Column(
+                    children: [
+                      Image.asset("assets/images/pipes.png", height: 60),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Pipes",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Image.asset("assets/images/measure.png", height: 60),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Measuring\nInstruments",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Image.asset("assets/images/tools.png", height: 60),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Tools",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Items you viewed recently",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              recent_view(),
+              SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Suggested for you",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black),
+                      ),
+                      Text(
+                        "based on your wishlist",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                          color: Color(0xff949494),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              suggest_you(),
+              SizedBox(
+                height: 20,
+              ),
+              Image.asset("assets/images/pricing plans banner.png"),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Near your location",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              near_you(),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Latest Products",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              latest(),
+              SizedBox(
+                height: 20,
+              ),
+              Image.asset("assets/images/refer a friend banner.png"),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Trending Now",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              trending_now(),
+              SizedBox(
+                height: 20,
+              ),
+              additional_category(),
+              SizedBox(
+                height: 20,
+              ),
+              Image.asset("assets/images/become a seller.png"),
+              footer(),
+            ],
+          ),
         ),
-            );
+      ),
+    );
   }
-
 }
 
 class header extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 10),
         width: double.infinity,
-
-
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -218,9 +271,7 @@ class header extends StatelessWidget {
                 decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(0),
-                      child: SizedBox(
-                          height: 3,
-                          child: Icon(Icons.search)),
+                      child: SizedBox(height: 3, child: Icon(Icons.search)),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
@@ -236,35 +287,15 @@ class header extends StatelessWidget {
               ),
             )
           ],
-        )
-    );
+        ));
   }
 }
 
-
 class recent_view extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                product_card_home(
-                  product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  image: "assets/images/product image.png",
-                ),
-                product_card_home(
-                  product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  image: "assets/images/product image.png",
-                ),
-              ],
-            ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -280,18 +311,29 @@ class recent_view extends StatelessWidget {
             ),
           ],
         ),
-
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            product_card_home(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              product_price: "7000",
+              image: "assets/images/product image.png",
+            ),
+            product_card_home(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              product_price: "7000",
+              image: "assets/images/product image.png",
+            ),
+          ],
+        ),
       ],
     );
-
   }
 }
 
 class suggest_you extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: [
         /*Container(
@@ -306,14 +348,13 @@ class suggest_you extends StatelessWidget {
         Container(
             margin: EdgeInsets.fromLTRB(0, 50, 0, 0),
             child: Image.asset("assets/images/pink bg.png")),
-
         Container(
-
-          margin: EdgeInsets.fromLTRB(30, 0, 30, 25), //from only horizontal to tlrb
+          margin: EdgeInsets.fromLTRB(30, 0, 30, 25),
+          //from only horizontal to tlrb
           padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
           width: double.infinity,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all( Radius.circular(10) ),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             color: Color(0xffffffff),
             boxShadow: [
               BoxShadow(
@@ -325,47 +366,43 @@ class suggest_you extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
-
               product_card_suggest(
-                product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                product_name:
+                    "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                 product_price: "7000",
-                description: "A little brief about the product comes brief about",
+                description:
+                    "A little brief about the product comes brief about",
                 image: "assets/images/product image.png",
               ),
-              Divider(
-                  color: Colors.black
-              ),
+              Divider(color: Colors.black),
               product_card_suggest(
-                product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                product_name:
+                    "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                 product_price: "7000",
-                description: "A little brief about the product comes brief about",
+                description:
+                    "A little brief about the product comes brief about",
                 image: "assets/images/product image.png",
               ),
-              Divider(
-                  color: Colors.black
-              ),
+              Divider(color: Colors.black),
               product_card_suggest(
-                product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                product_name:
+                    "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                 product_price: "7000",
-                description: "A little brief about the product comes brief about",
+                description:
+                    "A little brief about the product comes brief about",
                 image: "assets/images/product image.png",
               ),
-
             ],
           ),
         ),
       ],
     );
-
   }
 }
 
-
 class near_you extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         product_near_you(
@@ -388,15 +425,12 @@ class near_you extends StatelessWidget {
         ),
       ],
     );
-
   }
 }
 
 class latest extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         latest_products(
@@ -422,18 +456,14 @@ class latest extends StatelessWidget {
         ),
       ],
     );
-
   }
 }
 
-    class trending_now extends StatelessWidget {
-
+class trending_now extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
-
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -464,18 +494,14 @@ class latest extends StatelessWidget {
             ),
           ],
         ),
-
       ],
     );
-
   }
 }
 
 class additional_category extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: [
         Container(
@@ -489,8 +515,7 @@ class additional_category extends StatelessWidget {
                   topLeft: Radius.circular(15))),
           child: Container(
             padding: EdgeInsets.all(16),
-            child: Text(
-                'Additional Category',
+            child: Text('Additional Category',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
@@ -500,34 +525,37 @@ class additional_category extends StatelessWidget {
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: 175),
           child: Container(
-            margin: EdgeInsets.only(top: 50,left: 0),
-
+            margin: EdgeInsets.only(top: 50, left: 0),
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 searchcardsmall(
-                  product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                  product_name:
+                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                   product_price: "7000",
                   views: "112",
-                  image: "assets/images/product image.png" ,
+                  image: "assets/images/product image.png",
                 ),
                 searchcardsmall(
-                  product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                  product_name:
+                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                   product_price: "7000",
                   views: "112",
-                  image: "assets/images/product image.png" ,
+                  image: "assets/images/product image.png",
                 ),
                 searchcardsmall(
-                  product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                  product_name:
+                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                   product_price: "7000",
                   views: "112",
-                  image: "assets/images/product image.png" ,
+                  image: "assets/images/product image.png",
                 ),
                 searchcardsmall(
-                  product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                  product_name:
+                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
                   product_price: "7000",
                   views: "112",
-                  image: "assets/images/product image.png" ,
+                  image: "assets/images/product image.png",
                 ),
               ],
             ),
@@ -535,49 +563,92 @@ class additional_category extends StatelessWidget {
         )
       ],
     );
-
   }
 }
 
 class footer extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 60,horizontal: 40),
+        padding: EdgeInsets.symmetric(vertical: 60, horizontal: 40),
         width: double.infinity,
         decoration: BoxDecoration(
-    image: DecorationImage(
-    image: AssetImage("assets/images/footerbg.png"),),
+          image: DecorationImage(
+            image: AssetImage("assets/images/footerbg.png"),
+          ),
           color: Color(0xffFFEEF1),
-
         ),
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("About us",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Pricing Plans",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("FAQs",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Help",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Feedback",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Terms & Conditions",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
-            SizedBox(height: 10,),
-            Text("Refer a friend",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xff792B3B)),),
+            Text(
+              "About us",
+              style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff792B3B)),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Pricing Plans",
+              style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff792B3B)),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "FAQs",
+              style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff792B3B)),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Help",
+              style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff792B3B)),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Feedback",
+              style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff792B3B)),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Terms & Conditions",
+              style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff792B3B)),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Refer a friend",
+              style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff792B3B)),
+            ),
           ],
-        )
-    );
+        ));
   }
 }

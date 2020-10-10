@@ -1,3 +1,4 @@
+import 'package:destock/profile/edit_company_details.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/utils/bg_clip.dart';
 import 'package:destock/utils/profile_header.dart';
@@ -225,12 +226,18 @@ class Profile extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(8.0),
-                          width: 200,
-                          child: Text(
-                            "update",
-                            style: TextStyle(color: Colors.grey),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => EditCompanyDetails()));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            width: 200,
+                            child: Text(
+                              "update",
+                              style: TextStyle(color: Colors.blue),
+                            ),
                           ),
                         ),
                       ],
@@ -246,12 +253,18 @@ class Profile extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(8.0),
-                          width: 200,
-                          child: Text(
-                            "update",
-                            style: TextStyle(color: Colors.grey),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => EditCompanyDetails()));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            width: 200,
+                            child: Text(
+                              "update",
+                              style: TextStyle(color: Colors.blue),
+                            ),
                           ),
                         ),
                       ],

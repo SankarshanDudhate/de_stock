@@ -48,6 +48,7 @@ dependencies:
   uni_links:
   cashfree_pg: 0.0.4+9 #causes firebase to not work, presumably
   flutter_local_notifications:
+  flutter_screenutil: ^3.1.0
 
 dev_dependencies:
 
