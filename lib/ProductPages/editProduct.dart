@@ -20,7 +20,9 @@ class _editProductState extends State<editProduct> {
   String productMaterial = 'Cast iron';
   String pickupLocation = '103-104 Pithampur main road near indore, MP';
   String selectedUnit;
-  String newSpec; 
+  String newSpec;
+  bool availablity = true;
+  bool disclosePrice = true;
 
   var _selectUnit = {
     "kg",
@@ -379,7 +381,70 @@ List<Map<String,String>> _specs= new List();
                                     ],
                                   ),
                                   SizedBox(height: 10.0,),
-                                  //Switch > Available / Out of Stock
+                                  Row(
+                                    children: [
+                                      Container(
+                                        //width: 220,
+                                        //margin: EdgeInsets.symmetric(horizontal:40),
+                                        padding: EdgeInsets.symmetric(horizontal:2, vertical:2),
+                                        decoration: BoxDecoration(
+                                          border: Border.all( 
+                                            color : Color(0xFFE6E6E6),
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(60)
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState((){
+                                                  this.availablity = true;
+                                                });
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(horizontal:20, vertical:10),
+                                                decoration: BoxDecoration(
+                                                  color : availablity == true ? Color(0xFF4B69FF) : Color(0xFFFFFFFF),
+                                                  // border: Border.all( 
+                                                  //   color : Color(0xFFFFFF),
+                                                  // ),
+                                                  borderRadius: BorderRadius.all(
+                                                    Radius.circular(30)
+                                                  ),
+                                                ),
+                                                child: Text('Available', style: availablity == true ? TextStyle( fontSize : 20, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF)) : TextStyle( fontSize: 18 , color: Color(0xFF979797)))
+                                                ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState((){
+                                                  this.availablity = false;
+                                                });
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(horizontal:20, vertical:10),
+                                                decoration: BoxDecoration(
+                                                  color : availablity == false ? Color(0xFF000000) : Color(0xFFFFFFFF),
+                                                  // border: Border.all( 
+                                                  //   color : Color(0xFFFFFF),
+                                                  // ),
+                                                  borderRadius: BorderRadius.all(
+                                                    Radius.circular(30)
+                                                  ),
+                                                ),
+                                                child: Text('Out of Stock', style: availablity == false ? TextStyle( fontSize : 20, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF)) : TextStyle( fontSize: 18 , color: Color(0xFF979797)))
+                                                
+                                                ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                        //SizedBox(width:10),
                                   SizedBox(height: 30.0,),
                                   Row(
                                     children: [
@@ -442,9 +507,69 @@ List<Map<String,String>> _specs= new List();
                                 _buildProductPrice(),
                                 SizedBox(height: 30.0,),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text('Disclose price to customer?', style: TextStyle(fontSize:16,fontWeight:FontWeight.bold),),
-                                    //Switch > yes / no
+                                    Container(
+                                      //width: 220,
+                                      //margin: EdgeInsets.symmetric(horizontal:2),
+                                      padding: EdgeInsets.symmetric(horizontal:2, vertical:2),
+                                      decoration: BoxDecoration(
+                                        border: Border.all( 
+                                          color : Color(0xFFE6E6E6),
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(60)
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState((){
+                                                this.disclosePrice = false;
+                                              });
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal:20, vertical:10),
+                                              decoration: BoxDecoration(
+                                                color : disclosePrice == false ? Color(0xFF000000) : Color(0xFFFFFFFF),
+                                                // border: Border.all( 
+                                                //   color : Color(0xFFFFFF),
+                                                // ),
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(30)
+                                                ),
+                                              ),
+                                              child: Text('NO', style: disclosePrice == false ? TextStyle( fontSize : 16, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF)) : TextStyle( fontSize: 14 , color: Color(0xFFCBCBCB)))
+                                              
+                                              ),
+                                          ),
+                                          //SizedBox(width:10),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState((){
+                                                this.disclosePrice = true;
+                                              });
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal:20, vertical:10),
+                                              decoration: BoxDecoration(
+                                                color : disclosePrice == true ? Color(0xFF4B69FF) : Color(0xFFFFFFFF),
+                                                // border: Border.all( 
+                                                //   color : Color(0xFFFFFF),
+                                                // ),
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(30)
+                                                ),
+                                              ),
+                                              child: Text('YES', style: disclosePrice == true ? TextStyle( fontSize : 16, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF)) : TextStyle( fontSize: 14 , color: Color(0xFFCBCBCB)))
+                                              ),
+                                          )
+                                        ],
+                                      ),
+                                  ),
                                   ],
                                 ),
                               ],

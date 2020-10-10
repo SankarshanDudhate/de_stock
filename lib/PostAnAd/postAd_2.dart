@@ -256,19 +256,19 @@ class _PostAd2State extends State<PostAd2> {
           SizedBox(height:50),
           Center(
               child: Text(
-                "2 Out of 4",
+                "3 Out of 5",
                 style: TextStyle(
                     color: Color(0xff979797),
                     fontWeight: FontWeight.w400,
                     fontSize: 18),
               ),
             ),
-            SvgPicture.asset("assets/icons/progress_step_2.svg"),
+            SvgPicture.asset("assets/icons/progress_step_3.svg"),
             SizedBox(height:20),
           Row(
           children: [
         Text(
-          "Step 2",
+          "Step 3",
           style: TextStyle(
               color: Color(0xFF4B69FF),
               fontSize: 20.0,

@@ -92,15 +92,13 @@ class _manageProductsState extends State<manageProducts> {
 
   Widget searchBox() {
     return Container(
-      //height: double.infinity,
-      //padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(30),),
           color: Color(0xffffffff),
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 4),
-              blurRadius: 10,
+              blurRadius: 5,
               color: Colors.black.withOpacity(.16),
             ),
           ],
@@ -113,13 +111,7 @@ class _manageProductsState extends State<manageProducts> {
           hintStyle: TextStyle(
           color: Colors.grey[400]
         ),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(60),),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                borderSide: BorderSide(color: Colors.grey),
-                //color:Colors.grey,
-              ),
+          border: InputBorder.none,
           suffixIcon: Icon(Icons.search,color: Colors.black87,),
         ),
         controller: searchController,

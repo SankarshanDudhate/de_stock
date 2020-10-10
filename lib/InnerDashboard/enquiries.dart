@@ -45,7 +45,7 @@ class _EnquiriesState extends State<Enquiries> {
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 4),
-              blurRadius: 10,
+              blurRadius: 5,
               color: Colors.black.withOpacity(.16),
             ),
           ],
@@ -58,13 +58,7 @@ class _EnquiriesState extends State<Enquiries> {
           hintStyle: TextStyle(
           color: Colors.grey[400]
         ),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(60),),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                borderSide: BorderSide(color: Colors.grey),
-                //color:Colors.grey,
-              ),
+          border: InputBorder.none,
           suffixIcon: Icon(Icons.search,color: Colors.black87,),
         ),
         controller: searchController,

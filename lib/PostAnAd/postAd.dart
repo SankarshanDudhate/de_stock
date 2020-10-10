@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:destock/PostAnAd/postAd_Category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -318,7 +319,7 @@ List<Map<String,String>> _specs= new List();
                     SizedBox(width:20),
                     Center(
                         child: Text(
-                          "(1 Out of 4)",
+                          "(1 Out of 5)",
                           style: TextStyle(
                               color: Color(0xff979797),
                               fontWeight: FontWeight.w400,
@@ -327,7 +328,7 @@ List<Map<String,String>> _specs= new List();
                       ),
                   ],
                 ),
-                  SvgPicture.asset("assets/icons/progress_step_2.svg"),
+                  SvgPicture.asset("assets/icons/progress_step_1.svg"),
               ],
             ),
           ),
@@ -660,7 +661,7 @@ List<Map<String,String>> _specs= new List();
                               };
                               await prefs.setString("postAnAdData", jsonEncode(adData));
                               Navigator.push(context, new MaterialPageRoute(
-                                  builder: (BuildContext context) => new PostAd2() ),
+                                  builder: (BuildContext context) => new PostAdCategory() ),
                               );
                             },
                             child: Container(
