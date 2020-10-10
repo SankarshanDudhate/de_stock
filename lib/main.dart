@@ -12,6 +12,8 @@ import 'package:destock/wishlist/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'FAQ.dart';
 import 'Help.dart';
 import 'profile/edit_company_details.dart';
@@ -33,6 +35,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // ScreenUtil.init(context, designSize: Size(392, 850));
     return MaterialApp(
+      builder: (context, child) {
+        return ResponsiveWrapper.builder(
+          BouncingScrollWrapper.builder(context, child),
+          maxWidth: 1200,
+          minWidth: 450,
+          defaultScale: true,
+          breakpoints: [
+            ResponsiveBreakpoint.resize(450, name: MOBILE),
+            ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+            ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+            ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+          ],
+        );
+      },
       title: 'Material App',
       // home: EditPersonalProfile(),
       // home: EditCompanyDetails(),
@@ -75,9 +92,9 @@ class MyApp extends StatelessWidget {
       // Completed with backend
       // home: ChangePassword(),
       // home: PaymentDetails(),
-      home: PostAd4(),
+      // home: PostAd4(),
       // home: SearchHome(),
-      // home: Wishlist(),
+      home: Wishlist(),
       // home: HomeBuyer(),
       // home: Help(),
       // home: FAQ(),
