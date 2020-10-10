@@ -22,145 +22,167 @@ class EditPersonalProfile extends StatelessWidget {
     final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: ProfileHeader(),
-      body: ListView(children: [
-        Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 80),
+            child: BgClip(
+              height: 450,
+            ),
+          ),
+          ListView(
+            padding: EdgeInsets.only(bottom: 16),
             children: [
-              SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Edit Personal Details",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Container(
-                child: Stack(
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(height: 30),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24.0),
-                      child: BgClip(
-                        height: 450,
+                      padding: const EdgeInsets.all(8.0),
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Edit Personal Details ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black.withOpacity(0.5),
+                              ),
+                            ),
+                            TextSpan(
+                                text: " ( 1/3 ) ",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 10,
+                                ))
+                          ],
+                        ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: RaisedContainer(height: 450.0),
-                    ),
                     Container(
-                        margin: EdgeInsets.all(8.0),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 30, horizontal: 24),
-                        height: 450,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InputCard(
-                              title: "NAME*",
-                              controller: _nameController,
-                              placeholder: "Raunak Jainv",
-                              subtitle: "Enter your full name",
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            InputCard(
-                              title: "E-MAIL ID*",
-                              controller: _emailController,
-                              placeholder: "mittal@mittalcorps.com",
-                              subtitle: "Enter your email address",
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            InputCard(
-                              title: "PHONE NUMBER*",
-                              controller: _phoneController,
-                              placeholder: "89898 89898",
-                              subtitle:
-                                  "Enter your phone number as on this device",
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        ))
+                      padding: const EdgeInsets.all(12.0),
+                      child: RaisedContainer(
+                        // height: 450.0,
+                        child: Container(
+                          margin: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 30, horizontal: 24),
+                          height: 450,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              InputCard(
+                                title: "NAME",
+                                controller: _nameController,
+                                placeholder: "Raunak Jainv",
+                                subtitle: "Enter your full name",
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              InputCard(
+                                title: "E-MAIL ID",
+                                controller: _emailController,
+                                placeholder: "mittal@mittalcorps.com",
+                                subtitle: "Enter your email address",
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              InputCard(
+                                title: "PHONE NUMBER",
+                                controller: _phoneController,
+                                placeholder: "89898 89898",
+                                subtitle:
+                                    "Enter your phone number as on this device",
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FlatButton(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18)),
+                          onPressed: () {},
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                                color: Color(0xffD84764),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                        ),
+                        FlatButton(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                          color: Color(0xffD84764),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18)),
+    onPressed: () async {
+    if (_formKey.currentState.validate()) {
+    print(_nameController.value.text);
+    print(_emailController.value.text);
+    print(_phoneController.value.text);
+
+    String name = _nameController.value.text;
+    String email = _emailController.value.text;
+    String phoneNo = _phoneController.value.text;
+
+    if( !validateName(name) ) {
+    // print("Please enter a valid name!");
+    Get.snackbar("Invalid details", "Please enter a valid name!");
+    return;
+    }
+    if( !validateEmail(email) ) {
+    // #print("");
+    Get.snackbar("Invalid details", "Please enter a valid email!");
+    return;
+    }
+    if( !validatePhoneNo(phoneNo) ) {
+    Get.snackbar("Invalid details", "Please enter a valid phone number!");
+    return;
+    }
+
+    Map<String, dynamic> profileData = {};
+    profileData["user_name"] = name;
+    profileData["user_email"] = email;
+    profileData["user_phoneNo"] = phoneNo;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("profileEditDetails", jsonEncode(profileData));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditCompanyDetails()));
+    }
+    },
+                          child: Text(
+                            'Update',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)),
-                    onPressed: () {},
-                    child: Text(
-                      'Cancel',
-                      style: TextStyle(
-                          color: Color(0xffD84764),
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                    color: Color(0xffD84764),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)),
-                    onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        print(_nameController.value.text);
-                        print(_emailController.value.text);
-                        print(_phoneController.value.text);
-
-                        String name = _nameController.value.text;
-                        String email = _emailController.value.text;
-                        String phoneNo = _phoneController.value.text;
-
-                        if( !validateName(name) ) {
-                          // print("Please enter a valid name!");
-                          Get.snackbar("Invalid details", "Please enter a valid name!");
-                          return;
-                        }
-                        if( !validateEmail(email) ) {
-                          // #print("");
-                          Get.snackbar("Invalid details", "Please enter a valid email!");
-                          return;
-                        }
-                        if( !validatePhoneNo(phoneNo) ) {
-                          Get.snackbar("Invalid details", "Please enter a valid phone number!");
-                          return;
-                        }
-
-                        Map<String, dynamic> profileData = {};
-                        profileData["user_name"] = name;
-                        profileData["user_email"] = email;
-                        profileData["user_phoneNo"] = phoneNo;
-
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.setString("profileEditDetails", jsonEncode(profileData));
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditCompanyDetails()));
-                      }
-                    },
-                    child: Text(
-                      'Update',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

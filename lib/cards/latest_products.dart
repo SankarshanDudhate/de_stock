@@ -8,7 +8,13 @@ class latest_products extends StatelessWidget {
 
   final String image;
 
-  const latest_products({Key key, this.description,this.product_name,this.product_price,this.image,this.color })
+  const latest_products(
+      {Key key,
+      this.description,
+      this.product_name,
+      this.product_price,
+      this.image,
+      this.color})
       : super(key: key);
 
   @override
@@ -18,48 +24,71 @@ class latest_products extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all( Radius.circular(10) ),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         color: this.color,
-
       ),
-
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(image, height: 110,),
+          Image.asset(
+            image,
+            height: 110,
+          ),
           Container(
-            width: 190,
-            padding: const EdgeInsets.only(left:10.0),
+            // width: 22,
+            padding: const EdgeInsets.only(left: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 120,
-                      child: Text(product_name,
+                      width: 172,
+                      height: 28,
+                      child: Text(
+                        product_name,
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.black),),
+                        style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black),
+                      ),
                     ),
-
-                    Icon(Icons.favorite_border,color: Colors.black,) ,
+                    Icon(
+                      Icons.favorite_border,
+                      color: Colors.black,
+                    ),
                   ],
                 ),
-                SizedBox(height: 10,),
-                Text("Price ₹ "+product_price,
-                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
-
-                SizedBox(height: 10,),
-
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Price ₹ " + product_price,
+                  style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff6F6F6F)),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 Container(
                   width: 180,
-                  child: Text(description,
+                  child: Text(
+                    description,
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xff6F6F6F)),),
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff6F6F6F)),
+                  ),
                 ),
               ],
             ),

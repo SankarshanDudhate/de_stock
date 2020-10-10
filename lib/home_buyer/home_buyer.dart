@@ -1,4 +1,7 @@
 import 'package:destock/cards/latest_products.dart';
+import 'package:destock/models/RecentProducts.dart';
+import 'package:destock/models/SuggestedProducts.dart';
+import 'package:destock/models/TrendingProducts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

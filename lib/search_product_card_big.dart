@@ -26,8 +26,8 @@ class ProductSearchCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              spreadRadius: 7,
-              blurRadius: 5,
+              spreadRadius: 5,
+              blurRadius: 2,
               color: Colors.grey.withOpacity(0.2),
             )
           ],
@@ -113,6 +113,7 @@ class ProductSearchCard extends StatelessWidget {
                 child: Text(
                   this.description,
                   style: TextStyle(fontSize: 12, color: Colors.grey),
+                  maxLines: 2,
                 ),
               ),
             ],

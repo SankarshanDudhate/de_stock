@@ -86,6 +86,15 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             color: Colors.black,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.add,
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          )
+        ],
         backgroundColor: Color(0xffFAFAFA),
         elevation: 3,
       ),

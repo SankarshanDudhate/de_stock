@@ -157,8 +157,8 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
           key: scaffoldKey,
           // body: PaymentTest(),
-          // homebuyer()
-          body: EditPersonalProfile(),
+          body: homebuyer()
+          // body: EditPersonalProfile(),
           // body: EditCompanyDetails(),
           // body: EditContactPersonDetails(),
           // body: Profile(type: "buyer"),
@@ -211,10 +211,10 @@ class _MyAppState extends State<MyApp> {
     //This code shows notification
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
         0, 'You have a new notification', notificationBody, platformChannelSpecifics,
         payload: message["data"]["user_type"]);
@@ -229,7 +229,7 @@ class _MyAppState extends State<MyApp> {
       onDidReceiveLocalNotification: iOSNotificationHandler,
     );
     var initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: androidNotificationHandler);
   }

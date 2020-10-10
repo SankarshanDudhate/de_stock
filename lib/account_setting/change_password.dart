@@ -179,7 +179,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ),
                             ),
                             SizedBox(
-                              height: 100,
+                              height: 80,
                             ),
                             FlatButton(
                                 color: Color(0xffFC0151),

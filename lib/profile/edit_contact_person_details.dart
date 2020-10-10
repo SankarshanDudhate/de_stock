@@ -41,9 +41,24 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "Contact Person details",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Contact Person Details ",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                  ),
+                  TextSpan(
+                      text: " ( 3/3 ) ",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 10,
+                      ))
+                ],
+              ),
             ),
           ),
           Form(
@@ -74,7 +89,7 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InputCard(
-                              title: "NAME*",
+                              title: "NAME",
                               controller: _nameController,
                               placeholder: "Atul Mittal",
                               subtitle:
@@ -84,7 +99,7 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                               height: 8,
                             ),
                             InputCard(
-                              title: "E-MAIL ID*",
+                              title: "E-MAIL ID",
                               controller: _emailController,
                               placeholder: "mittal@mittalcorp.com",
                               subtitle:
@@ -94,7 +109,7 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                               height: 8,
                             ),
                             InputCard(
-                              title: "PHONE NUMBER*",
+                              title: "PHONE NUMBER",
                               controller: _phoneController,
                               placeholder: "89898 89898",
                               subtitle:
@@ -125,7 +140,8 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                         'Cancel',
                         style: TextStyle(
                             color: Color(0xffD84764),
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
                       ),
                     ),
                     FlatButton(
@@ -184,7 +200,7 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                           var resp = await http.post(url, body: profileData);
                           print(resp.body);
                           if (jsonDecode(resp.body)["Status"] == "Success")
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
                                 builder: (context) => Profile()));
                           else
                             Get.snackbar("Error!", "Could not update profile... Please try again later!");
@@ -192,7 +208,7 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                       },
                       child: Text(
                         'Update',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),
                   ],

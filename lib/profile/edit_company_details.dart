@@ -102,9 +102,24 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Edit Company details",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Edit Company Details ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                        ),
+                        TextSpan(
+                            text: " ( 2/3 ) ",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 10,
+                            ))
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -125,7 +140,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 InputCard(
-                                  title: "COMPANY NAME*",
+                                  title: "COMPANY NAME",
                                   controller: _companyNameController,
                                   placeholder:
                                       "Mittal steel corp near indore pvt ltd",
@@ -136,7 +151,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                                   height: 24,
                                 ),
                                 InputCard(
-                                  title: "PAN NUMBER*",
+                                  title: "PAN NUMBER",
                                   controller: _panNumberController,
                                   placeholder: "ABCDE 1234F",
                                   subtitle: "Enter company’s PAN number",
@@ -145,7 +160,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                                   height: 32,
                                 ),
                                 InputCard(
-                                  title: "GST NUMBER*",
+                                  title: "GST NUMBER",
                                   controller: _gstNumberController,
                                   placeholder: "eg. 22 AAAAA 000AA 1Z5",
                                 ),
@@ -153,7 +168,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                                   height: 32,
                                 ),
                                 InputCard(
-                                  title: "FACTORY ADDRESS*",
+                                  title: "FACTORY ADDRESS",
                                   controller: _factoryAddressController,
                                   placeholder:
                                       "Plot No. - 123, Sector – III, Industrial Area, Pithampur, Dist.: Dhar – 454 775, Madhya Pradesh",
@@ -165,7 +180,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                                   height: 32,
                                 ),
                                 Container(
-                                  child: Text("Set your location on map*"),
+                                  child: Text("Set your location on map"),
                                 ),
                                 Container(
                                   height: 300,
@@ -219,7 +234,8 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                         'Cancel',
                         style: TextStyle(
                             color: Color(0xffD84764),
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
                       ),
                     ),
                     FlatButton(
@@ -269,7 +285,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                       },
                       child: Text(
                         'Update',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),
                   ],

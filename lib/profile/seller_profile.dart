@@ -1,13 +1,26 @@
-import 'package:destock/profile/edit_company_details.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/utils/bg_clip.dart';
-import 'package:destock/utils/profile_header.dart';
 import 'package:destock/utils/raised_container.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class Profile extends StatelessWidget {
-  Profile({this.type});
-  String name = "Sankarshan Dudhate";
-  final String type;
+class ProfileSeller extends StatelessWidget {
+  ProfileSeller({
+    this.type,
+  });
+  String type;
+  String profileName;
+  String profileEmail;
+  String profilePhone;
+  String companyName;
+  String companyPan;
+  String companyGst;
+  String companyFactoryAddress;
+  String officeAddress;
+  String whatYouSell;
+  String contactPersonName;
+  String contactPersonEmail;
+  String contactPersonPhone;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,24 +37,49 @@ class Profile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Hello ' + this.name.split(' ')[0]),
-                    SizedBox(
-                      height: 8,
+                    Text('Hello ' + this.profileName.split(' ')[0]),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.home,
+                          size: 14,
+                        ),
+                        Container(
+                          width: 200,
+                          padding: EdgeInsets.all(4),
+                          child: Text(
+                            this.companyName,
+                            maxLines: 3,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    Text(
-                      "Welcome to your profile",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 2,
-                    ),
-                    Text(
-                      "Become a seller and start de-stocking!",
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black),
-                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          size: 14,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(4),
+                          width: 200,
+                          child: Text(
+                            this.companyFactoryAddress,
+                            maxLines: 3,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                            ),
+                          ),
+                        )
+                      ],
+                    )
                   ],
                 ),
                 IconButton(
@@ -78,7 +116,7 @@ class Profile extends StatelessWidget {
             )
           ],
         ),
-        toolbarHeight: 150,
+        toolbarHeight: 200,
       ),
       body: Stack(
         children: [
@@ -145,21 +183,21 @@ class Profile extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "Ajay Mittal",
+                              this.profileName,
                               style: TextStyle(color: Colors.grey),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "mittal@mittalcorp.com",
+                              this.profileEmail,
                               style: TextStyle(color: Colors.grey),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "89898 89898",
+                              this.profilePhone,
                               style: TextStyle(color: Colors.grey),
                             ),
                           ),
@@ -169,11 +207,6 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 48),
-              color: Colors.amber,
-              height: 150,
             ),
             Padding(
               padding:
@@ -210,7 +243,7 @@ class Profile extends StatelessWidget {
                           padding: EdgeInsets.all(8.0),
                           width: 200,
                           child: Text(
-                            "Mittal steel corp near indore pvt ltd",
+                            this.companyName,
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
@@ -231,7 +264,7 @@ class Profile extends StatelessWidget {
                           padding: EdgeInsets.all(8.0),
                           width: 200,
                           child: Text(
-                            "GHTRS 852K",
+                            this.companyPan,
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
@@ -252,7 +285,7 @@ class Profile extends StatelessWidget {
                           padding: EdgeInsets.all(8.0),
                           width: 200,
                           child: Text(
-                            "22 AAAAA 000AA 1Z7",
+                            this.companyGst,
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
@@ -273,7 +306,7 @@ class Profile extends StatelessWidget {
                           padding: EdgeInsets.all(8.0),
                           width: 200,
                           child: Text(
-                            "Plot No. - 123, Sector – III, Industrial Area, Pithampur, Dist.: Dhar – 454 775, Madhya Pradesh",
+                            this.companyFactoryAddress,
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
@@ -283,6 +316,11 @@ class Profile extends StatelessWidget {
                       margin: EdgeInsets.all(8.0),
                       color: Colors.red,
                       height: 200,
+                      child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(45.521563, -122.677433),
+                        ),
+                      ),
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,18 +333,12 @@ class Profile extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => EditCompanyDetails()));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(8.0),
-                            width: 200,
-                            child: Text(
-                              "update",
-                              style: TextStyle(color: Colors.blue),
-                            ),
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          width: 200,
+                          child: Text(
+                            this.officeAddress,
+                            style: TextStyle(color: Colors.grey),
                           ),
                         ),
                       ],
@@ -322,18 +354,12 @@ class Profile extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => EditCompanyDetails()));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(8.0),
-                            width: 200,
-                            child: Text(
-                              "update",
-                              style: TextStyle(color: Colors.blue),
-                            ),
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          width: 200,
+                          child: Text(
+                            this.whatYouSell,
+                            style: TextStyle(color: Colors.grey),
                           ),
                         ),
                       ],
@@ -404,21 +430,21 @@ class Profile extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "Ajay Mittal",
+                              this.contactPersonName,
                               style: TextStyle(color: Colors.grey),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "mittal@mittalcorp.com",
+                              this.contactPersonEmail,
                               style: TextStyle(color: Colors.grey),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "89898 89898",
+                              this.contactPersonPhone,
                               style: TextStyle(color: Colors.grey),
                             ),
                           ),
