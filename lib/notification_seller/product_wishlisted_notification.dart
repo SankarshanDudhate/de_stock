@@ -1,3 +1,4 @@
+import 'package:destock/CONSTANTS.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -81,7 +82,7 @@ class _product_wishlistedState extends State<product_wishlisted> {
                           maxLines: 2,
                           style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300, color: Color(0xff6f6f6f)),),
                       ),
-                      Image.asset(widget.product_image,height: 30,),
+                      Image.network(localhostAddress+widget.product_image,height: 30,),
                     ],
                   ),
                 ),

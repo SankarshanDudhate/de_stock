@@ -23,3 +23,22 @@ bool validatePhoneNo(String phoneNo) {
   else if( !phoneNoRegExp.hasMatch(phoneNo) ) return false;
   return true;
 }
+
+bool validatePan(String panNo) {
+  panNo = panNo.trim().toUpperCase();
+  RegExp panRegExp = RegExp(r"^[A-Z]{5}[0-9]{4}[A-Z]{1}$");
+  if( panNo == '' ) return false;
+  else if( panNo.indexOf(' ') >= 0 ) return false;
+  else if( !panRegExp.hasMatch(panNo) ) return false;
+  return true;
+}
+
+bool validateGST(String gstNo) {
+  gstNo = gstNo.trim().toUpperCase();
+  // RegExp gstRegExp = RegExp(r"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{1}[Z][A-Z0-9]{1}$");
+  RegExp gstRegExp = RegExp(r"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$");
+  if( gstNo == '' ) return false;
+  else if( gstNo.indexOf(' ') >= 0 ) return false;
+  else if( !gstRegExp.hasMatch(gstNo) ) return false;
+  return true;
+}

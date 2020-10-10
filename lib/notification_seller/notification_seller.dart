@@ -200,12 +200,20 @@ class _notification_sellerState extends State<notification_seller> {
     if( modifiledFlag && notifIndex == notifList.length-1 )
       saveNotificationReadStatus();
 
+    if(data["data"]["type"] == "enquiry")
       return request_quote_notification(
         product_name: data["data"]["product_name"],
         time: diffString, //time diff
         buyer_image: data["data"]["user_image_link"],
         product_image: data["data"]["product_image_link"],
         buyer_name: data["data"]["user_name"],
+        is_read: is_read,
+      );
+    else
+      return product_wishlisted(
+        product_name: data["data"]["product_name"],
+        wishlist_count: data["data"]["wishlisted_count"],
+        product_image: data["data"]["product_image_link"],
         is_read: is_read,
       );
   }

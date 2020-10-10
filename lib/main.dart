@@ -9,6 +9,7 @@ import 'package:destock/account_setting/account_setting.dart';
 import 'package:destock/account_setting/change_password.dart';
 import 'package:destock/account_setting/confirm_deactivate_account.dart';
 import 'package:destock/account_setting/payment_details.dart';
+import 'package:destock/notification_buyer/notification_buyer.dart';
 import 'package:destock/notification_seller/notification_seller.dart';
 import 'package:destock/payment/payment.dart';
 import 'package:destock/post_ad_4.dart';
@@ -33,12 +34,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter/services.dart' show PlatformException;
 
-//No longer needed as static function works now
-// Future<dynamic> backgroundMessageHandler(Map<String, dynamic> message) {
-//   log(message["data"]["type"]);
-//   // Get.snackbar("OnLaunch", message["data"]["type"], duration: Duration(seconds: 10));
-// }
-
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() => runApp(MyApp());
@@ -55,13 +50,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     firebaseMessagingInit();
@@ -100,6 +93,8 @@ class _MyAppState extends State<MyApp> {
     fbm.requestNotificationPermissions();
     String firebaseToken = await fbm.getToken();
     // log(firebaseToken);
+    //TODO handle token refresh
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString("firebaseDeviceToken") == null)
       prefs.setString("firebaseDeviceToken", firebaseToken);
@@ -108,32 +103,45 @@ class _MyAppState extends State<MyApp> {
     fbm.configure(
       onMessage: (Map<String, dynamic> message) async {
         log("onMessage: $message");
-        // Flushbar(message: "OnMessage:", duration: Duration(seconds: 5),)..show(scaffoldKey.currentContext);
         await saveNotification(message);
+
+        String notificationBody = '';
+
+        if (message["data"]["type"] == "enquiry") notificationBody = "You have a new enquiry";
+        else if(message["data"]["type"] == "wishlisted_count") notificationBody = "Your product was wishlisted "+message["wishlisted_count"]+" times";
+        else if(message["data"]["type"] == "views_count") notificationBody = "Your product was wishlisted "+message["views_count"]+" times";
+        else if(message["data"]["type"] == "reply") notificationBody = "You have a reply to your quotation enquiry";
+
         Get.snackbar(
-            "New notification", "You have a new "+message["data"]["type"],
-            duration: Duration(seconds: 6),
-            onTap: (GetBar snackbar) {
+          "New notification", notificationBody,
+          duration: Duration(seconds: 6),
+          onTap: (GetBar snackbar) {
+            if (message["data"]["user_type"] == "seller") {
+              log('notification payload: ' + message["data"]["user_type"]);
               navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
+            } else if (message["data"]["user_type"] == "buyer") {
+              log('notification payload: ' + message["data"]["user_type"]);
+              navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_buyer()));
             }
+          }
         );
       },
       // onBackgroundMessage: myBackgroundMessageHandler,
-      onLaunch: (Map<String, dynamic> message) async {
-        log("onLaunch: $message");
-        Get.snackbar("OnLaunch", message["data"]["type"], duration: Duration(seconds: 10));
-        // Flushbar(message: "OnLaunch:",)..show(scaffoldKey.currentContext);
-        saveNotification(message);
-        // navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
-      },
+      // onLaunch: (Map<String, dynamic> message) async {
+      //   log("onLaunch: $message");
+      //   Get.snackbar("OnLaunch", message["data"]["type"], duration: Duration(seconds: 10));
+      //   // Flushbar(message: "OnLaunch:",)..show(scaffoldKey.currentContext);
+      //   saveNotification(message);
+      //   // navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
+      // },
       onBackgroundMessage: myBackgroundMessageHandler,
-      onResume: (Map<String, dynamic> message) async {
-        log("onResume: $message");
-        Get.snackbar("OnResume", message["data"]["type"], duration: Duration(seconds: 10));
-        // Flushbar(message: "OnResume: $message",)..show(scaffoldKey.currentContext);
-        saveNotification(message);
-        // navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
-      },
+      // onResume: (Map<String, dynamic> message) async {
+      //   log("onResume: $message");
+      //   Get.snackbar("OnResume", message["data"]["type"], duration: Duration(seconds: 10));
+      //   // Flushbar(message: "OnResume: $message",)..show(scaffoldKey.currentContext);
+      //   saveNotification(message);
+      //   // navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
+      // },
     );
   }
 
@@ -148,11 +156,11 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
           key: scaffoldKey,
-          body: PaymentTest(),
+          // body: PaymentTest(),
           // homebuyer()
-          // body: EditPersonalProfile(),
+          body: EditPersonalProfile(),
           // body: EditCompanyDetails(),
-          // body: ContactPersonDetails(),
+          // body: EditContactPersonDetails(),
           // body: Profile(type: "buyer"),
           // body: AccountSettings(),
           // body: ChangePassword(),
@@ -190,8 +198,15 @@ class _MyAppState extends State<MyApp> {
 
   //hot restart after writing static functions otherwise they won't work
   static Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
-    print('AppPush myBackgroundMessageHandler : '+message["data"]["user_name"]);
+    // print('AppPush myBackgroundMessageHandler : '+message["data"]["user_type"]);
     saveNotification(message);
+
+    String notificationBody = '';
+
+    if (message["data"]["type"] == "enquiry") notificationBody = "You have a new enquiry";
+    else if(message["data"]["type"] == "wishlisted_count") notificationBody = "Your product was wishlisted "+message["wishlisted_count"]+" times";
+    else if(message["data"]["type"] == "views_count") notificationBody = "Your product was wishlisted "+message["views_count"]+" times";
+    else if(message["data"]["type"] == "reply") notificationBody = "You have a reply to your quotation enquiry";
 
     //This code shows notification
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
@@ -201,9 +216,8 @@ class _MyAppState extends State<MyApp> {
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-        0, 'plain title', 'plain body', platformChannelSpecifics,
+        0, 'You have a new notification', notificationBody, platformChannelSpecifics,
         payload: message["data"]["user_type"]);
-
 
   }
 
@@ -212,39 +226,32 @@ class _MyAppState extends State<MyApp> {
 // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = IOSInitializationSettings(
-      onDidReceiveLocalNotification: localNotificationHandler,
+      onDidReceiveLocalNotification: iOSNotificationHandler,
     );
     var initializationSettings = InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: selectNotification);
+        onSelectNotification: androidNotificationHandler);
   }
 
   //Handles notification clicks on android
-  Future selectNotification(String payload) async {
+  Future androidNotificationHandler(String payload) async {
     if (payload == "seller") {
       log('notification payload: ' + payload);
-      // Get.snackbar(
-      //   "New notification", "You have a new "+payload,
-      //   duration: Duration(seconds: 6),
-      //   // onTap: (GetBar snackbar) {
-      //   //   navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
-      //   // }
-      // );
-
       navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
+    } else if (payload == "buyer") {
+      log('notification payload: ' + payload);
+      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_buyer()));
     }
   }
 
-  Future localNotificationHandler(int id, String title, String body, String payload) async {
+  //hanldes notification on iOS
+  Future iOSNotificationHandler(int id, String title, String body, String payload) async {
     if (payload != null) {
       log('Received notification: ' + payload);
       Get.snackbar(
         "Did Receive", "Data: $id, $title, $body,\n$payload",
         duration: Duration(seconds: 6),
-        // onTap: (GetBar snackbar) {
-        //   navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
-        // }
       );
     }
   }
