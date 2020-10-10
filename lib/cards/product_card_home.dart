@@ -32,7 +32,7 @@ class product_card_home extends StatelessWidget {
         children: [
           Image.asset(
             image,
-            height: 150,
+            height: 180,
           ),
           SizedBox(
             height: 4,

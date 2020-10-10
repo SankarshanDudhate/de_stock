@@ -11,6 +11,10 @@ class PaymentDetails extends StatefulWidget {
 }
 
 class _PaymentDetailsState extends State<PaymentDetails> {
+  final RegExp visaRegEx = new RegExp(r"^4[0-9]{12}(?:[0-9]{3})?$");
+  final RegExp masterCardRegEx = new RegExp(
+      r"^5[1-5][0-9]{14}|^(222[1-9]|22[3-9]\\d|2[3-6]\\d{2}|27[0-1]\\d|2720)[0-9]{12}$");
+
   final card_details_1 = {
     'card_number': '**** **** **** 1234',
     'card_type': 'visa',
@@ -24,6 +28,122 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     'card_name': 'Atul Mehra',
     'expiry_date': '06/30'
   };
+
+  addCardAlert(context) {
+    final formKey = GlobalKey<FormState>();
+    final TextEditingController _cardController = TextEditingController();
+    final TextEditingController _nameController = TextEditingController();
+    final TextEditingController _monthController = TextEditingController();
+    final TextEditingController _yearController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(child: Text('Add New Card')),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  child: TextFormField(
+                    controller: _cardController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(labelText: "Card Number"),
+                    validator: (value) {
+                      if (visaRegEx.hasMatch(_cardController.value.text) ||
+                          masterCardRegEx
+                              .hasMatch(_cardController.value.text)) {
+                        return null;
+                      }
+                      return "Only MasterCard and Visa Card accepted";
+                    },
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      width: 160,
+                      child: TextFormField(
+                        controller: _nameController,
+                        decoration:
+                            InputDecoration(labelText: "Card Holder Name"),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Enter a Name";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: 80,
+                      child: TextFormField(
+                        controller: _monthController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: "Month",
+                          border: InputBorder.none,
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Enter Month";
+                          } else if (int.parse(value) < 0 ||
+                              int.parse(value) > 12) {
+                            return 'Invalid';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Text(' /  '),
+                    Container(
+                      width: 80,
+                      child: TextFormField(
+                        controller: _yearController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: "Year",
+                          border: InputBorder.none,
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Enter Month";
+                          } else if (int.parse(value) < DateTime.now().year) {
+                            return 'Invalid';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                print(formKey.currentState.validate());
+              },
+              child: Text("Add"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +166,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               Icons.add,
               color: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              addCardAlert(context);
+            },
           )
         ],
         backgroundColor: Color(0xffFAFAFA),
@@ -101,6 +223,7 @@ class SavedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         RaisedContainer(
           child: Container(
