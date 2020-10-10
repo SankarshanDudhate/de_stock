@@ -19,9 +19,14 @@ class InputCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          this.title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+        RichText(
+          text: TextSpan(
+            text: this.title,
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            children: [
+              TextSpan(text: '*', style: TextStyle(color: Colors.red))
+            ],
+          ),
         ),
         SizedBox(
           height: 8,

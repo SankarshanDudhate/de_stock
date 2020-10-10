@@ -1,180 +1,177 @@
+import 'dart:convert';
+
+import 'package:destock/models/Product.dart';
 import 'package:destock/search_product_card_big.dart';
 import 'package:destock/search_product_card_small.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
-class SearchHome extends StatelessWidget {
+class SearchHome extends StatefulWidget {
+  @override
+  _SearchHomeState createState() => _SearchHomeState();
+}
+
+class _SearchHomeState extends State<SearchHome> {
   final _searchController = TextEditingController();
+
+  List<Product> productList = new List();
+  List search = new List();
+
+  FocusNode _focus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
+    _focus.addListener(() {
+      debugPrint("Focus: " + _focus.hasFocus.toString());
+      (_focus.hasFocus)
+          ? FocusScope.of(context).requestFocus(_focus)
+          : FocusScope.of(context).unfocus();
+    });
+
     return Scaffold(
-        body: Stack(children: [
-      Container(
-        height: 180,
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Color(0xffD84764),
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(80)),
-        ),
-        child: Row(
-          children: [
-            GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              "Suggested for you",
-              style: TextStyle(
+      body: Stack(children: [
+        Container(
+          height: 180,
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Color(0xffD84764),
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(80)),
+          ),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.arrow_back_ios,
                   color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 24),
-            )
-          ],
+                ),
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Text(
+                "Suggested for you",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 24),
+              )
+            ],
+          ),
         ),
-      ),
-      Container(
-        margin: EdgeInsets.only(top: 180),
-        padding: EdgeInsets.all(8),
-        child: ListView(
-          children: [
-            ProductSearchCard(
-              productName: 'Cast Iron gears 15 inch 1050 rounded edges- PVC',
-              productPrice: '7,000',
-              views: '112',
-              image: 'assets/images/product_1.png',
-              description:
-                  'A little brief about the product comes here A little brief about the products',
+        GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Container(
+            margin: EdgeInsets.only(top: 180),
+            padding: EdgeInsets.all(8),
+            child: ListView.builder(
+              itemCount: productList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ProductSearchCard(
+                  productName: productList[index].name,
+                  productPrice: productList[index].price.toString(),
+                  views: productList[index].views.toString(),
+                  image: 'assets/images/product_1.png',
+                  description: productList[index].details,
+                );
+              },
             ),
-            SizedBox(
-              height: 8,
-            ),
-            ProductSearchCard(
-              productName: 'Cast Iron gears 15 inch 1050 rounded edges- PVC',
-              productPrice: '7,000',
-              views: '112',
-              image: 'assets/images/product_2.png',
-              description:
-                  'A little brief about the product comes here A little brief about the products',
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            ProductSearchCard(
-              productName: 'Cast Iron gears 15 inch 1050 rounded edges- PVC',
-              productPrice: '7,000',
-              views: '112',
-              image: 'assets/images/product_3.png',
-              description:
-                  'A little brief about the product comes here A little brief about the products',
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Stack(
-              children: [
-                Container(
-                  height: 130,
-                  margin: EdgeInsets.only(left: 16),
-                  decoration: BoxDecoration(
-                      color: Color(0xff0B868A),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          topLeft: Radius.circular(20))),
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
-                        'Because you viewed Cast Iron gears 15 inch 1050 rounded edges-PVC',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w300)),
+          ),
+        ),
+        Positioned(
+          top: 160,
+          right: 40,
+          child: Column(
+            children: [
+              Container(
+                width: 320,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      spreadRadius: 5,
+                      blurRadius: 5,
+                      color: Colors.grey.withOpacity(0.4),
+                    )
+                  ],
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  focusNode: _focus,
+                  onChanged: (v) {
+                    post('http://192.168.43.188:5000/products/',
+                        body: {'keyword': v}).then((value) {
+                      print(v);
+                      print(jsonDecode(value.body));
+                      setState(() {
+                        search = jsonDecode(value.body);
+                      });
+                    });
+                  },
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          _focus.unfocus(disposition: UnfocusDisposition.scope);
+                          // print(_focus.hasFocus);
+                          // print(_focus.hasPrimaryFocus);
+                        }),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(24))),
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50)),
                   ),
                 ),
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: 200),
-                  child: Container(
-                    margin: EdgeInsets.only(top: 80),
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        SearchProductCardSmall(),
-                        SearchProductCardSmall(),
-                        SearchProductCardSmall(),
-                        SearchProductCardSmall(),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            ProductSearchCard(
-              productName: 'Cast Iron gears 15 inch 1050 rounded edges- PVC',
-              productPrice: '7,000',
-              views: '112',
-              image: 'assets/images/product_1.png',
-              description:
-                  'A little brief about the product comes here A little brief about the products',
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            ProductSearchCard(
-              productName: 'Cast Iron gears 15 inch 1050 rounded edges- PVC',
-              productPrice: '7,000',
-              views: '112',
-              image: 'assets/images/product_1.png',
-              description:
-                  'A little brief about the product comes here A little brief about the products',
-            ),
-            SizedBox(
-              height: 8,
-            ),
-          ],
-        ),
-      ),
-      Positioned(
-          top: 160,
-          right: 50,
-          child: Container(
-            width: 300,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              boxShadow: [
-                BoxShadow(
-                  spreadRadius: 5,
-                  blurRadius: 5,
-                  color: Colors.grey.withOpacity(0.4),
-                )
-              ],
-            ),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                suffixIcon: IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      _searchController.clear();
-                    }),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(50)),
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(50)),
               ),
-            ),
-          )),
-    ]));
+              (_focus.hasFocus)
+                  ? Container(
+                      height: 300,
+                      width: 320,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(24)),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 7,
+                              spreadRadius: 5,
+                              color: Colors.grey.withOpacity(0.4),
+                            )
+                          ]),
+                      child: ListView.builder(
+                        itemCount: search.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            onTap: () {
+                              post('http://192.168.43.188:5000/products/search',
+                                      body: {'search': search[index]})
+                                  .then((value) {
+                                setState(() {
+                                  productList = productFromJson(value.body);
+                                });
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                              });
+                            },
+                            title: Text(search[index]),
+                          );
+                        },
+                      ),
+                    )
+                  : Container()
+            ],
+          ),
+        ),
+      ]),
+    );
   }
 }

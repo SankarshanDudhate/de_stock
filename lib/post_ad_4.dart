@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PostAd4 extends StatefulWidget {
@@ -20,9 +19,14 @@ class _PostAd4State extends State<PostAd4> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(
+      context,
+      designSize: Size(392, 850),
+    );
+
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 80, horizontal: 16),
+        padding: EdgeInsets.symmetric(vertical: 80.h, horizontal: 16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
@@ -37,7 +41,7 @@ class _PostAd4State extends State<PostAd4> {
               ),
             ),
             SvgPicture.asset("assets/icons/progress_step_4.svg"),
-            SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               "Step 4",
               style: TextStyle(
@@ -54,7 +58,7 @@ class _PostAd4State extends State<PostAd4> {
               ),
             ),
             SizedBox(
-              height: 16,
+              height: 16.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +108,7 @@ class _PostAd4State extends State<PostAd4> {
               ],
             ),
             SizedBox(
-              height: 32,
+              height: 32.h,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -126,14 +130,14 @@ class _PostAd4State extends State<PostAd4> {
               ],
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 16),
+              margin: EdgeInsets.symmetric(vertical: 16.h),
               decoration: BoxDecoration(
                   border: Border.symmetric(
                       vertical:
                           BorderSide(color: Colors.grey.withOpacity(0.5)))),
               // color: Colors.grey.withOpacity(0.5),
-              height: 1,
-              width: 172,
+              height: 1.h,
+              width: 172.w,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,7 +153,7 @@ class _PostAd4State extends State<PostAd4> {
               ],
             ),
             SizedBox(
-              height: 8,
+              height: 8.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,12 +169,12 @@ class _PostAd4State extends State<PostAd4> {
               ],
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 16),
+              margin: EdgeInsets.symmetric(vertical: 16.h),
               decoration: BoxDecoration(
                   border: Border.symmetric(
                       vertical:
                           BorderSide(color: Colors.grey.withOpacity(0.5)))),
-              height: 1,
+              height: 1.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -185,11 +189,15 @@ class _PostAd4State extends State<PostAd4> {
                 )
               ],
             ),
-            Center(
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 80),
-                child: FlatButton(
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 54),
+            SizedBox(
+              height: 80.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FlatButton(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 16.h, horizontal: 54.w),
                   color: Color(0XFFFC0151),
                   onPressed: () {},
                   textColor: Colors.white,
@@ -197,10 +205,9 @@ class _PostAd4State extends State<PostAd4> {
                     "PROCEED TO PAYMENT",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
-                ),
-              ),
+                  shape: StadiumBorder(),
+                )
+              ],
             ),
           ],
         ),
@@ -219,8 +226,8 @@ class PaymentPlanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
-      width: 100,
+      height: 150.h,
+      width: 100.w,
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.fill,
@@ -230,7 +237,7 @@ class PaymentPlanCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 16,
+            height: 16.h,
           ),
           (minVisible)
               ? Text(
@@ -238,7 +245,7 @@ class PaymentPlanCard extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w300),
                 )
               : SizedBox(
-                  height: 16,
+                  height: 16.h,
                 ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -248,8 +255,8 @@ class PaymentPlanCard extends StatelessWidget {
                 adQty.toString(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 5.h),
                 child: Text(
                   "Ads",
                   style: TextStyle(fontSize: 8),
@@ -258,7 +265,7 @@ class PaymentPlanCard extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 24,
+            height: 24.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -269,7 +276,7 @@ class PaymentPlanCard extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.0),
+                padding: EdgeInsets.symmetric(vertical: 1.h),
                 child: Text(
                   " /Ad",
                   style: TextStyle(fontSize: 8),

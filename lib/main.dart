@@ -2,228 +2,92 @@ import 'package:destock/account_setting/account_setting.dart';
 import 'package:destock/account_setting/change_password.dart';
 import 'package:destock/account_setting/confirm_deactivate_account.dart';
 import 'package:destock/account_setting/payment_details.dart';
+import 'package:destock/categories_page.dart';
+import 'package:destock/dashboard/dashboard.dart';
+import 'package:destock/home_buyer.dart';
 import 'package:destock/post_ad_4.dart';
+import 'package:destock/profile/seller_profile.dart';
+import 'package:destock/recently_viewed.dart';
+import 'package:destock/wishlist/wishlist.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'FAQ.dart';
+import 'Help.dart';
 import 'profile/edit_company_details.dart';
 import 'profile/edit_contact_person_details.dart';
 import 'profile/edit_personal_details.dart';
-import 'profile/my_profile.dart';
+import 'profile/buyer_profile.dart';
 import 'search/search_home.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // ScreenUtil.init(
+  //     context,
+  //     designSize: Size(392, 850),
+  //   );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // ScreenUtil.init(context, designSize: Size(392, 850));
     return MaterialApp(
       title: 'Material App',
       // home: EditPersonalProfile(),
-      home: EditCompanyDetails(),
+      // home: EditCompanyDetails(),
       // home: ContactPersonDetails(),
-      // home: Profile(type: "buyer"),
+      // home: ProfileSeller(
+      //   profileName: 'Ajay Mittal',
+      //   profileEmail: 'mittal@mittalcorp.com',
+      //   profilePhone: '89898 89898',
+      //   companyName: 'Mittal steel corp near indore pvt ltd',
+      //   companyPan: 'GHTRS 852K',
+      //   companyGst: '22 AAAAA 000AA 1Z7',
+      //   companyFactoryAddress:
+      //       'Plot No. - 123, Sector – III, Industrial Area, Pithampur, Dist.: Dhar – 454 775, Madhya Pradesh',
+      //   officeAddress:
+      //       'Plot No. - 123, Sector – III, Industrial Area, Pithampur, Dist.: Dhar – 454 775, Madhya Pradesh',
+      //   whatYouSell:
+      //       'we sell all types of steel goods which include Steel, flat steel products, coated steel, tubes and pipes.',
+      //   contactPersonName: 'Atul Mittal',
+      //   contactPersonEmail: 'mittal@mittalcorp.com',
+      //   contactPersonPhone: '89898 89898',
+      // ),
+      // home: ProfileBuyer(
+      //   profileName: 'Ajay Mittal',
+      //   profileEmail: 'mittal@mittalcorp.com',
+      //   profilePhone: '89898 89898',
+      //   companyName: 'Mittal steel corp near indore pvt ltd',
+      //   companyPan: 'GHTRS 852K',
+      //   companyGst: '22 AAAAA 000AA 1Z7',
+      //   companyFactoryAddress:
+      //       'Plot No. - 123, Sector – III, Industrial Area, Pithampur, Dist.: Dhar – 454 775, Madhya Pradesh',
+      //   officeAddress:
+      //       'Plot No. - 123, Sector – III, Industrial Area, Pithampur, Dist.: Dhar – 454 775, Madhya Pradesh',
+      //   whatYouSell:
+      //       'we sell all types of steel goods which include Steel, flat steel products, coated steel, tubes and pipes.',
+      //   contactPersonName: 'Atul Mittal',
+      //   contactPersonEmail: 'mittal@mittalcorp.com',
+      //   contactPersonPhone: '89898 89898',
+      // ),
       // home: AccountSettings(),
+      // Completed with backend
       // home: ChangePassword(),
       // home: PaymentDetails(),
-      // home: PostAd4(),
+      home: PostAd4(),
       // home: SearchHome(),
-      // home: MyHome(),
-    );
-  }
-}
+      // home: Wishlist(),
+      // home: HomeBuyer(),
+      // home: Help(),
+      // home: FAQ(),
 
-class MyHome extends StatefulWidget {
-  @override
-  _MyHomeState createState() => _MyHomeState();
-}
+      // Completed with backend
+      // home: recently_viewed(),
 
-class _MyHomeState extends State<MyHome> {
-  bool _available = true;
-  var _dropdownValue = 1;
-  void _showDailog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return StatefulBuilder(
-            builder: (context, setState) {
-              return AlertDialog(
-                titlePadding: EdgeInsets.all(16),
-                title: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(2.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(color: Colors.grey[300]),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          FlatButton(
-                            onPressed: () {
-                              setState(() {
-                                _available = true;
-                                print(_available);
-                              });
-                            },
-                            padding: EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            color: (_available) ? Color(0xff4B69FF) : null,
-                            child: Text(
-                              "Available",
-                              style: (_available)
-                                  ? TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold)
-                                  : TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                            ),
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              setState(() {
-                                _available = false;
-                                print(_available);
-                              });
-                            },
-                            padding: EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            color: (!_available) ? Color(0xffD84764) : null,
-                            child: Text(
-                              "Out of Stock",
-                              style: (!_available)
-                                  ? TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold)
-                                  : TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                contentPadding: EdgeInsets.all(16.0),
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "CHANGE QUANTITY",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: (!_available) ? Colors.grey : null),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 160,
-                          child: TextField(
-                            textAlignVertical: TextAlignVertical.center,
-                            style: TextStyle(fontSize: 18),
-                            decoration: InputDecoration(
-                              enabled: _available,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 8),
-                              enabledBorder: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 120,
-                          height: 40,
-                          color: (_available) ? Colors.black : Colors.grey,
-                          child: DropdownButtonHideUnderline(
-                            child: Center(
-                              child: DropdownButton(
-                                value: _dropdownValue,
-                                dropdownColor: Colors.black,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                icon: Icon(Icons.keyboard_arrow_down),
-                                items: [
-                                  DropdownMenuItem(
-                                    child: Text("kg"),
-                                    value: 1,
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("ton"),
-                                    value: 2,
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text("more ton"),
-                                    value: 3,
-                                  ),
-                                ],
-                                onChanged: (_available)
-                                    ? (value) {
-                                        setState(() {
-                                          _dropdownValue = value;
-                                        });
-                                      }
-                                    : (value) {},
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Maximum stock a customer can purchase",
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    FlatButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      child: Text("CONFIRM"),
-                      textColor: Color(0xff4B69FF),
-                    )
-                  ],
-                ),
-              );
-            },
-          );
-        });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          child: Text('Show alert'),
-          onPressed: () {
-            _showDailog(context);
-          },
-        ),
-      ),
+      // Completed with backend
+      // home: dashboard(),
+      // home: category_page(),
     );
   }
 }

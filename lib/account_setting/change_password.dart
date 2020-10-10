@@ -39,9 +39,11 @@ class _ChangePasswordState extends State<ChangePassword> {
         child: Stack(children: [
           Container(
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                        "assets/background/background_circles.png"))),
+              image: DecorationImage(
+                image: AssetImage("assets/background/background_circles.png"),
+                fit: BoxFit.fill,
+              ),
+            ),
           ),
           ListView(children: [
             Container(
@@ -178,26 +180,26 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ),
                             ),
                             SizedBox(
-                              height: 160,
+                              height: 80,
                             ),
                             FlatButton(
-                                color: Color(0xffFC0151),
-                                onPressed: () {},
-                                padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "UPDATE",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100)))
+                              color: Color(0xffFC0151),
+                              onPressed: () {},
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "UPDATE",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                              shape: StadiumBorder(),
+                            )
                           ]),
                     ),
                   )
