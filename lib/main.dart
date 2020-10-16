@@ -91,9 +91,9 @@ class MyApp extends StatelessWidget {
       // home: AccountSettings(),
       // Completed with backend
       // home: ChangePassword(),
-      home: PaymentDetails(),
+      // home: PaymentDetails(),
       // home: PostAd4(),
-      // home: SearchHome(),
+      home: SearchHome(),
       // home: Wishlist(),
       // home: HomeBuyer(),
       // home: Help(),

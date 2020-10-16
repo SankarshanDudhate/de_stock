@@ -13,11 +13,34 @@ class SearchHome extends StatefulWidget {
 
 class _SearchHomeState extends State<SearchHome> {
   final _searchController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
 
   List<Product> productList = new List();
   List search = new List();
 
   FocusNode _focus = FocusNode();
+
+  _searchProduct(search) {
+    post('http://192.168.43.188:5000/products/search/${productList.length}',
+        body: {'search': search}).then((value) {
+      setState(() {
+        productList = productList + productFromJson(value.body);
+      });
+      FocusScope.of(context).requestFocus(FocusNode());
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _searchProduct(_searchController.value.text);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +90,7 @@ class _SearchHomeState extends State<SearchHome> {
             margin: EdgeInsets.only(top: 180),
             padding: EdgeInsets.all(8),
             child: ListView.builder(
+              controller: _scrollController,
               itemCount: productList.length,
               itemBuilder: (BuildContext context, int index) {
                 return ProductSearchCard(
@@ -152,15 +176,7 @@ class _SearchHomeState extends State<SearchHome> {
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             onTap: () {
-                              post('http://192.168.43.188:5000/products/search',
-                                      body: {'search': search[index]})
-                                  .then((value) {
-                                setState(() {
-                                  productList = productFromJson(value.body);
-                                });
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                              });
+                              _searchProduct(search[index]);
                             },
                             title: Text(search[index]),
                           );

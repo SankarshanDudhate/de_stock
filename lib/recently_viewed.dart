@@ -78,11 +78,13 @@ class header extends StatelessWidget {
 }
 
 class recent_view extends StatelessWidget {
+  List<RecentProduct> _recentProducts = [];
   Future<List<RecentProduct>> _getRecentViews() async {
     var response =
         await post('http://192.168.43.188:5000/user/recent', body: {"id": "1"})
             .then((value) => value.body);
     print(recentProductFromJson(response));
+    _recentProducts = recentProductFromJson(response) + _recentProducts;
     return recentProductFromJson(response);
   }
 
