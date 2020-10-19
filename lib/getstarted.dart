@@ -88,14 +88,12 @@ class _getstartedState extends State<getstarted> {
         child: Row(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Image.asset("assets/images/destocklogo.png"),
-              width:30,
+              padding: EdgeInsets.only( top: 10),
+              child: Image.asset("assets/images/destock_logo.png"),
+              width:100,
+              height: 60,
             ),
-            SizedBox(width: 5,),
-            Text('De- Stock',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700))
-          ],
+          ]
         ),
       ),
     );
@@ -103,29 +101,47 @@ class _getstartedState extends State<getstarted> {
 
   Widget _entryField(String title, TextEditingController controller) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 40),
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             title,
-            style: TextStyle( fontSize: 15),
+            style: TextStyle( fontSize: 20),
           ),
           SizedBox(
             height: 10,
           ),
-          TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xffffffff),
-                  filled: true))
+          Container(
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    // offset: Offset(0, 1),
+                    blurRadius: 2,
+                    color: Colors.black.withOpacity(.08),
+                  ),
+                ],
+              ),
+            child: TextField(
+                controller: controller,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    fillColor: Color(0xffffffff),
+                    filled: true)),
+          )
         ],
       ),
     );
   }
 
-  Widget _emailPasswordWidget() {
+  Widget textEdit() {
     return Column(children: <Widget>[
       _entryField("Enter full name", nameController),
       _entryField("Enter email ID", emailController),
@@ -196,50 +212,54 @@ class _getstartedState extends State<getstarted> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-            child:Container(
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                color: Color(0xfff3f3f3),
-              ),
-              child:Stack(
-                children: <Widget>[
-                  Positioned(
-                    top:150,
-                    left: -MediaQuery.of(context).size.width * .1,
-                    child: SvgPicture.asset("assets/icons/bg_circle_grey.svg"), width: 150, height: 150,),
-                  Positioned(
-                    top:250,
-                    right: -MediaQuery.of(context).size.width * .2,
-                    child: SvgPicture.asset("assets/icons/bg_circle_stroke.svg"), width: 350, height: 350,),
-                  Positioned(
-                    top:500,
-                    right: -MediaQuery.of(context).size.width * .15,
-                    child: SvgPicture.asset("assets/icons/bg_circle.svg"), width: 250, height: 250,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: SizedBox(),
-                        ),
-                        _title(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        _emailPasswordWidget(),
-                        _submitButton(),
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(),
-                        )
-                      ],
+            child: SafeArea(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: Color(0xfff3f3f3),
+                ),
+                child:Stack(
+                  children: <Widget>[
+                    Positioned(
+                      top:150,
+                      left: -MediaQuery.of(context).size.width * .1,
+                      child: SvgPicture.asset("assets/icons/bg_circle_grey.svg"), width: 150, height: 150,),
+                    Positioned(
+                      top:250,
+                      right: -MediaQuery.of(context).size.width * .2,
+                      child: SvgPicture.asset("assets/icons/bg_circle_stroke.svg"), width: 350, height: 350,),
+                    Positioned(
+                      top:500,
+                      right: -MediaQuery.of(context).size.width * .15,
+                      child: SvgPicture.asset("assets/icons/bg_circle.svg"), width: 250, height: 250,),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // Expanded(
+                          //   flex: 2,
+                          //   child: SizedBox(),
+                          // ),
+                          SizedBox(height: 150,),
+                          _title(),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          textEdit(),
+                          SizedBox(height: 10,),
+                          _submitButton(),
+                          Expanded(
+                            flex: 2,
+                            child: SizedBox(),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Positioned(top: 40, left: 0, child: _logobutton()),
-                ],
+                    Positioned(top: 10, left: 10, child: _logobutton()),
+                  ],
+                ),
               ),
             )
         )

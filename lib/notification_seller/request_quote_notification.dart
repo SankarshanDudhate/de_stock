@@ -31,7 +31,6 @@ class _request_quote_notificationState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if (widget.is_read) {

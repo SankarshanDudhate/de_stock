@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:developer';
 
+import 'package:destock/CONSTANTS.dart';
 import 'package:destock/wishlist/wishlist_card_contact.dart'; //remove this
 import 'package:destock/wishlist/wishlist_card_note.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class MyWishlist extends StatefulWidget {
 }
 
 class _MyWishlistState extends State<MyWishlist> {
-  List productList = new List();
+  // List productList = new List();
+  List productList = [{"quotation_received": true},{"quotation_received": true},{"quotation_received": true}];
 
   @override
   initState() {
@@ -40,7 +42,7 @@ class _MyWishlistState extends State<MyWishlist> {
   }
 
   Future _fetchData() async {
-    String url = "http://192.168.43.167:5000/wishlist/?user_id=1";
+    String url = localhostAddress+"/wishlist/?user_id=1";
     var response = await http.get(url);
     var respJson = jsonDecode(response.body);
     if( respJson["Status"] == "Failure" ) {
@@ -59,6 +61,24 @@ class _MyWishlistState extends State<MyWishlist> {
 
   Widget productCard(var data) {
     var enquiryData = data["quotation_received"] ? data["quotation"]["enquiry"] : "";
+
+    // return Column(
+    //   children: [
+    //     WishlistCardNotes(
+    //       productName: "Cast Iron gears 15 inch 1050 rounded edges- PVC",
+    //       productImage: "",
+    //       maxQty: "300 kg",
+    //       productCategory: "Steel Pipes",
+    //       productDescription: "Some random stuff that decribes the product... But keep it short, don't get carried away!",
+    //       enquiry: "Hello sir,we have stock of about 100 kgs and you can visit our pithampur based factory on August 21 to pick up the stock. 100 kgs stock would cost you ₹ 50,000",
+    //       note: "Ask for the quote, about 1000kgs, later in the month.material not required now. Also ask for the durability of the material and ...",
+    //       productPrice: "7,000",
+    //       scrollController: ScrollController(),
+    //       views: "300",
+    //     ),
+    //     SizedBox(height: 12,)
+    //   ],
+    // );
     return WishlistCardNotes(
       productName: data["product_name"],
       productImage: data["product_image"],
@@ -80,6 +100,7 @@ class _MyWishlistState extends State<MyWishlist> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) return Center(child: CircularProgressIndicator(),);
         // print(snapshot.data[0]);
+        //TODO return one of the placeholder images if snapshot length is 0 i.e. no products added to wishlist
         return ListView(
           children: snapshot.data.map<Widget>((product) => productCard(product)).toList(),
         );

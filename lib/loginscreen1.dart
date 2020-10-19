@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     // print(formData);
-
+    // TODO send firebase key if it has changed, maybe write another endpoint in user blueprint to get the firebase key, then check if it has changed, if yes send it to server
     var url = 'http://192.168.43.167:5000/login/'; //replace '192.168.43.101' with your ip adrress
     var response = await http.post(url, body: formData);
     print(response.body);

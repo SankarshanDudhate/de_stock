@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:destock/search/search_home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,7 +21,6 @@ class category_pageState extends State<category_page> {
           SizedBox(height: 30,),
           header(),
           SizedBox(height: 30,),
-
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Align(
@@ -381,22 +383,22 @@ class category_pageState extends State<category_page> {
 }
 
 class header extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 10),
         width: double.infinity,
-
-
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Image.asset("assets/images/destocklogo.png", height: 50),
+            SizedBox(width: 20,),
+            Image.asset("assets/images/destock_logo.png", width: 100, height: 60,),
+            SizedBox(
+              width: 40,
+            ),
             Container(
-              width: 250,
-              height: 40,
+              width: 260,
+              height: 60,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -407,12 +409,16 @@ class header extends StatelessWidget {
                 ],
               ),
               child: TextField(
+                onSubmitted: (String searchKey) {
+                  log("\nSearch Key: "+searchKey);
+
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SearchHome(searchText: searchKey,)));
+                },
                 decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(0),
-                      child: SizedBox(
-                          height: 3,
-                          child: Icon(Icons.search)),
+                      child: SizedBox(height: 4, child: Icon(Icons.search)),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
@@ -422,13 +428,12 @@ class header extends StatelessWidget {
                       ),
                     ),
                     filled: true,
-                    hintStyle: new TextStyle(color: Colors.grey,fontSize: 12),
+                    hintStyle: new TextStyle(color: Colors.grey, fontSize: 15),
                     hintText: "Search for pipes, valves etc.",
                     fillColor: Colors.white),
               ),
             )
           ],
-        )
-    );
+        ));
   }
 }

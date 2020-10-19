@@ -1,3 +1,4 @@
+import 'package:destock/ProductPages/productPage.dart';
 import 'package:flutter/material.dart';
 
 class suggest_you extends StatelessWidget {
@@ -63,76 +64,85 @@ class product_card_suggest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: [
-          Image.asset(
-            image,
-            height: 110,
-          ),
-          Container(
-            width: 180,
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 120,
-                      height: 28,
-                      child: Text(
-                        product_name,
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+            new MaterialPageRoute(builder: (BuildContext context) {
+              return productPage();
+            })
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          children: [
+            Image.asset(
+              image,
+              height: 110,
+            ),
+            Container(
+              width: 180,
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 120,
+                        height: 28,
+                        child: Text(
+                          product_name,
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                        ),
                       ),
-                    ),
-                    Text(
-                      "View",
+                      Text(
+                        "View",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff4DA4D6)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Price ₹ " + product_price,
+                    style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xff6F6F6F)),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: 180,
+                    child: Text(
+                      description,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: Color(0xff4DA4D6)),
+                          color: Color(0xff6F6F6F)),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Price ₹ " + product_price,
-                  style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xff6F6F6F)),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: 180,
-                  child: Text(
-                    description,
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff6F6F6F)),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

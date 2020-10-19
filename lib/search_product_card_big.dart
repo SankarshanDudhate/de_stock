@@ -1,3 +1,4 @@
+import 'package:destock/CONSTANTS.dart';
 import 'package:flutter/material.dart';
 
 class ProductSearchCard extends StatelessWidget {
@@ -6,12 +7,15 @@ class ProductSearchCard extends StatelessWidget {
   final String description;
   final String image;
   final String views;
+
+  final String category;
   const ProductSearchCard(
       {Key key,
       this.productName,
       this.productPrice,
       this.views,
       this.image,
+      this.category,
       this.description})
       : super(key: key);
 
@@ -40,7 +44,8 @@ class ProductSearchCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               image: DecorationImage(
-                image: AssetImage(this.image),
+                // image: AssetImage(this.image),
+                image: NetworkImage(localhostAddress+this.image),
                 fit: BoxFit.fill,
               ),
             ),
@@ -75,7 +80,7 @@ class ProductSearchCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 8,
+            width: 12,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,6 +93,8 @@ class ProductSearchCard extends StatelessWidget {
                     width: 188,
                     child: Text(
                       this.productName,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -105,15 +112,16 @@ class ProductSearchCard extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   color: Color(0xffD84764).withOpacity(0.15),
                   child: Text(
-                    "GEARBOX",
+                    category,
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   )),
               Container(
                 width: 216,
                 child: Text(
                   this.description,
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
                   maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

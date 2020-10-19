@@ -135,7 +135,10 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                           EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18)),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => Profile()));
+                      },
                       child: Text(
                         'Cancel',
                         style: TextStyle(
@@ -188,22 +191,24 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                               "profileEditDetails", jsonEncode(profileData));
                           log(jsonEncode(profileData));
 
-                          String userid = prefs.getString("userid") == null
+                          String userid = prefs.getString("userId") == null
                               ? '1'
-                              : prefs.getString("userid");
+                              : prefs.getString("userId");
                           String url = localhostAddress +
                               "/users/" +
                               userid +
                               "/edit/profile/";
                           print(url);
 
-                          var resp = await http.post(url, body: profileData);
-                          print(resp.body);
-                          if (jsonDecode(resp.body)["Status"] == "Success")
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          // var resp = await http.post(url, body: profileData);
+                          // print(resp.body);
+                          // if (jsonDecode(resp.body)["Status"] == "Success")
+                          //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          //       builder: (context) => Profile()));
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(
                                 builder: (context) => Profile()));
-                          else
-                            Get.snackbar("Error!", "Could not update profile... Please try again later!");
+                          // else
+                          //   Get.snackbar("Error!", "Could not update profile... Please try again later!");
                         }
                       },
                       child: Text(

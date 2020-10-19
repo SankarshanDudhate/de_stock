@@ -1,6 +1,12 @@
+import 'package:destock/ProductPages/editProduct.dart';
+import 'package:destock/ProductPages/productPage.dart';
+import 'package:destock/ProductPages/productPageSeller.dart';
 import 'package:destock/category/category_page.dart';
+import 'package:destock/dashboard/dashboard.dart';
+import 'package:destock/getstarted.dart';
 import 'package:destock/notification_buyer/notification_buyer.dart';
-import 'profile.dart';
+import 'package:destock/profile/my_profile.dart';
+import 'package:destock/wishlist/wishlist_and_enquiry.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/home_buyer/home_buyer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,6 +27,8 @@ class _HomeState extends State<Home> {
     notification_buyer(),
   ]; // to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
+  PageStorageKey _pageStorageKey = new PageStorageKey("bottomBarPageStorage");
+  // Widget currentScreen = homebuyer(); // Our first view in viewport
   Widget currentScreen = homebuyer(); // Our first view in viewport
 
   @override
@@ -29,11 +37,17 @@ class _HomeState extends State<Home> {
       body: PageStorage(
         child: currentScreen,
         bucket: bucket,
+        key: _pageStorageKey,
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xffD84764),
         child: Icon(Icons.favorite),
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            currentScreen =
+                WishlistAndEnquiry();
+          });
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -43,7 +57,8 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration( borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           margin: EdgeInsets.symmetric(horizontal: 20),
-          height: 60,
+          padding: EdgeInsets.only(top: 5),
+          height: 70,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -65,7 +80,6 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         currentTab == 0 ? SvgPicture.asset("assets/icons/home_fill.svg", width: 20,) : SvgPicture.asset("assets/icons/home_stroke.svg", width: 20,),
-
                         Text(
                           'Home',
                           style: TextStyle(

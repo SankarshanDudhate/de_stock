@@ -32,7 +32,6 @@ class _reply_quote_notificationState extends State<reply_quote_notification> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if (widget.is_read) {
@@ -70,10 +69,11 @@ class _reply_quote_notificationState extends State<reply_quote_notification> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.network(
-                          localhostAddress + widget.seller_image,
-                          height: 50,
-                        ),
+                        // Image.network(
+                        //   localhostAddress + widget.seller_image,
+                        //   height: 50,
+                        // ),
+                        Image.asset("assets/images/product_3.png", height: 50,),
                         Container(
                           width: 180,
                           child: RichText(
@@ -126,10 +126,11 @@ class _reply_quote_notificationState extends State<reply_quote_notification> {
                                   color: Color(0xff6f6f6f)),
                             ),
                           ),
-                          Image.network(
-                            localhostAddress+widget.product_image,
-                            height: 30,
-                          ),
+                          // Image.network(
+                          //   localhostAddress+widget.product_image,
+                          //   height: 30,
+                          // ),
+                          Image.asset("assets/images/product_2.png", height: 30,),
                         ],
                       ),
                     ),

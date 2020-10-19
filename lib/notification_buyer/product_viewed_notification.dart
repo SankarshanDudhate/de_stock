@@ -19,7 +19,6 @@ class _product_viewedState extends State<product_viewed> {
   String color = "assets/images/blue_notification.png" ;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if(widget.is_read){

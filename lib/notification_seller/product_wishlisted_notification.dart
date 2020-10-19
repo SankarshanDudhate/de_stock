@@ -23,7 +23,6 @@ class _product_wishlistedState extends State<product_wishlisted> {
   String color = "assets/images/red_notification.png" ;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if(widget.is_read){

@@ -11,6 +11,8 @@ import 'package:destock/validatons.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'my_profile.dart';
+
 class EditPersonalProfile extends StatelessWidget {
   EditPersonalProfile({Key key}) : super(key: key);
   final _nameController = TextEditingController();
@@ -119,7 +121,10 @@ class EditPersonalProfile extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18)),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                builder: (context) => Profile()));
+                          },
                           child: Text(
                             'Cancel',
                             style: TextStyle(

@@ -6,7 +6,7 @@ import 'dart:math';
 import 'package:http/http.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
-class category_page extends StatelessWidget {
+class category_page_2 extends StatelessWidget {
   final iconBg = [
     Color(0xff4B69FF),
     Color(0xff0B868A),

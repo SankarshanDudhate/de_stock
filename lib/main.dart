@@ -1,3 +1,8 @@
+import 'package:destock/InnerDashboard/enquiries.dart';
+import 'package:destock/InnerDashboard/manageProducts.dart';
+import 'package:destock/ProductPages/editProduct.dart';
+import 'package:destock/ProductPages/productPage.dart';
+import 'package:destock/ProductPages/productPageSeller.dart';
 import 'package:destock/home_buyer/home_buyer.dart';
 import 'package:destock/loginscreen1.dart';
 import 'package:destock/home_buyer/recently_viewed.dart';
@@ -12,7 +17,8 @@ import 'package:destock/account_setting/payment_details.dart';
 import 'package:destock/notification_buyer/notification_buyer.dart';
 import 'package:destock/notification_seller/notification_seller.dart';
 import 'package:destock/payment/payment.dart';
-import 'package:destock/post_ad_4.dart';
+import 'package:destock/post_an_ad 4.dart';
+import 'package:destock/widgets/home.dart';
 import 'package:destock/wishlist/wishlist_and_enquiry.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +31,9 @@ import 'profile/edit_contact_person_details.dart';
 import 'profile/edit_personal_details.dart';
 import 'profile/my_profile.dart';
 import 'search/search_home.dart';
+
+import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:responsive_framework/utils/scroll_behavior.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -148,6 +157,21 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      builder: (context, child) {
+        return ResponsiveWrapper.builder(
+          BouncingScrollWrapper.builder(context, child),
+          maxWidth: 1200,
+          minWidth: 450,
+          defaultScale: true,
+          breakpoints: [
+            ResponsiveBreakpoint.resize(450, name: MOBILE),
+            ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+            ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+            ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+          ],
+        );
+      },
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
       title: 'Flutter Demo',
@@ -157,7 +181,11 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
           key: scaffoldKey,
           // body: PaymentTest(),
-          body: homebuyer()
+          // body: productPageSeller()
+          // body: editProduct()
+          // body: productPage()
+          // body: homebuyer()
+          // body: getstarted(),
           // body: EditPersonalProfile(),
           // body: EditCompanyDetails(),
           // body: EditContactPersonDetails(),
@@ -168,7 +196,10 @@ class _MyAppState extends State<MyApp> {
           // body: PostAd4(),
           // body: SearchHome(),
           // body: MyHome(),
-          //body: WishlistAndEnquiry()
+          // body: WishlistAndEnquiry(),
+          // body: Enquiries(),
+          // body: manageProducts(),
+          body: Home(),
       ),
     );
   }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'my_wishlist.dart';
 
-class WishlistAndEnquiry extends StatelessWidget {
-  WishlistAndEnquiry(this.userId, this.shareableKey);
+class WishlistShared extends StatelessWidget {
+  WishlistShared(this.userId, this.shareableKey);
   String userId;
   String shareableKey;
 

@@ -1,4 +1,9 @@
+import 'package:destock/GoogleMapWidget.dart';
+import 'package:destock/account_setting/account_setting.dart';
 import 'package:destock/profile/edit_company_details.dart';
+import 'package:destock/profile/edit_contact_person_details.dart';
+import 'package:destock/profile/edit_personal_details.dart';
+import 'package:destock/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/utils/bg_clip.dart';
 import 'package:destock/utils/profile_header.dart';
@@ -6,12 +11,18 @@ import 'package:destock/utils/raised_container.dart';
 
 class Profile extends StatelessWidget {
   Profile({this.type});
+
+  //TODO make this page dynamic, its all static right now
   String name = "Sankarshan Dudhate";
   final String type;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //TODO change app bar if  type is 'seller'
+        // leading: SizedBox(width: 1, height: 1,),
+        automaticallyImplyLeading: false,
         backgroundColor: Color(0xFFD84764),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
@@ -21,64 +32,88 @@ class Profile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Hello ' + this.name.split(' ')[0]),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Welcome to your profile",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 2,
-                    ),
-                    Text(
-                      "Become a seller and start de-stocking!",
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black),
-                    ),
-                  ],
+                Container(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'Hello ' + this.name.split(' ')[0],
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        "Welcome to your profile",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      SizedBox(
+                        height: 2,
+                      ),
+                      Text(
+                        "Become a seller and start de-stocking!",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.account_circle),
-                  onPressed: () {},
-                  iconSize: 64,
+                Image.asset(
+                  "assets/images/user_image_1.png",
+                  width: 96,
+                  height: 96,
                 )
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FlatButton.icon(
-                    onPressed: () {},
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    icon: Icon(
-                      Icons.edit,
-                      color: Color(0xffD84764),
-                    ),
-                    label: Text(
-                      'Edit Profile',
-                      style: TextStyle(color: Color(0xffD84764)),
-                    )),
-                FlatButton.icon(
-                    onPressed: () {},
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    icon: Icon(Icons.settings),
-                    label: Text('Account Settings'))
+                Container(
+                  padding: EdgeInsets.only(top: 20, ),
+                  child: FlatButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EditPersonalProfile()));
+                      },
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      icon: Icon(
+                        Icons.edit,
+                        color: Color(0xffD84764),
+                      ),
+                      label: Text(
+                        'Edit Profile',
+                        style: TextStyle(color: Color(0xffD84764)),
+                      )),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 20,),
+                  child: FlatButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AccountSettings()));
+                      },
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      icon: Icon(Icons.settings),
+                      label: Text('Account Settings')),
+                )
               ],
             )
           ],
         ),
-        toolbarHeight: 150,
+        toolbarHeight: 220,
       ),
       body: Stack(
         children: [
@@ -99,7 +134,13 @@ class Profile extends StatelessWidget {
                     "Personal Details",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  IconButton(icon: Icon(Icons.edit), onPressed: () {})
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EditPersonalProfile()));
+                    },
+                  )
                 ],
               ),
             ),
@@ -185,7 +226,11 @@ class Profile extends StatelessWidget {
                     "Company Details",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  IconButton(icon: Icon(Icons.edit), onPressed: () {})
+                  IconButton(icon: Icon(Icons.edit), onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditCompanyDetails()));
+                    },
+                  )
                 ],
               ),
             ),
@@ -280,9 +325,11 @@ class Profile extends StatelessWidget {
                       ],
                     ),
                     Container(
-                      margin: EdgeInsets.all(8.0),
-                      color: Colors.red,
-                      height: 200,
+                        height: 300,
+                        color: Colors.amber,
+                        child: GoogleMapWidget(
+                          picker: false,
+                        )
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,7 +405,13 @@ class Profile extends StatelessWidget {
                     "Contact Person Details",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  IconButton(icon: Icon(Icons.edit), onPressed: () {})
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => EditContactPersonDetails()));
+                    },
+                  )
                 ],
               ),
             ),

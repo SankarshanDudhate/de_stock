@@ -25,7 +25,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   }];
 
   Future<List<Map<String, String>>> fetchCardList() async {
-    await Future.delayed( Duration(seconds: 3) );
+    await Future.delayed( Duration(seconds: 1) );
     return card_details;
   }
 
@@ -75,24 +75,32 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
         leading: Container(
-          padding: EdgeInsets.only(left: 32.0),
-          child: SvgPicture.asset("assets/icons/credit-card.svg"),
+          padding: EdgeInsets.only(left: 25, top: 8),
+          child: SvgPicture.asset("assets/icons/credit-card.svg", ),
         ),
-        title: Text(
-          "Payment Details",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+        title: Container(
+          padding: EdgeInsets.only(top: 5),
+          child: Text(
+            "Payment Details",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.add,
-              color: Colors.black,
+          Container(
+            padding: EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: Icon(
+                Icons.add,
+                color: Colors.black,
+                size: 32,
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
           )
         ],
         backgroundColor: Color(0xffFAFAFA),

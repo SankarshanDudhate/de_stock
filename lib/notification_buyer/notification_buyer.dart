@@ -59,79 +59,79 @@ class _notification_buyerState extends State<notification_buyer> {
             SizedBox(
               height: 20,
             ),
-            notification_list(),
+            // notification_list(),
 
-            // reply_quote_notification(
-            //   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-            //   time: "4 min",
-            //   seller_image: "assets/images/seller_image.png",
-            //   product_image: "assets/images/product image.png",
-            //   seller_name: "Mittal steels",
-            //   is_read: false,
-            // ),
-            // selling_fast(
-            //   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-            //   product_image: "assets/images/product image.png",
-            //   is_read: false,
-            // ),
-            // product_viewed(
-            //   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-            //   views: "200",
-            //   product_image: "assets/images/product image.png",
-            //   is_read: false,
-            // ),
-            // out_of_stock(
-            //   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-            //   product_image: "assets/images/product image.png",
-            //   is_read: false,
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // Image.asset("assets/images/become a seller 2.png"),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(17, 0, 0, 0),
-            //   child: Text(
-            //     "Yesterday",
-            //     style: TextStyle(
-            //         fontSize: 13,
-            //         fontWeight: FontWeight.w700,
-            //         color: Colors.black),
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // reply_quote_notification(
-            //   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-            //   time: "4 min",
-            //   seller_image: "assets/images/seller_image.png",
-            //   product_image: "assets/images/product image.png",
-            //   seller_name: "Mittal steels",
-            //   is_read: true,
-            // ),
-            // selling_fast(
-            //   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-            //   product_image: "assets/images/product image.png",
-            //   is_read: true,
-            // ),
-            // product_viewed(
-            //   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-            //   views: "200",
-            //   product_image: "assets/images/product image.png",
-            //   is_read: true,
-            // ),
-            // out_of_stock(
-            //   product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-            //   product_image: "assets/images/product image.png",
-            //   is_read: true,
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
+            reply_quote_notification(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              time: "4 min",
+              seller_image: "assets/images/seller_image.png",
+              product_image: "assets/images/product image.png",
+              seller_name: "Mittal steels",
+              is_read: false,
+            ),
+            selling_fast(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              product_image: "assets/images/product image.png",
+              is_read: false,
+            ),
+            product_viewed(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              views: "200",
+              product_image: "assets/images/product image.png",
+              is_read: false,
+            ),
+            out_of_stock(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              product_image: "assets/images/product image.png",
+              is_read: false,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Image.asset("assets/images/become a seller 2.png"),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(17, 0, 0, 0),
+              child: Text(
+                "Yesterday",
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            reply_quote_notification(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              time: "4 min",
+              seller_image: "assets/images/seller_image.png",
+              product_image: "assets/images/product image.png",
+              seller_name: "Mittal steels",
+              is_read: true,
+            ),
+            selling_fast(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              product_image: "assets/images/product image.png",
+              is_read: true,
+            ),
+            product_viewed(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              views: "200",
+              product_image: "assets/images/product image.png",
+              is_read: true,
+            ),
+            out_of_stock(
+              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+              product_image: "assets/images/product image.png",
+              is_read: true,
+            ),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
@@ -224,9 +224,9 @@ class header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+      padding: EdgeInsets.fromLTRB(15, 7.5, 0, 0),
       width: double.infinity,
-      height: 50,
+      height: 70,
       decoration: BoxDecoration(
         color: Color(0xfffafafa),
         boxShadow: [
@@ -243,9 +243,9 @@ class header extends StatelessWidget {
             width: 10,
           ),
           Text(
-            "Notification",
+            "Notifications",
             style: TextStyle(
-                fontSize: 15, fontWeight: FontWeight.w600, color: Colors.black),
+                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
           ),
         ],
       ),

@@ -1,4 +1,4 @@
-import 'profile.dart';
+import 'package:destock/profile/my_profile.dart';
 import 'settings.dart';
 import 'package:flutter/material.dart';
 

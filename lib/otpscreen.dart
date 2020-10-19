@@ -31,47 +31,47 @@ class _OtpPageState extends State<OtpPage> {
   }
 
   void sendOTP() async {
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      String data = await sharedPreferences.getString("userData");
-      var dataJson = jsonDecode(data);
-      print(data);
-
-      var url = 'http://192.168.43.167:5000/otp/send'; //replace '192.168.43.101' with your ip adrress
-      var response = await http.post(url, body: {
-        'phone_no': dataJson["phone_no"]
-      });
-      Map<String, dynamic> resp = jsonDecode(response.body);
-
-      if(resp["Status"] == "Success") {
-        print("Details:\n"+resp["Details"]);
-        sessionId = resp["Details"];
-      }
-      else{
-        //show unsuccessful message
-      }
+      // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      // String data = await sharedPreferences.getString("userData");
+      // var dataJson = jsonDecode(data);
+      // print(data);
+      //
+      // var url = 'http://192.168.43.167:5000/otp/send'; //replace '192.168.43.101' with your ip adrress
+      // var response = await http.post(url, body: {
+      //   'phone_no': dataJson["phone_no"]
+      // });
+      // Map<String, dynamic> resp = jsonDecode(response.body);
+      //
+      // if(resp["Status"] == "Success") {
+      //   print("Details:\n"+resp["Details"]);
+      //   sessionId = resp["Details"];
+      // }
+      // else{
+      //   //show unsuccessful message
+      // }
   }
 
   void verifyOTP() async {
-    var verifyUrl = 'http://192.168.43.167:5000/otp/verify'; //replace '192.168.43.101' with your ip adrress
-    var verifyResp = await http.post(verifyUrl, body: {
-      'otp': otpController.text,
-      'session_id': sessionId
-    });
-    print(verifyResp.body);
-    Map<String, dynamic> verifyRespJson = jsonDecode(verifyResp.body);
-    if(verifyRespJson["Status"] == "Success") {
-      if(widget.signup) {
+    // var verifyUrl = 'http://192.168.43.167:5000/otp/verify'; //replace '192.168.43.101' with your ip adrress
+    // var verifyResp = await http.post(verifyUrl, body: {
+    //   'otp': otpController.text,
+    //   'session_id': sessionId
+    // });
+    // print(verifyResp.body);
+    // Map<String, dynamic> verifyRespJson = jsonDecode(verifyResp.body);
+    // if(verifyRespJson["Status"] == "Success") {
+    //   if(widget.signup) {
         Navigator.of(context).push(
           new MaterialPageRoute(builder: (BuildContext context) {
             return Signup();
           })
         );
-      } else {
-        //TODO navigate to homescreen because user has logged in successfully...
-      }
-    } else {
-      print("Wrong OTP! Please enter OTP again...");
-    }
+    //   } else {
+    //     //TODO navigate to homescreen because user has logged in successfully...
+    //   }
+    // } else {
+    //   print("Wrong OTP! Please enter OTP again...");
+    // }
   }
 
   Widget _logobutton() {
@@ -148,7 +148,7 @@ class _OtpPageState extends State<OtpPage> {
           ),
           InkWell(
             onTap: () {
-              Navigator.push(context,
+              Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => OtpPage(signup: widget.signup, login: widget.login,)));
             },
             child: Text(

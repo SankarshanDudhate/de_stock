@@ -23,15 +23,19 @@ class _ChangePasswordState extends State<ChangePassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
         leading: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.fromLTRB(12, 15, 12, 12),
           child: SvgPicture.asset(
             "assets/icons/settings.svg",
           ),
         ),
-        title: Text(
-          "Settings",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        title: Container(
+          padding: EdgeInsets.only(top: 5),
+          child: Text(
+            "Settings",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
         ),
         backgroundColor: Color(0xffFAFAFA),
       ),

@@ -1,3 +1,5 @@
+import 'package:destock/home_buyer/home_buyer.dart';
+import 'package:destock/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,7 +28,7 @@ class _SignupState extends State<Signup> {
       //TODO send password to db
       print('Yay! Passswords match...!');
 
-    saveData();
+      saveData();
     } else {
       Get.snackbar(
           "Passwords don't match", " Please retry!"
@@ -35,37 +37,43 @@ class _SignupState extends State<Signup> {
   }
 
   void saveData() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String data = await sharedPreferences.getString('signupData');
-    var dataJson = jsonDecode(data);
-    print(data);
-
-    // Scaffold.of(context).showSnackBar(SnackBar(content:Text(data)));
-
-    var url = 'http://192.168.43.167:5000/signup/'; //replace '192.168.43.101' with your ip adrress
-    var response = await http.post(url, body: {
-      'email_id': dataJson["email_id"],
-      'password': passwordController.text,
-      "name": dataJson["name"],
-      "phone_no": dataJson["phone_no"]
-    });
-    print(response.body);
-
-    Map<String, dynamic> resp = jsonDecode(response.body);
-
-    if(resp["Status"] == "Success") {
-      print("Details:\n"+resp["Details"]);
-      Get.snackbar(
-          "Yay!", "Signup succesful!"
-      );
-      //TODO send user to homepage/dashboard
-    }
-    else{
-      //show unsuccessful message
-      Get.snackbar(
-        "Error", "Signup failed!"
-      );
-    }
+    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // String data = await sharedPreferences.getString('signupData');
+    // var dataJson = jsonDecode(data);
+    // print(data);
+    //
+    // // Scaffold.of(context).showSnackBar(SnackBar(content:Text(data)));
+    //
+    //TODO send firebase token
+    // var url = 'http://192.168.43.167:5000/signup/'; //replace '192.168.43.101' with your ip adrress
+    // var response = await http.post(url, body: {
+    //   'email_id': dataJson["email_id"],
+    //   'password': passwordController.text,
+    //   "name": dataJson["name"],
+    //   "phone_no": dataJson["phone_no"]
+    // });
+    // print(response.body);
+    //
+    // Map<String, dynamic> resp = jsonDecode(response.body);
+    //
+    // if(resp["Status"] == "Success") {
+    //   print("Details:\n"+resp["Details"]);
+    //   Get.snackbar(
+    //       "Yay!", "Signup succesful!"
+    //   );
+    //   //TODO send user to homepage/dashboard
+    // }
+    // else{
+    //   //show unsuccessful message
+    //   Get.snackbar(
+    //     "Error", "Signup failed!"
+    //   );
+    // }
+    Navigator.of(context).pushReplacement(
+        new MaterialPageRoute(builder: (BuildContext context) {
+          return Home();
+        })
+    );
   }
 
   Widget _logobutton() {

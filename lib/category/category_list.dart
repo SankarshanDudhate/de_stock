@@ -79,10 +79,10 @@ class header extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),),
             ],
           ),
-          Transform.rotate(
-            angle: 90 * pi / 180,
-            child:Icon(Icons.tune,color: Colors.white,),
-          ),
+          // Transform.rotate(
+          //   angle: 90 * pi / 180,
+          //   child:Icon(Icons.tune,color: Colors.white,),
+          // ),
         ],
       ),
 

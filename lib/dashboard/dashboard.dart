@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:destock/CONSTANTS.dart';
+import 'package:destock/wishlist/wishlist_and_enquiry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_empty.dart';
-import 'enquiry_card.dart';
+import 'dashboard_enquiry_card.dart';
 import 'footer.dart';
 import 'product_card.dart';
 import 'renewal_card.dart';
@@ -12,34 +16,78 @@ import 'renewal_card.dart';
 class dashboard extends StatefulWidget {
   dashboard({Key key, this.title}) : super(key: key);
   final String title;
+
   @override
   _dashboardState createState() => _dashboardState();
 }
 
 class _dashboardState extends State<dashboard> {
+  String userId = '';
+  int totalProductViews = 0;
+
+  int activeProductsCount = 0;
+
   _getMyProducts() async {
-    var response = await post('http://192.168.43.188:5000/user/my_products',
-        body: {"id": "1"}).then((value) => value.body);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId =
+        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    var response = await get(
+      localhostAddress + '/users/$userId/products/',
+    ).then((value) => value.body);
 
     // print(response);
+    // log(response);
+    List respJson = List.from(jsonDecode(response)); //TODO if this doesn't work, use futurebuilder to get active prod count from backend
     return jsonDecode(response);
   }
 
+  getTotalViews() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId =
+        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    var response = await get(
+      localhostAddress + '/users/$userId/getTotalViews/',
+    ).then((value) => value.body);
+    log('Views: ' + response);
+    return response;
+  }
+
+  getActiveProductsCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId =
+    (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    var response = await get(
+      localhostAddress + '/users/$userId/getActiveProductsCount/',
+    ).then((value) => value.body);
+    log('Active products count: ' + response);
+    return response;
+  }
+
   _getLatestEnquiries() async {
-    var response = await post(
-        'http://192.168.43.188:5000/user/latest_enquiries',
-        body: {"id": "1"}).then((value) => value.body);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId =
+        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    var response = await get(
+      '$localhostAddress/users/sellerEnquiries/?user_id=$userId',
+    ).then((value) => value.body);
+    // '$localhostAddress/products/enquiries/?user_id=$userId',).then((value) => value.body);
 
     // print(response);
+    // log(response);
+    // log(jsonDecode(response)[0].toString());
     return jsonDecode(response);
   }
 
   _getUpcomingRenewals() async {
-    var response = await post(
-        'http://192.168.43.188:5000/user/upcoming_renewals',
-        body: {"id": "1"}).then((value) => value.body);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId =
+        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    var response =
+        await get('$localhostAddress/users/upcoming_renewals?user_id=$userId')
+            .then((value) => value.body);
 
     // print(response);
+    // log(response);
     return jsonDecode(response);
   }
 
@@ -55,12 +103,20 @@ class _dashboardState extends State<dashboard> {
               ),
               child: Column(
                 children: <Widget>[
-                  header(
-                    headline1: 'Hello Ajay',
-                    headline2: 'Welcome to your dashboard !',
-                    headline3: 'Complete you profile for better reach!',
-                    image: "assets/images/USER PROFILE PIC.png",
-                  ),
+                  FutureBuilder(
+                      future: getUserId(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData)
+                          return header(
+                            headline1: 'Hello Ajay', //TODO Change to user's name
+                            headline2: 'Welcome to your dashboard !',
+                            headline3: 'Complete you profile for better reach!',
+                            image:
+                                "/static/images/users/${snapshot.data}/user.jpg",
+                          );
+                        else
+                          return Container();
+                      }),
                   SizedBox(
                     height: 70,
                   ),
@@ -68,9 +124,17 @@ class _dashboardState extends State<dashboard> {
                   SizedBox(
                     height: 10,
                   ),
-                  options_like(
-                    title: "Products I would like to buy",
-                    image: "assets/images/product_like.png",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WishlistAndEnquiry()));
+                    },
+                    child: options_like(
+                      title: "Products I would like to buy",
+                      image: "assets/images/product_like.png",
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -112,10 +176,13 @@ class _dashboardState extends State<dashboard> {
                                   )
                                 : Column(
                                     children: List.generate(
-                                      2,
+                                      (snapshot.data.length > 3)
+                                          ? 3
+                                          : snapshot.data.length,
                                       (index) {
                                         return product_card(
                                           product_id: "#786GFHDR",
+                                          //TODO change to randomId
                                           product_name: snapshot.data[index]
                                               ["name"],
                                           product_price: snapshot.data[index]
@@ -124,12 +191,15 @@ class _dashboardState extends State<dashboard> {
                                           views: snapshot.data[index]["views"]
                                               .toString(),
                                           favorite: snapshot.data[index]
-                                                  ["favourites"]
+                                                  ["wishlisted"]
                                               .toString(),
-                                          enquiries: snapshot.data[index]
-                                                  ["enquiries"]
+                                          enquiries: List.from(jsonDecode(
+                                                  snapshot.data[index]
+                                                      ["enquiries"]))
+                                              .length
                                               .toString(),
                                           expiry_date: "12 August 2020",
+                                          // expiry_date: dateToMMMddyyyy(snapshot.data[index]["expiryDate"]), //TODO
                                           image:
                                               "assets/images/product image.png",
                                         );
@@ -149,8 +219,9 @@ class _dashboardState extends State<dashboard> {
                   ),
                   FutureBuilder(
                     future: _getLatestEnquiries(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    builder: (BuildContext context, snapshot) {
                       if (snapshot.hasData) {
+                        List prodList = snapshot.data;
                         return Column(
                           children: [
                             Title_with_no(
@@ -176,17 +247,28 @@ class _dashboardState extends State<dashboard> {
                                       ),
                                     ],
                                   )
-                                : enquiry_card(
-                                    product_id: "#786GFHDR",
-                                    product_name:
-                                        "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                                    product_price: "7000",
-                                    image: "assets/images/product image.png",
-                                    user_image: "assets/images/user_image.png",
-                                    user_name: "Tanmay Patil",
-                                    user_enquiry:
-                                        "I wanted to enquire about the price of this product",
-                                    quantity: "300",
+                                : Column(
+                                    children: prodList
+                                        .sublist(0, 3)
+                                        .map(
+                                          (prod) => Column(
+                                            children: [
+                                              enquiry_card(
+                                                product_id:
+                                                    prod["id"].toString(),
+                                                product_name: prod['name'],
+                                                product_price:
+                                                    prod['price'].toString(),
+                                                image: prod['image'],
+                                                enquiry_data: prod['enquiries'],
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                        .toList(),
                                   )
                           ],
                         );
@@ -246,7 +328,9 @@ class _dashboardState extends State<dashboard> {
                                   )
                                 : Column(
                                     children: [
-                                      renewal_card(data: snapshot.data),
+                                      renewal_card(
+                                        data: snapshot.data,
+                                      ),
                                       SizedBox(
                                         height: 40,
                                       ),
@@ -271,9 +355,9 @@ class _dashboardState extends State<dashboard> {
               top: 150,
               left: 71.5,
               child: product_view_card(
-                products: '0',
+                products: this.activeProductsCount.toString(),
                 pro_text: 'Active\nProducts',
-                views: '0',
+                views: this.totalProductViews.toString(),
                 view_text: "Total\nviews",
               ),
             ),
@@ -282,11 +366,114 @@ class _dashboardState extends State<dashboard> {
       ),
     );
   }
+
+  Future<String> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId =
+        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    return userId;
+  }
+
+  Widget product_view_card(
+      {String products, String pro_text, String views, String view_text}) {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        width: 250,
+        height: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+          color: Color(0xffffffff),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 4),
+              blurRadius: 40,
+              color: Colors.black.withOpacity(.16),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                FutureBuilder(
+                    future: getActiveProductsCount(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData)
+                        return Text(
+                          snapshot.data,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        );
+                      return Text(
+                        "0",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      );
+                    }),
+                Text(
+                  pro_text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff6F6F6F)),
+                ),
+              ],
+            ),
+            VerticalDivider(
+              color: Colors.black38,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                FutureBuilder(
+                    future: getTotalViews(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData)
+                        return Text(
+                          snapshot.data,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        );
+                      return Text(
+                        "0",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      );
+                    }),
+                Text(
+                  view_text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff6F6F6F)),
+                ),
+              ],
+            ),
+          ],
+        ));
+  }
 }
 
 class options_like extends StatelessWidget {
   final String title;
   final String image;
+
   const options_like({Key key, this.title, this.image}) : super(key: key);
 
   @override
@@ -326,6 +513,65 @@ class options_like extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
+          ],
+        ));
+  }
+}
+
+class header extends StatelessWidget {
+  final String headline1;
+  final String headline2;
+  final String headline3;
+  final String image;
+
+  const header(
+      {Key key, this.headline1, this.headline2, this.headline3, this.image})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        width: double.infinity,
+        height: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(40),
+              bottomRight: Radius.circular(40)),
+          color: Color(0xffD84764),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  headline1,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                Text(
+                  headline2,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                Text(
+                  headline3,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black),
+                ),
+              ],
+            ),
+            Image.network(localhostAddress + image, height: 70),
+            // Image.asset(image, height: 50),
           ],
         ));
   }

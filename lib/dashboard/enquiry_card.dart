@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class enquiry_card extends StatelessWidget {
+class dashboard_enquiry_card extends StatelessWidget {
   final String product_id;
   final String product_name;
   final String product_price;
@@ -10,7 +10,7 @@ class enquiry_card extends StatelessWidget {
   final String user_image;
   final String quantity;
 
-  const enquiry_card(
+  const dashboard_enquiry_card(
       {Key key,
       this.product_id,
       this.product_name,

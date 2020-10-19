@@ -19,7 +19,6 @@ class _ad_expireState extends State<ad_expire> {
   String color = "assets/images/cyan_notification.png" ;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if(widget.is_read){

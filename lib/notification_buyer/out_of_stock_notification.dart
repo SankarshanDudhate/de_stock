@@ -19,7 +19,6 @@ class _out_of_stockState extends State<out_of_stock> {
   String color = "assets/images/red_notification.png" ;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if(widget.is_read){

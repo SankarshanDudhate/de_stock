@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:destock/profile/edit_contact_person_details.dart';
+import 'package:destock/profile/my_profile.dart';
 import 'package:destock/utils/profile_header.dart';
 import 'package:destock/validatons.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,6 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     locator = Geolocator();
     initMarker =
@@ -185,7 +185,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                                 Container(
                                   height: 300,
                                   color: Colors.amber,
-                                  child: renderMap(),
+                                  child: renderMap(), //TODO change it to user GoogleMapWidget class that we created
                                 ),
                                 SizedBox(
                                   height: 32,
@@ -229,7 +229,10 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                           EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18)),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => Profile()));
+                      },
                       child: Text(
                         'Cancel',
                         style: TextStyle(

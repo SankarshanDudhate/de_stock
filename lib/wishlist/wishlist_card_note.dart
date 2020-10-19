@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:destock/CONSTANTS.dart';
 import 'package:flutter/material.dart';
 
 class WishlistCardNotes extends StatelessWidget {
@@ -50,6 +51,7 @@ class WishlistCardNotes extends StatelessWidget {
               ),
             ),
             Container(
+              height: 140,
               margin: EdgeInsets.symmetric(horizontal: 16),
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -97,11 +99,13 @@ class WishlistCardNotes extends StatelessWidget {
               children: [
                 Container(
                   width: 120,
-                  height: 140,
+                  height: 130,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
-                      image: MemoryImage(base64Decode(this.productImage)),
+                      // image: MemoryImage(base64Decode(this.productImage)),
+                      // image: AssetImage("assets/images/product_2.png"),
+                      image: NetworkImage(localhostAddress+this.productImage),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -138,7 +142,7 @@ class WishlistCardNotes extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 8,
+                  width: 15,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -146,12 +150,15 @@ class WishlistCardNotes extends StatelessWidget {
                   children: [
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: 150,
-                          padding: EdgeInsets.only(right: 16, top: 2),
+                          width: 200,
+                          padding: EdgeInsets.only(right: 8, top: 2),
                           child: Text(
                             this.productName,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
@@ -159,27 +166,29 @@ class WishlistCardNotes extends StatelessWidget {
                         GestureDetector(
                           onTap: () {},
                           child: Container(
-                              padding: EdgeInsets.only(top: 2),
-                              child: Icon(Icons.favorite_border)
+                              padding: EdgeInsets.only(top: 2, left: 25),
+                              child: Icon(Icons.favorite, color: Colors.pink,)
                           ),
                         )
                       ],
                     ),
                     Container(
+                      padding: EdgeInsets.only(top: 4),
                       width: 150,
                       child: Text(
                         "Category : " + this.productCategory,
                         maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontWeight: FontWeight.w400, color: Colors.grey, fontSize: 13.5),
+                            fontWeight: FontWeight.w400, color: Colors.grey, fontSize: 14),
                       ),
                     ),
                     SizedBox(
                       height: 16,
                     ),
                     Text(
-                      "Price ₹" + productPrice,
-                      style: TextStyle(fontSize: 14),
+                      "₹" + productPrice,
+                      style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(
                       height: 2,
@@ -224,14 +233,14 @@ class WishlistCardNotes extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: Color(0xff4B69FF).withOpacity(0.2)),
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 16.0, horizontal: 4),
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                   child: Text(
                     'NOTES',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -264,6 +273,7 @@ class WishlistCardNotes extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 20,),
           quotationBox(),
           Container(
             margin: EdgeInsets.symmetric(vertical: 32, horizontal: 0),
@@ -271,7 +281,8 @@ class WishlistCardNotes extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  width: 147,
+                  width: 180,
+                  height: 50,
                   padding: EdgeInsets.all(0),
                   margin: EdgeInsets.all(0),
                   child: FlatButton.icon(
@@ -283,14 +294,15 @@ class WishlistCardNotes extends StatelessWidget {
                     label: Text(
                       "Contact Seller",
                       style: TextStyle(
-                          color: Color(0xff4B69FF), fontWeight: FontWeight.bold, fontSize: 13),
+                          color: Color(0xff4B69FF), fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     shape:
                         StadiumBorder(side: BorderSide(color: Color(0xff4B69FF))),
                   ),
                 ),
                 Container(
-                  width: 147,
+                  width: 180,
+                  height: 50,
                   padding: EdgeInsets.all(0),
                   margin: EdgeInsets.fromLTRB(2,0,0,0),
                   child: FlatButton(
@@ -298,7 +310,7 @@ class WishlistCardNotes extends StatelessWidget {
                     child: Text(
                       'Request a quote',
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     shape: StadiumBorder(),
                     color: Color(0xff4B69FF),

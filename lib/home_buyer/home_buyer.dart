@@ -1,9 +1,17 @@
+import 'dart:developer';
+
+import 'package:destock/CONSTANTS.dart';
 import 'package:destock/cards/latest_products.dart';
+import 'package:destock/categories_page.dart';
+import 'package:destock/category/category_list.dart';
+import 'package:destock/category/category_page.dart';
 import 'package:destock/models/RecentProducts.dart';
 import 'package:destock/models/SuggestedProducts.dart';
 import 'package:destock/models/TrendingProducts.dart';
+import 'package:destock/search/search_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:destock/cards/latest_products.dart';
@@ -11,7 +19,7 @@ import 'package:destock/cards/product_card_home.dart';
 import 'package:destock/cards/product_card_suggest.dart';
 import 'package:destock/cards/product_near_you.dart';
 import 'package:destock/cards/search_product_card_small.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart';
 
 class homebuyer extends StatefulWidget {
   homebuyer({Key key, this.title}) : super(key: key);
@@ -24,94 +32,148 @@ class homebuyer extends StatefulWidget {
 class _homebuyerState extends State<homebuyer> {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context,
-        designSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height));
-
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xF8F9FF),
-          ),
+          // decoration: BoxDecoration(
+          //   color: Color(0xF8F9FF),
+          // ),
           child: Column(
             children: <Widget>[
               SizedBox(
-                height: 70,
+                height: 60,
               ),
               header(),
               SizedBox(
-                height: 40,
+                height: 30,
               ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+
+                    Text("Top categories",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => category_page()));
+                      },
+                      child: Text("View all",
+                        style: TextStyle(fontSize: 14, color: Colors.blue),),
+                    ),
+                  ],
+
+                ),
+              ),
+              SizedBox(height: 20,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Column(
-                    children: [
-                      Image.asset("assets/images/cutting_tool.png", height: 60),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Cutting Tools",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                          new MaterialPageRoute(builder: (BuildContext context) {
+                            return category_list();
+                          })
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset("assets/images/cutting_tool.png", height: 60),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Cutting Tools",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset("assets/images/pipes.png", height: 60),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Pipes",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                          new MaterialPageRoute(builder: (BuildContext context) {
+                            return category_list();
+                          })
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset("assets/images/pipes.png", height: 60),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Pipes",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset("assets/images/measure.png", height: 60),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Measuring\nInstruments",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                          new MaterialPageRoute(builder: (BuildContext context) {
+                            return category_list();
+                          })
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset("assets/images/measure.png", height: 60),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Measuring\nInstruments",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset("assets/images/tools.png", height: 60),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Tools",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                          new MaterialPageRoute(builder: (BuildContext context) {
+                            return category_list();
+                          })
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset("assets/images/tools.png", height: 60),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Tools",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
               SizedBox(
-                height: 40,
+                height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
@@ -170,26 +232,26 @@ class _homebuyerState extends State<homebuyer> {
               SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Near your location",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              near_you(),
-              SizedBox(
-                height: 20,
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 20),
+              //   child: Align(
+              //     alignment: Alignment.centerLeft,
+              //     child: Text(
+              //       "Near your location",
+              //       style: TextStyle(
+              //           fontSize: 15,
+              //           fontWeight: FontWeight.w700,
+              //           color: Colors.black),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // near_you(),
+              // SizedBox(
+              //   height: 20,
+              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: Align(
@@ -234,12 +296,12 @@ class _homebuyerState extends State<homebuyer> {
               SizedBox(
                 height: 20,
               ),
-              additional_category(),
-              SizedBox(
-                height: 20,
-              ),
-              Image.asset("assets/images/become a seller.png"),
-              footer(),
+              // additional_category(),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Image.asset("assets/images/become a seller.png"),
+              Footer(),
             ],
           ),
         ),
@@ -255,12 +317,16 @@ class header extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10),
         width: double.infinity,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Image.asset("assets/images/destocklogo.png", height: 50),
+            SizedBox(width: 20,),
+            Image.asset("assets/images/destock_logo.png", width: 100, height: 60,),
+            SizedBox(
+              width: 40,
+            ),
             Container(
-              width: 250,
-              height: 40,
+              width: 260,
+              height: 60,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -271,10 +337,16 @@ class header extends StatelessWidget {
                 ],
               ),
               child: TextField(
+                onSubmitted: (String searchKey) {
+                  log("\nSearch Key: "+searchKey);
+
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SearchHome(searchText: searchKey,)));
+                },
                 decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(0),
-                      child: SizedBox(height: 3, child: Icon(Icons.search)),
+                      child: SizedBox(height: 4, child: Icon(Icons.search)),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
@@ -284,7 +356,7 @@ class header extends StatelessWidget {
                       ),
                     ),
                     filled: true,
-                    hintStyle: new TextStyle(color: Colors.grey, fontSize: 12),
+                    hintStyle: new TextStyle(color: Colors.grey, fontSize: 15),
                     hintText: "Search for pipes, valves etc.",
                     fillColor: Colors.white),
               ),
@@ -295,46 +367,54 @@ class header extends StatelessWidget {
 }
 
 class recent_view extends StatelessWidget {
+  Future<List<RecentProduct>> _getRecentViews() async {
+    var response =
+        await post('$localhostAddress/users/suggestions', body: {"id": "1"})
+            .then((value) => value.body);
+    // print(recentProductFromJson(response));
+    return recentProductFromJson(response);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            product_card_home(
-              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-              product_price: "7000",
-              image: "assets/images/product image.png",
-            ),
-            product_card_home(
-              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-              product_price: "7000",
-              image: "assets/images/product image.png",
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            product_card_home(
-              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-              product_price: "7000",
-              image: "assets/images/product image.png",
-            ),
-            product_card_home(
-              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-              product_price: "7000",
-              image: "assets/images/product image.png",
-            ),
-          ],
-        ),
-      ],
+    return FutureBuilder(
+      future: _getRecentViews(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData)
+          return GridView.builder(
+              primary: false,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.all(16),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.65,
+                crossAxisSpacing: 24,
+              ),
+              itemCount: 4,
+              itemBuilder: (context, index) {
+                return product_card_home(
+                  product_name: snapshot.data[index].name,
+                  product_price: snapshot.data[index].price.toString(),
+                  image: "assets/images/product image.png",
+                );
+              });
+        else
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+      },
     );
   }
 }
 
 class suggest_you extends StatelessWidget {
+  _getSuggested() async {
+    var response = await post('$localhostAddress/users/suggestions',
+        body: {"id": "1"}).then((value) => value.body);
+    return suggestionFromJson(response);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -362,40 +442,44 @@ class suggest_you extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 offset: Offset(0, 4),
-                blurRadius: 15,
-                color: Color(0xff9B9B9B).withOpacity(0.5),
+                blurRadius: 20,
+                color: Colors.black.withOpacity(.1),
               ),
             ],
           ),
-          child: Column(
-            children: <Widget>[
-              product_card_suggest(
-                product_name:
-                    "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                product_price: "7000",
-                description:
-                    "A little brief about the product comes brief about",
-                image: "assets/images/product image.png",
-              ),
-              Divider(color: Colors.black),
-              product_card_suggest(
-                product_name:
-                    "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                product_price: "7000",
-                description:
-                    "A little brief about the product comes brief about",
-                image: "assets/images/product image.png",
-              ),
-              Divider(color: Colors.black),
-              product_card_suggest(
-                product_name:
-                    "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                product_price: "7000",
-                description:
-                    "A little brief about the product comes brief about",
-                image: "assets/images/product image.png",
-              ),
-            ],
+          child: FutureBuilder(
+            future: _getSuggested(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData)
+                return Column(
+                  children: <Widget>[
+                    product_card_suggest(
+                      product_name: snapshot.data[0].name,
+                      product_price: snapshot.data[0].price.toString(),
+                      description: snapshot.data[0].description,
+                      image: "assets/images/product image.png",
+                    ),
+                    Divider(color: Colors.black),
+                    product_card_suggest(
+                      product_name: snapshot.data[1].name,
+                      product_price: snapshot.data[1].price.toString(),
+                      description: snapshot.data[1].description,
+                      image: "assets/images/product image.png",
+                    ),
+                    Divider(color: Colors.black),
+                    product_card_suggest(
+                      product_name: snapshot.data[2].name,
+                      product_price: snapshot.data[2].price.toString(),
+                      description: snapshot.data[2].description,
+                      image: "assets/images/product image.png",
+                    ),
+                  ],
+                );
+              else
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+            },
           ),
         ),
       ],
@@ -432,77 +516,96 @@ class near_you extends StatelessWidget {
 }
 
 class latest extends StatelessWidget {
+  _getLatest() async {
+    var response = await post('$localhostAddress/products/latest',
+        body: {"id": "1"}).then((value) => value.body);
+    return suggestionFromJson(response);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        latest_products(
-          color: Color(0xff2DDDB7).withOpacity(.07),
-          product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-          product_price: "7000",
-          description: "A little brief about the product comes brief about",
-          image: "assets/images/product image.png",
-        ),
-        latest_products(
-          color: Color(0xffD84764).withOpacity(.07),
-          product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-          product_price: "7000",
-          description: "A little brief about the product comes brief about",
-          image: "assets/images/product image.png",
-        ),
-        latest_products(
-          color: Color(0xff4060B8).withOpacity(.07),
-          product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-          product_price: "7000",
-          description: "A little brief about the product comes brief about",
-          image: "assets/images/product image.png",
-        ),
-      ],
+    return FutureBuilder(
+      future: _getLatest(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData)
+          return Column(
+            children: [
+              latest_products(
+                color: Color(0xff2DDDB7).withOpacity(.07),
+                product_name: snapshot.data[0].name,
+                product_price: snapshot.data[0].price.toString(),
+                description: snapshot.data[0].description,
+                image: "assets/images/product image.png",
+              ),
+              latest_products(
+                color: Color(0xffD84764).withOpacity(.07),
+                product_name: snapshot.data[1].name,
+                product_price: snapshot.data[1].price.toString(),
+                description: snapshot.data[1].description,
+                image: "assets/images/product image.png",
+              ),
+              latest_products(
+                color: Color(0xff4060B8).withOpacity(.07),
+                product_name: snapshot.data[2].name,
+                product_price: snapshot.data[2].price.toString(),
+                description: snapshot.data[2].description,
+                image: "assets/images/product image.png",
+              ),
+            ],
+          );
+        else
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+      },
     );
   }
 }
 
 class trending_now extends StatelessWidget {
+  _getTrending() async {
+    var response = await post('$localhostAddress/products/trending',
+        body: {"id": "1"}).then((value) => value.body);
+    // print(response);
+    return trendingFromJson(response);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            product_card_trending(
-              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-              product_price: "7000",
-              image: "assets/images/product image.png",
-            ),
-            product_card_trending(
-              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-              product_price: "7000",
-              image: "assets/images/product image.png",
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            product_card_trending(
-              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-              product_price: "7000",
-              image: "assets/images/product image.png",
-            ),
-            product_card_trending(
-              product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-              product_price: "7000",
-              image: "assets/images/product image.png",
-            ),
-          ],
-        ),
-      ],
+    return FutureBuilder(
+      future: _getTrending(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return GridView.builder(
+              primary: false,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.all(16),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.65,
+                crossAxisSpacing: 24,
+              ),
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                return product_card_trending(
+                  product_name: snapshot.data[index].name,
+                  product_price: snapshot.data[index].price.toString(),
+                  image: "assets/images/product image.png",
+                );
+              });
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
 
 class additional_category extends StatelessWidget {
+  _getAdditionalCategories() {}
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -569,7 +672,7 @@ class additional_category extends StatelessWidget {
   }
 }
 
-class footer extends StatelessWidget {
+class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

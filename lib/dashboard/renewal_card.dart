@@ -1,10 +1,13 @@
+import 'package:destock/CONSTANTS.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class renewal_card extends StatelessWidget {
   final List data;
   var renew_edit = "EDIT";
+  bool autoRenew;
 
-  renewal_card({Key key, this.data}) : super(key: key);
+  renewal_card({Key key, this.data, this.autoRenew = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +44,16 @@ class renewal_card extends StatelessWidget {
           ],
         ),
         child: Column(
-          children: List.generate(data.length, (index) {
+          children: List.generate((data.length > 3) ? 3 : data.length, (index) {
             return Row(
               children: [
-                Image.asset(
-                  "assets/images/product image.png",
+                // Image.asset(
+                //   "assets/images/product image.png",
+                //   height: 60,
+                // ),
+                Image.network(
+                  localhostAddress+data[index]['image'],
+                  // width: 60, //TODO change image width, right now they maintain aspect ratio
                   height: 60,
                 ),
                 Padding(
@@ -56,7 +64,8 @@ class renewal_card extends StatelessWidget {
                       Container(
                         width: 190,
                         child: Text(
-                          '#' + data[index]['name'].toString(),
+                          '#' + data[index]['id'].toString(),
+                          //Change it to randomId
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontSize: 14,
@@ -68,22 +77,25 @@ class renewal_card extends StatelessWidget {
                         height: 5,
                       ),
                       Container(
-                        width: 240,
+                        width: 280,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Auto-renewal on",
+                                  (this.autoRenew)
+                                      ? "Auto-renewal on"
+                                      : "Expires on",
                                   style: TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.w400,
                                       color: Color(0xff6e6e6e)),
                                 ),
                                 Text(
-                                  data[index]['date'],
+                                  data[index]['expiryDate'],
                                   style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w400,
@@ -91,14 +103,7 @@ class renewal_card extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Text(
-                              renew_edit,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xff2DDDB7)),
-                            ),
+                            buildActionButton(), //TODO move this out of column... wrap the padding with a row maybe,
                           ],
                         ),
                       ),
@@ -111,5 +116,29 @@ class renewal_card extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget buildActionButton() {
+    if(this.autoRenew)
+      return GestureDetector(
+        onTap: () {}, //TODO navigate to appropriate page(editProduct page, maybe?)
+        child: Text(
+          "EDIT",
+          textAlign: TextAlign.right,
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w600, color: Color(0xff2DDDB7)),
+        ),
+      );
+    else
+      return GestureDetector(
+        onTap: () {}, //TODO navigate to appropriate page(payment page, maybe?)
+        child: Text( //TODO wrap this with container and backgroundcolor to it
+          "RENEW",
+          textAlign: TextAlign.right,
+          style: TextStyle(
+            fontSize: 15, fontWeight: FontWeight.w600, color: Color(0xff2DDDB7)
+          ),
+        ),
+      );
   }
 }

@@ -1,3 +1,7 @@
+import 'package:destock/InnerDashboard/enquiries.dart';
+import 'package:destock/InnerDashboard/manageProducts.dart';
+import 'package:destock/profile/my_profile.dart';
+import 'package:destock/profile/seller_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -283,7 +287,8 @@ class product_view_card extends StatelessWidget {
 class options_small extends StatelessWidget {
   final String title;
   final String image;
-  const options_small({Key key, this.title, this.image}) : super(key: key);
+
+  options_small({Key key, this.title, this.image}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -372,6 +377,7 @@ class options_large extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class option_cards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -386,16 +392,28 @@ class option_cards extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                options_large(
-                  title: "Manage your products",
-                  image: "assets/images/manage_products.png",
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => manageProducts()));
+                  },
+                  child: options_large(
+                    title: "Manage your products",
+                    image: "assets/images/manage_products.png",
+                  ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
-                options_small(
-                  title: "My profile",
-                  image: "assets/images/myprofile.png",
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Profile()));
+                  },
+                  child: options_small(
+                    title: "My profile",
+                    image: "assets/images/myprofile.png",
+                  ),
                 ),
               ],
             ),
@@ -406,16 +424,28 @@ class option_cards extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                options_small(
-                  title: "Enquiries",
-                  image: "assets/images/enquiries.png",
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Enquiries()));
+                  },
+                  child: options_small(
+                    title: "Enquiries",
+                    image: "assets/images/enquiries.png",
+                  ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
-                options_large(
-                  title: "Renewals & Billings",
-                  image: "assets/images/renewals.png",
+                GestureDetector(
+                  // onTap: () {
+                  //   Navigator.push(context,
+                  //       MaterialPageRoute(builder: (context) => ())); //TODO navigate to renewals page
+                  // },
+                  child: options_large(
+                    title: "Renewals & Billings",
+                    image: "assets/images/renewals.png",
+                  ),
                 ),
               ],
             ),

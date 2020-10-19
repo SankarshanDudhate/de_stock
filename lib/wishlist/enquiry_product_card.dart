@@ -1,3 +1,5 @@
+import 'package:destock/CONSTANTS.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/utils/conversions.dart';
 
@@ -65,7 +67,7 @@ class EnquiryProductCard extends StatelessWidget {
 
   ExpansionTile buildEnquiry({String enquiryMessage}) {
     return ExpansionTile(
-      backgroundColor: Color(0xffF9F9F9),
+      backgroundColor: Color(0xeeF9F9F9),
       tilePadding: EdgeInsets.symmetric(horizontal: 32),
       childrenPadding: EdgeInsets.only(bottom: 16),
       title: Text(
@@ -99,14 +101,17 @@ class EnquiryProductCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
                   height: 50,
                   width: 50,
-                  margin: EdgeInsets.only(right: 16),
+                  margin: EdgeInsets.only(right: 16, left: 8),
+                  // padding: EdgeInsets.only(right: 16),
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(profileImage),
+                        // image: AssetImage(profileImage),
+                        image: NetworkImage(localhostAddress+profileImage),
                       ),
                       borderRadius: BorderRadius.circular(100)),
                 ),
@@ -116,7 +121,7 @@ class EnquiryProductCard extends StatelessWidget {
                     RichText(
                       text: new TextSpan(
                         style: new TextStyle(
-                          fontSize: 14.0,
+                          fontSize: 15,
                           color: Colors.black,
                         ),
                         children: <TextSpan>[
@@ -129,6 +134,7 @@ class EnquiryProductCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(height: 4,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -149,13 +155,13 @@ class EnquiryProductCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: 60,
-                        ),
-                        Text(
-                          dateToMMMddyyyy(date),
-                          style: TextStyle(
-                              fontSize: 10, fontStyle: FontStyle.italic),
+                        SizedBox(width: 140,),
+                        Container(
+                          child: Text(
+                            dateToMMMddyyyy(date),
+                            style: TextStyle(
+                                fontSize: 10, fontStyle: FontStyle.italic),
+                          ),
                         ),
                       ],
                     ),
@@ -164,32 +170,38 @@ class EnquiryProductCard extends StatelessWidget {
               ],
             ),
             Container(
+              height: 170,
               padding: EdgeInsets.all(16),
               margin: EdgeInsets.fromLTRB(8,16,8,16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 color: Color(0xffFFDDE9),
               ),
-              child: Text(message, style: TextStyle(
-                fontSize: 18
-              ),
-              maxLines: 5,),
-            ),
-            FlatButton(
-              onPressed: () {},
-              shape: StadiumBorder(),
-              color: Color(0xffD84764),
-              padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
               child: Text(
-                'Contact Seller',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                message,
+                style: TextStyle(fontSize: 18),
+                maxLines: 5,
+              ),
+            ),
+            Container(
+              width: 360,
+              margin: EdgeInsets.only(top: 4),
+              child: FlatButton(
+                onPressed: () {},
+                shape: StadiumBorder(),
+                color: Color(0xffD84764),
+                padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                child: Text(
+                  'Contact Seller',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
               ),
             )
           ],
         ),
       );
     } else {
-      print("No reply found!");
+      // print("No reply found!");
       return Container(
         padding: EdgeInsets.all(12),
         child: Container(
@@ -207,7 +219,7 @@ class EnquiryProductCard extends StatelessWidget {
     String productCost,
   }) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.fromLTRB(16,16,16,16),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.grey.withOpacity(0.2))),
@@ -220,23 +232,27 @@ class EnquiryProductCard extends StatelessWidget {
             margin: EdgeInsets.only(right: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              image: DecorationImage(image: AssetImage(productImage)),
+              image: DecorationImage(image: NetworkImage(localhostAddress+productImage)),
             ),
           ),
+          SizedBox(width: 8,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 210,
+                width: 250,
+                height: 50,
                 child: Text(
                   productName,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.5),
                 ),
               ),
               SizedBox(
-                height: 8,
+                height: 4,
               ),
               Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -249,7 +265,7 @@ class EnquiryProductCard extends StatelessWidget {
                           color: Color(0xff626161)),
                     ),
                   ),
-                  SizedBox(width: 70),
+                  SizedBox(width: 60),
                   //cost text should float right
                   Text(
                     "₹ " + productCost,

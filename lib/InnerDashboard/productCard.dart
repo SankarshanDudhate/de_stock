@@ -1,3 +1,4 @@
+import 'package:destock/CONSTANTS.dart';
 import 'package:flutter/material.dart';
 
 class product_card extends StatelessWidget {
@@ -10,7 +11,8 @@ class product_card extends StatelessWidget {
   final String views;
   final String favorite;
   final String enquiries;
-  const product_card({Key key, this.product_id,this.product_name,this.product_price,this.expiry_date, this.views,this.favorite, this.enquiries,this.image})
+  final bool productStatus;
+  const product_card({Key key, this.productStatus, this.product_id,this.product_name,this.product_price,this.expiry_date, this.views,this.favorite, this.enquiries,this.image="assets/images/product image.png"})
       : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class product_card extends StatelessWidget {
     return Container(
       // margin: EdgeInsets.symmetric(horizontal: 20)
       margin: EdgeInsets.fromLTRB(20, 0, 20, 25), //from only horizontal to tlrb
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(20,10,20,20),
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all( Radius.circular(10) ),
@@ -35,7 +37,8 @@ class product_card extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(image, height: 110,), //changed to 110
+              // Image.asset(image, height: 110,), //changed to 110
+              Image.network(localhostAddress+image, height: 110,), //changed to 110
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
@@ -46,7 +49,7 @@ class product_card extends StatelessWidget {
                       style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: Color(0xff6e6e6e)),),
                     SizedBox(height: 3,),
                     Container(
-                      width: 150, //180 to 150
+                      width: 240,
                       child: Text(product_name,
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
@@ -56,27 +59,27 @@ class product_card extends StatelessWidget {
                     SizedBox(height: 8,),
                     Row(
                       children: [
-                        Image.asset("assets/images/ruppee.png", height: 13,),
-                        Text(" "+product_price,
+                        //Image.asset("assets/images/ruppee.png", height: 13,),
+                        Text("₹"+product_price,
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
                       ],
                     ),
                     SizedBox(height: 25,),
                     Container(
-                      height: 15,
-                      child: Row(
-                        children: [
-                          Text("EDIT",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
-                          VerticalDivider(color: Colors.black,),
-                          Text("CHANGE QTY",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
-                        ],
-                      ),
+                    height: 15,
+                    child: Row(
+                      children: [
+                        Text("EDIT",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
+                        VerticalDivider(color: Colors.black,),
+                        Text("CHANGE QTY",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xff6F6F6F)),),
+                      ],
                     ),
+                  ),
                   ],
                 ),
               ),
@@ -88,7 +91,7 @@ class product_card extends StatelessWidget {
             height: 70, //from 80 to 70
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10),),
-              color: Color(0xff0B868A),
+              color: productStatus == true ? Color(0xFF0B868A) : Color(0xFFC4C4C4),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
