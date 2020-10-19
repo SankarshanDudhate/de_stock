@@ -69,6 +69,7 @@ class _editProductSliderState extends State<editProductSlider> {
                   //autoPlayAnimationDuration: Duration(milliseconds: 500),
                   viewportFraction: 0.6,
                   aspectRatio: 1/1,
+                  //initialPage: 1,
                   onPageChanged: (index) {
                       setState(() {
                         //_current = index;

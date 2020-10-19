@@ -8,6 +8,10 @@ import 'package:destock/PostAnAd/postAd.dart';
 import 'package:destock/PostAnAd/postAd_2.dart';
 import 'package:destock/PostAnAd/postAd_3.dart';
 import 'package:destock/PostAnAd/postAd_4.dart';
+import 'package:destock/ProductPages/editProduct.dart';
+import 'package:destock/ProductPages/productPage.dart';
+import 'package:destock/ProductPages/productPageSeller.dart';
+import 'package:destock/ProductPages/renewalBilling.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,7 +29,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: "Poppins",
       ),
-      home: PostAd()
+      home: renewalBilling()
     );
   }
 }

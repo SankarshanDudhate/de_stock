@@ -1,4 +1,5 @@
 import 'package:destock/ProductPages/ImageCarousel.dart';
+import 'package:destock/utils/bg_clip_purple.dart';
 import 'package:flutter/material.dart';
 
 class productPageSeller extends StatefulWidget {
@@ -311,22 +312,47 @@ class _productPageSellerState extends State<productPageSeller> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal:10),
-                    margin: EdgeInsets.symmetric(horizontal:20),
-                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10),),
-                        color: Color(0xFFFFF9FA),
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 1),
-                            blurRadius: 10,
-                            color: Colors.black.withOpacity(.16),
-                        ),]
-                    ),
-                    child: _buildContactSeller()
+                  Stack(
+                    children: [
+                      // Positioned.fill(
+                      //   child: Align(
+                      //     alignment: Alignment.center,
+                      //     child: RotationTransition(
+                      //        turns: new AlwaysStoppedAnimation(-5 / 360),
+                      //        child: Container(
+                      //       width: MediaQuery.of(context).size.width,
+                      //       height: 200,
+                      //         decoration: BoxDecoration(
+                      //           color: Color(0xFF4B69FF),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: BgClip(
+                          height: 360,
+                        ),
+                      ),
+                      Container(
+                      padding: EdgeInsets.symmetric(horizontal:10,vertical: 20),
+                      margin: EdgeInsets.symmetric(horizontal:10,vertical:30),
+                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10),),
+                            color: Color(0xFFFFF9FA),
+                          boxShadow: [
+                            BoxShadow(
+                                offset: Offset(0, 1),
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(.16),
+                            ),]
+                        ),
+                        child: _buildContactSeller()
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 40,)
+                  SizedBox(height: 100,)
                 
                   ],
                 ),
