@@ -1,11 +1,16 @@
 import 'package:destock/cards/latest_products.dart';
+import 'package:destock/category/category_page.dart';
+import 'package:destock/home_buyer/latest_product.dart';
+import 'package:destock/home_buyer/recently_viewed.dart';
+import 'package:destock/home_buyer/suggested_for_you.dart';
+import 'package:destock/home_buyer/trending.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/cards/product_card_home.dart';
 import 'package:destock/cards/product_card_suggest.dart';
 import 'package:destock/cards/product_near_you.dart';
 import 'package:destock/cards/search_product_card_small.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 
 class homebuyer extends StatefulWidget {
@@ -21,7 +26,7 @@ class _homebuyerState extends State<homebuyer> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, width: 1080, height: 1920);
+
     return Scaffold(
         body: SingleChildScrollView(
           child: Container(
@@ -35,8 +40,35 @@ class _homebuyerState extends State<homebuyer> {
                       children: <Widget>[
                         SizedBox(height: 70,),
                         header(),
+                        SizedBox(height: 20,),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
 
-                        SizedBox(height: 40,),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+
+                              Text("Top categories",
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return (category_page());
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text("View all",
+                                  style: TextStyle(fontSize: 12, color: Colors.blue),),
+                              ),
+                            ],
+
+                          ),
+                        ),
+                        SizedBox(height: 20,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -77,37 +109,76 @@ class _homebuyerState extends State<homebuyer> {
                         ),
 
                         SizedBox(height: 40,),
-
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Items you viewed recently",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+
+                              Text("Items you viewed recently",
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return (recently_viewed());
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text("View all",
+                                  style: TextStyle(fontSize: 12, color: Colors.blue),),
+                              ),
+                            ],
+
                           ),
                         ),
+
 
                         SizedBox(height: 20,),
 
                         recent_view(),
 
                         SizedBox(height: 30,),
-
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Suggested for you",
-                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
-                                Text("based on your wishlist",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Color(0xff949494),),)
-                              ],
-                            ),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Suggested for you",
+                                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
+                                  Text("based on your wishlist",
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Color(0xff949494),),)
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return (suggested_for_you());
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text("View all",
+                                  style: TextStyle(fontSize: 12, color: Colors.blue),),
+                              ),
+                            ],
+
                           ),
                         ),
+
+
 
                         SizedBox(height: 20,),
 
@@ -118,15 +189,35 @@ class _homebuyerState extends State<homebuyer> {
                         Image.asset("assets/images/pricing plans banner.png"),
 
                         SizedBox(height: 20,),
-
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Latest Products",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+
+                              Text("Latest Products",
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return (latest_product());
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text("View all",
+                                  style: TextStyle(fontSize: 12, color: Colors.blue),),
+                              ),
+                            ],
+
                           ),
                         ),
+
+
                         SizedBox(height: 20,),
 
                         latest(),
@@ -136,15 +227,34 @@ class _homebuyerState extends State<homebuyer> {
                         Image.asset("assets/images/refer a friend banner.png"),
 
                         SizedBox(height: 20,),
-
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Trending Now",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+
+                              Text("Trending Now",
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.black),),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return (trending());
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text("View all",
+                                  style: TextStyle(fontSize: 12, color: Colors.blue),),
+                              ),
+                            ],
+
                           ),
                         ),
+
 
                         SizedBox(height: 20,),
 

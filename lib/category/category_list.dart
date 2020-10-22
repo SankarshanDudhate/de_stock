@@ -1,4 +1,5 @@
 import 'package:destock/cards/pro_card_hor_scroll.dart';
+import 'package:destock/category/category_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/cards/latest_products.dart';
@@ -72,7 +73,11 @@ class header extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.arrow_back_ios,color: Colors.white,),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back_ios,color: Colors.white,)),
 
               SizedBox(width: 10,),
               Text("Gearbox",

@@ -1,3 +1,4 @@
+import 'package:destock/category/category_list.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -142,7 +143,16 @@ class category_pageState extends State<category_page> {
                 child: _grid("Flanges", "assets/images/categories/bearing 1.png",Color(0xff0B868A)),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return category_list();
+                      },
+                    ),
+                  );
+                },
                 child: _grid("Gearbox", "assets/images/categories/package-box 1.png",Color(0xff0B868A)),
               ),
               GestureDetector(

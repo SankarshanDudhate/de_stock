@@ -62,7 +62,11 @@ padding: EdgeInsets.fromLTRB(10,0,0,0),
 
         child: Row(
           children: [
-            Icon(Icons.arrow_back_ios,color: Colors.white,),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back_ios,color: Colors.white,)),
             SizedBox(width: 10,),
             Text("Items viewed recently",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),),

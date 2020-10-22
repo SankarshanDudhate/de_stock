@@ -71,7 +71,11 @@ class header extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.arrow_back_ios,color: Colors.white,),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back_ios,color: Colors.white,)),
 
               SizedBox(width: 10,),
               Text("Latest products",
@@ -164,9 +168,10 @@ class horizontal_scroll extends StatelessWidget {
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: 310),
           child: Container(
-            margin: EdgeInsets.only(top: 60,left: 30),
+            margin: EdgeInsets.only(top: 60),
 
             child: ListView(
+              padding: EdgeInsets.only(left: 40),
               scrollDirection: Axis.horizontal,
               children: [
                 pro_card_hor_scroll(

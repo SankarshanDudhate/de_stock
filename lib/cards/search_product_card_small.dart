@@ -23,7 +23,7 @@ class searchcardsmall extends StatelessWidget {
           BoxShadow(
             offset: Offset(0, 1),
             blurRadius: 3,
-            color: Color(0xffE3E6EF).withOpacity(1),
+            color: Color(0xff000000).withOpacity(.16),
           ),
         ],
       ),
@@ -99,7 +99,7 @@ class searchcardsmall extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("CONTACT SELLER",
-                      style: TextStyle(fontSize: 8, fontWeight: FontWeight.w300, color: Colors.blue),),
+                      style: TextStyle(fontSize: 9, fontWeight: FontWeight.w300, color: Colors.blue),),
                     Icon(Icons.favorite_border,color: Colors.black,) ,
                   ],
                 ),
