@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'cards/product_card_home.dart';
-import 'models/RecentProducts.dart';
+import '../cards/product_card_home.dart';
+import '../models/RecentProducts.dart';
 
 class recently_viewed extends StatefulWidget {
   recently_viewed({Key key, this.title}) : super(key: key);

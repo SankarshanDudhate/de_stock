@@ -1,7 +1,9 @@
 import 'package:destock/cards/latest_products.dart';
+import 'package:destock/categories_page.dart';
 import 'package:destock/models/RecentProducts.dart';
 import 'package:destock/models/SuggestedProducts.dart';
 import 'package:destock/models/TrendingProducts.dart';
+import 'package:destock/utils/footer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/cards/product_card_home.dart';
@@ -9,6 +11,11 @@ import 'package:destock/cards/product_card_suggest.dart';
 import 'package:destock/cards/product_near_you.dart';
 import 'package:destock/cards/search_product_card_small.dart';
 import 'package:http/http.dart';
+
+import 'latest_products.dart';
+import 'recently_viewed.dart';
+import 'suggested_for_you.dart';
+import 'trending.dart';
 
 class HomeBuyer extends StatelessWidget {
   @override
@@ -27,6 +34,40 @@ class HomeBuyer extends StatelessWidget {
               Header(),
               SizedBox(
                 height: 40,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Top categories",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return (category_page());
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "View all",
+                        style: TextStyle(fontSize: 12, color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,18 +140,37 @@ class HomeBuyer extends StatelessWidget {
                 height: 40,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Items you viewed recently",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black),
-                  ),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Items you viewed recently",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return (recently_viewed());
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "View all",
+                        style: TextStyle(fontSize: 12, color: Colors.blue),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+
               SizedBox(
                 height: 20,
               ),
@@ -119,29 +179,47 @@ class HomeBuyer extends StatelessWidget {
                 height: 30,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Suggested for you",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      Text(
-                        "based on your wishlist",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w300,
-                          color: Color(0xff949494),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Suggested for you",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
                         ),
-                      )
-                    ],
-                  ),
+                        Text(
+                          "based on your wishlist",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300,
+                            color: Color(0xff949494),
+                          ),
+                        )
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return (suggested_for_you());
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "View all",
+                        style: TextStyle(fontSize: 12, color: Colors.blue),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -176,18 +254,37 @@ class HomeBuyer extends StatelessWidget {
               //   height: 20,
               // ),
               Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Latest Products",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black),
-                  ),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Latest Products",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return (latest_product());
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "View all",
+                        style: TextStyle(fontSize: 12, color: Colors.blue),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+
               SizedBox(
                 height: 20,
               ),
@@ -200,18 +297,37 @@ class HomeBuyer extends StatelessWidget {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Trending Now",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black),
-                  ),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Trending Now",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return (trending());
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "View all",
+                        style: TextStyle(fontSize: 12, color: Colors.blue),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+
               SizedBox(
                 height: 20,
               ),
@@ -219,11 +335,11 @@ class HomeBuyer extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              // additional_category(),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Image.asset("assets/images/become a seller.png"),
+              additional_category(),
+              SizedBox(
+                height: 20,
+              ),
+              Image.asset("assets/images/become a seller.png"),
               Footer(),
             ],
           ),
@@ -297,40 +413,6 @@ class recent_view extends StatelessWidget {
       future: _getRecentViews(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData)
-          // return Column(
-          //   children: [
-          //     Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //       children: [
-          //         product_card_home(
-          //           product_name: snapshot.data[0].name,
-          //           product_price: snapshot.data[0].price.toString(),
-          //           image: "assets/images/product image.png",
-          //         ),
-          //         product_card_home(
-          //           product_name: snapshot.data[1].name,
-          //           product_price: snapshot.data[1].price.toString(),
-          //           image: "assets/images/product image.png",
-          //         ),
-          //       ],
-          //     ),
-          //     Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //       children: [
-          //         product_card_home(
-          //           product_name: snapshot.data[2].name,
-          //           product_price: snapshot.data[2].price.toString(),
-          //           image: "assets/images/product image.png",
-          //         ),
-          //         product_card_home(
-          //           product_name: snapshot.data[3].name,
-          //           product_price: snapshot.data[3].price.toString(),
-          //           image: "assets/images/product image.png",
-          //         ),
-          //       ],
-          //     ),
-          //   ],
-          // );
           return GridView.builder(
               primary: false,
               physics: NeverScrollableScrollPhysics(),
@@ -371,7 +453,10 @@ class suggest_you extends StatelessWidget {
       children: [
         Container(
             margin: EdgeInsets.fromLTRB(0, 50, 0, 0),
-            child: Image.asset("assets/images/pink bg.png")),
+            child: Image.asset(
+              "assets/images/pink bg.png",
+              fit: BoxFit.fill,
+            )),
         Container(
           margin:
               EdgeInsets.fromLTRB(30, 0, 30, 25), //from only horizontal to tlrb
@@ -505,7 +590,7 @@ class latest extends StatelessWidget {
 
 class trending_now extends StatelessWidget {
   _getTrending() async {
-    var response = await post('http://192.168.43.188:5000/products/trending',
+    var response = await post('http://192.168.43.188:5000/products/latest',
         body: {"id": "1"}).then((value) => value.body);
     // print(response);
     return trendingFromJson(response);
@@ -610,92 +695,5 @@ class additional_category extends StatelessWidget {
         )
       ],
     );
-  }
-}
-
-class Footer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(vertical: 60, horizontal: 40),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/footerbg.png"),
-          ),
-          color: Color(0xffFFEEF1),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "About us",
-              style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff792B3B)),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Pricing Plans",
-              style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff792B3B)),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "FAQs",
-              style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff792B3B)),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Help",
-              style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff792B3B)),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Feedback",
-              style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff792B3B)),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Terms & Conditions",
-              style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff792B3B)),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Refer a friend",
-              style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff792B3B)),
-            ),
-          ],
-        ));
   }
 }

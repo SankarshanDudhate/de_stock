@@ -104,12 +104,11 @@ class _SearchHomeState extends State<SearchHome> {
             ),
           ),
         ),
-        Positioned(
-          top: 160,
-          right: 40,
+        Center(
           child: Column(
             children: [
               Container(
+                margin: EdgeInsets.only(top: 150),
                 width: 320,
                 height: 50,
                 decoration: BoxDecoration(

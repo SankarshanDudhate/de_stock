@@ -123,7 +123,7 @@ class category_page extends StatelessWidget {
                     },
                   );
                 else
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
               },
             ),
             SizedBox(

@@ -4,10 +4,10 @@ import 'package:destock/account_setting/confirm_deactivate_account.dart';
 import 'package:destock/account_setting/payment_details.dart';
 import 'package:destock/categories_page.dart';
 import 'package:destock/dashboard/dashboard.dart';
-import 'package:destock/home_buyer.dart';
+import 'package:destock/home_buyer/home_buyer.dart';
 import 'package:destock/post_ad_4.dart';
 import 'package:destock/profile/seller_profile.dart';
-import 'package:destock/recently_viewed.dart';
+import 'package:destock/home_buyer/recently_viewed.dart';
 import 'package:destock/wishlist/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -93,9 +93,9 @@ class MyApp extends StatelessWidget {
       // home: ChangePassword(),
       // home: PaymentDetails(),
       // home: PostAd4(),
-      home: SearchHome(),
+      // home: SearchHome(),
       // home: Wishlist(),
-      // home: HomeBuyer(),
+      home: HomeBuyer(),
       // home: Help(),
       // home: FAQ(),
 
