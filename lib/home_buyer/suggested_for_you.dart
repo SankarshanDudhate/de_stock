@@ -111,35 +111,13 @@ class header extends StatelessWidget {
   }
 }
 
-class category_list_suggest extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        product_card_suggest_withtag(
-          product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-          product_price: "7000",
-          description: "A little brief about the product comes brief about",
-          image: "assets/images/product image.png",
-        ),
-        product_card_suggest_withtag(
-          product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-          product_price: "7000",
-          description: "A little brief about the product comes brief about",
-          image: "assets/images/product image.png",
-        ),
-        product_card_suggest_withtag(
-          product_name: "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-          product_price: "7000",
-          description: "A little brief about the product comes brief about",
-          image: "assets/images/product image.png",
-        ),
-      ],
-    );
-  }
-}
-
 class horizontal_scroll extends StatelessWidget {
+  _getViewSuggestion() async {
+    var response = await post('http://192.168.43.188:5000/user/view_suggestion',
+        body: {"id": "1"}).then((value) => value.body);
+    return jsonDecode(response);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -168,38 +146,59 @@ class horizontal_scroll extends StatelessWidget {
           constraints: BoxConstraints(maxHeight: 175),
           child: Container(
             margin: EdgeInsets.only(top: 50, left: 0),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                searchcardsmall(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png",
-                ),
-                searchcardsmall(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png",
-                ),
-                searchcardsmall(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png",
-                ),
-                searchcardsmall(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png",
-                ),
-              ],
+            // child: ListView(
+            //   scrollDirection: Axis.horizontal,
+            //   children: [
+            //     searchcardsmall(
+            //       product_name:
+            //           "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+            //       product_price: "7000",
+            //       views: "112",
+            //       image: "assets/images/product image.png",
+            //     ),
+            //     searchcardsmall(
+            //       product_name:
+            //           "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+            //       product_price: "7000",
+            //       views: "112",
+            //       image: "assets/images/product image.png",
+            //     ),
+            //     searchcardsmall(
+            //       product_name:
+            //           "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+            //       product_price: "7000",
+            //       views: "112",
+            //       image: "assets/images/product image.png",
+            //     ),
+            //     searchcardsmall(
+            //       product_name:
+            //           "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+            //       product_price: "7000",
+            //       views: "112",
+            //       image: "assets/images/product image.png",
+            //     ),
+            //   ],
+            // ),
+            child: FutureBuilder(
+              future: _getViewSuggestion(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData)
+                  return ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: List.generate(
+                      4,
+                      (index) => searchcardsmall(
+                        product_name: snapshot.data[index]['name'],
+                        product_price: snapshot.data[index]['price'].toString(),
+                        views: snapshot.data[index]['views'].toString(),
+                        image: "assets/images/product image.png",
+                      ),
+                    ),
+                  );
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         )

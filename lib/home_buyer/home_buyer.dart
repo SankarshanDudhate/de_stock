@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:destock/cards/latest_products.dart';
 import 'package:destock/categories_page.dart';
 import 'package:destock/models/RecentProducts.dart';
@@ -18,6 +20,12 @@ import 'suggested_for_you.dart';
 import 'trending.dart';
 
 class HomeBuyer extends StatelessWidget {
+  _getTopCategories() async {
+    var body = await get('http://192.168.43.188:5000/products/top_categories')
+        .then((value) => value.body);
+    return jsonDecode(body);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,72 +77,103 @@ class HomeBuyer extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      Image.asset("assets/images/cutting_tool.png", height: 60),
-                      SizedBox(
-                        height: 10,
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     Column(
+              //       children: [
+              //         Image.asset("assets/images/cutting_tool.png", height: 60),
+              //         SizedBox(
+              //           height: 10,
+              //         ),
+              //         Text(
+              //           "Cutting Tools",
+              //           style: TextStyle(
+              //               fontSize: 12,
+              //               fontWeight: FontWeight.w500,
+              //               color: Colors.black),
+              //         ),
+              //       ],
+              //     ),
+              //     Column(
+              //       children: [
+              //         Image.asset("assets/images/pipes.png", height: 60),
+              //         SizedBox(
+              //           height: 10,
+              //         ),
+              //         Text(
+              //           "Pipes",
+              //           style: TextStyle(
+              //               fontSize: 12,
+              //               fontWeight: FontWeight.w500,
+              //               color: Colors.black),
+              //         ),
+              //       ],
+              //     ),
+              //     Column(
+              //       children: [
+              //         Image.asset("assets/images/measure.png", height: 60),
+              //         SizedBox(
+              //           height: 10,
+              //         ),
+              //         Text(
+              //           "Measuring\nInstruments",
+              //           textAlign: TextAlign.center,
+              //           style: TextStyle(
+              //               fontSize: 12,
+              //               fontWeight: FontWeight.w500,
+              //               color: Colors.black),
+              //         ),
+              //       ],
+              //     ),
+              //     Column(
+              //       children: [
+              //         Image.asset("assets/images/tools.png", height: 60),
+              //         SizedBox(
+              //           height: 10,
+              //         ),
+              //         Text(
+              //           "Tools",
+              //           style: TextStyle(
+              //               fontSize: 12,
+              //               fontWeight: FontWeight.w500,
+              //               color: Colors.black),
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
+              FutureBuilder(
+                future: _getTopCategories(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData)
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: List.generate(
+                        4,
+                        (index) => Column(
+                          children: [
+                            Image.asset("assets/images/tools.png", height: 60),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              snapshot.data[index]['name'],
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        "Cutting Tools",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.asset("assets/images/pipes.png", height: 60),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Pipes",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.asset("assets/images/measure.png", height: 60),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Measuring\nInstruments",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Image.asset("assets/images/tools.png", height: 60),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Tools",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                    ],
-                  ),
-                ],
+                    );
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
               SizedBox(
                 height: 40,
@@ -630,7 +669,11 @@ class trending_now extends StatelessWidget {
 }
 
 class additional_category extends StatelessWidget {
-  _getAdditionalCategories() {}
+  _getViewSuggestion() async {
+    var response = await post('http://192.168.43.188:5000/user/view_suggestion',
+        body: {"id": "1"}).then((value) => value.body);
+    return jsonDecode(response);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -658,38 +701,56 @@ class additional_category extends StatelessWidget {
           constraints: BoxConstraints(maxHeight: 175),
           child: Container(
             margin: EdgeInsets.only(top: 50, left: 0),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                searchcardsmall(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png",
-                ),
-                searchcardsmall(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png",
-                ),
-                searchcardsmall(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png",
-                ),
-                searchcardsmall(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  views: "112",
-                  image: "assets/images/product image.png",
-                ),
-              ],
+            child: FutureBuilder(
+              future: _getViewSuggestion(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData)
+                  return ListView(
+                    scrollDirection: Axis.horizontal,
+                    // children: [
+                    //   searchcardsmall(
+                    //     product_name:
+                    //         "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                    //     product_price: "7000",
+                    //     views: "112",
+                    //     image: "assets/images/product image.png",
+                    //   ),
+                    //   searchcardsmall(
+                    //     product_name:
+                    //         "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                    //     product_price: "7000",
+                    //     views: "112",
+                    //     image: "assets/images/product image.png",
+                    //   ),
+                    //   searchcardsmall(
+                    //     product_name:
+                    //         "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                    //     product_price: "7000",
+                    //     views: "112",
+                    //     image: "assets/images/product image.png",
+                    //   ),
+                    // searchcardsmall(
+                    //   product_name:
+                    //       "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                    //   product_price: "7000",
+                    //   views: "112",
+                    //   image: "assets/images/product image.png",
+                    // ),
+                    // ],
+                    children: List.generate(
+                      4,
+                      (index) => searchcardsmall(
+                        product_name: snapshot.data[index]["name"],
+                        product_price: snapshot.data[index]["price"].toString(),
+                        views: snapshot.data[index]["views"].toString(),
+                        image: "assets/images/product image.png",
+                      ),
+                    ),
+                  );
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         )

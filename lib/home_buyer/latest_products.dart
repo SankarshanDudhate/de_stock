@@ -128,6 +128,12 @@ class header extends StatelessWidget {
 }
 
 class horizontal_scroll extends StatelessWidget {
+  _getRecommended() async {
+    var response = await post('http://192.168.43.188:5000/user/recommended',
+        body: {"id": "1"}).then((value) => value.body);
+    return jsonDecode(response);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -165,34 +171,51 @@ class horizontal_scroll extends StatelessWidget {
           constraints: BoxConstraints(maxHeight: 310),
           child: Container(
             margin: EdgeInsets.only(top: 60, left: 30),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                pro_card_hor_scroll(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  image: "assets/images/product image.png",
-                ),
-                pro_card_hor_scroll(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  image: "assets/images/product image.png",
-                ),
-                pro_card_hor_scroll(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  image: "assets/images/product image.png",
-                ),
-                pro_card_hor_scroll(
-                  product_name:
-                      "Cast Iron gears 15 inche 1050 rounded edges - PVC",
-                  product_price: "7000",
-                  image: "assets/images/product image.png",
-                ),
-              ],
+            child: FutureBuilder(
+              future: _getRecommended(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData)
+                  return ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: List.generate(
+                      4,
+                      (index) => pro_card_hor_scroll(
+                        product_name: snapshot.data[index]['name'],
+                        product_price: snapshot.data[index]['price'].toString(),
+                        image: "assets/images/product image.png",
+                      ),
+                    ),
+                    // children: [
+                    //   pro_card_hor_scroll(
+                    //     product_name:
+                    //         "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                    //     product_price: "7000",
+                    //     image: "assets/images/product image.png",
+                    //   ),
+                    //   pro_card_hor_scroll(
+                    //     product_name:
+                    //         "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                    //     product_price: "7000",
+                    //     image: "assets/images/product image.png",
+                    //   ),
+                    //   pro_card_hor_scroll(
+                    //     product_name:
+                    //         "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                    //     product_price: "7000",
+                    //     image: "assets/images/product image.png",
+                    //   ),
+                    //   pro_card_hor_scroll(
+                    //     product_name:
+                    //         "Cast Iron gears 15 inche 1050 rounded edges - PVC",
+                    //     product_price: "7000",
+                    //     image: "assets/images/product image.png",
+                    //   ),
+                    // ],
+                  );
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         )
