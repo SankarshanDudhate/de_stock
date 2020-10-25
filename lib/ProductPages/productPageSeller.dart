@@ -1,8 +1,12 @@
 import 'package:destock/ProductPages/ImageCarousel.dart';
 import 'package:destock/utils/bg_clip_purple.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'editQuantityDialog.dart';
 
 class productPageSeller extends StatefulWidget {
+
   @override
   _productPageSellerState createState() => _productPageSellerState();
 }
@@ -15,9 +19,19 @@ class _productPageSellerState extends State<productPageSeller> {
   String productQty = '150 kgs';
   String productCategory = 'Cutting tools';
   String publishDate = 'August 19, 2020';
+  String selectedUnit;
+  TextEditingController editQtyController = new TextEditingController();
   final String views = '112';
   final String favorite = '19';
   final String enquiries = '45';
+  bool availablity = true;
+
+  var _selectUnit = {
+      "kg",
+      "pieces",
+      "litre"
+  };
+  //productPageSeller(this.productQty,this.availblity);
 
    List<String> specName = [
     'Brand','Model','Material','Weight','Dimensions','Capacity'
@@ -127,6 +141,117 @@ class _productPageSellerState extends State<productPageSeller> {
     );
   }
 
+  Widget _buildAvailablity(){
+    return Row(
+              children: [
+                Container(
+                  //width: 220,
+                  //margin: EdgeInsets.symmetric(horizontal:40),
+                  padding: EdgeInsets.symmetric(horizontal:2, vertical:2),
+                  decoration: BoxDecoration(
+                    border: Border.all( 
+                      color : Color(0xFFE6E6E6),
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(60)
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState((){
+                            this.availablity = true;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:20, vertical:10),
+                          decoration: BoxDecoration(
+                            color : availablity == true ? Color(0xFF4B69FF) : Color(0xFFFFFFFF),
+                            // border: Border.all( 
+                            //   color : Color(0xFFFFFF),
+                            // ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30)
+                            ),
+                          ),
+                          child: Text('Available', style: availablity == true ? TextStyle( fontSize : 20, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF)) : TextStyle( fontSize: 18 , color: Color(0xFF979797)))
+                          ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState((){
+                            this.availablity = false;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:20, vertical:10),
+                          decoration: BoxDecoration(
+                            color : availablity == false ? Color(0xFFD84764) : Color(0xFFFFFFFF),
+                            // border: Border.all( 
+                            //   color : Color(0xFFFFFF),
+                            // ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30)
+                            ),
+                          ),
+                          child: Text('Out of Stock', style: availablity == false ? TextStyle( fontSize : 20, fontWeight: FontWeight.bold, color: Color(0xFFFFFFFF)) : TextStyle( fontSize: 18 , color: Color(0xFF979797))),
+                          ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+  }
+
+  Widget _buildQuantity(){
+    return TextField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(0),
+          )
+      ),
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        WhitelistingTextInputFormatter.digitsOnly
+      ],
+      controller: editQtyController,
+    );
+  }
+
+  Widget _buildUnit(){
+    return Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor : Colors.black
+      ),
+          child: DropdownButtonFormField<String>(
+          items: _selectUnit.map((String dropDownStringItem){
+            return DropdownMenuItem<String>(
+              value: dropDownStringItem,
+              child: Center(child: Text(dropDownStringItem,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
+            );
+          }).toList(),
+          onChanged: (_value) {
+            setState(() {
+              this.selectedUnit = _value;
+              print(selectedUnit);
+            });
+          },
+          hint: Text("Select unit",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
+          value: selectedUnit,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20, 17, 20, 17),
+          filled : true,
+          fillColor: Colors.black,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(0),
+          )
+        ),
+      ),
+    );
+  }
 
 
   @override
@@ -372,14 +497,22 @@ class _productPageSellerState extends State<productPageSeller> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width*0.6,
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFE5E5E5),
-                            borderRadius: BorderRadius.circular(30),
+                        GestureDetector(
+                          onTap: () async {
+                            //editQuantity(data: new productPageSeller(this.productQty, this.availablity));
+                            //_editQty();
+                            final result = await _editQtyDialog();
+                            print(result);
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width*0.6,
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFE5E5E5),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Text('CHANGE QUANTITY', style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),),
                           ),
-                          child: Text('CHANGE QUANTITY', style: TextStyle(fontSize:16,fontWeight: FontWeight.bold),),
                         ),
                         Text(''),
                       ],
@@ -408,4 +541,20 @@ class _productPageSellerState extends State<productPageSeller> {
       )
     );
   }
+
+
+  _editQtyDialog(){
+    return showDialog(
+      context: context,
+      builder: (context) {
+            return AlertDialog(
+            content: editQuantity(data: productQty),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))
+            ),
+          );
+        }
+        );
+  }
+
 }
