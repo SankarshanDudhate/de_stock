@@ -3,6 +3,7 @@ import 'package:destock/utils/bg_clip_purple.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'confirmDialog.dart';
 import 'editQuantityDialog.dart';
 
 class productPageSeller extends StatefulWidget {
@@ -503,6 +504,7 @@ class _productPageSellerState extends State<productPageSeller> {
                             //_editQty();
                             final result = await _editQtyDialog();
                             print(result);
+                            _buildConfirmDialogue(context);
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width*0.6,
@@ -558,3 +560,22 @@ class _productPageSellerState extends State<productPageSeller> {
   }
 
 }
+
+
+void _buildConfirmDialogue(BuildContext context) {
+
+   
+    var alertDialog = AlertDialog(
+      content : confirmDialog(),
+      shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.all(Radius.circular(5.0))
+               ),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      }
+    );
+  }

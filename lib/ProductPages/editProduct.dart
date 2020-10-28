@@ -2,6 +2,8 @@ import 'package:destock/ProductPages/editProductSlider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'confirmDialog.dart';
+
 class editProduct extends StatefulWidget {
   @override
   _editProductState createState() => _editProductState();
@@ -743,7 +745,6 @@ List<Map<String,String>> _specs= new List();
                                             return;
                                           }
                                           _formKeyEditProduct.currentState.save();
-                                          //Enter Data here
                                         },
                                         child: Container(
                                           width: 280,

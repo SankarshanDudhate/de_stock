@@ -367,9 +367,16 @@ class _PostAd2State extends State<PostAd2> {
 void _buildErrorDialogue(BuildContext context,int status) {
 
     var alertDialog = AlertDialog(
-      content : status == 0 ? Text("Enter at least 1 image")
-      : status == 1? Text("Only 10 Images are Allowed.\nCancel excess images")
-      : Text(''),
+      content : Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          status == 0 ? Text("Enter at least 1 image")
+          : status == 1? Text("You've already selected 10 images")
+          : Text(''),
+          SizedBox(height: 20,),
+          Text('Ok',style: TextStyle(fontSize:18,color:Color(0xFF4B69FF)),)
+        ],
+      ),
       shape: RoundedRectangleBorder(
                    borderRadius: BorderRadius.all(Radius.circular(10.0))
                ),
