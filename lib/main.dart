@@ -4,6 +4,7 @@ All the data from postAd,postAd_2,postAd_3 to be added in db
 
 import 'package:destock/InnerDashboard/enquiries.dart';
 import 'package:destock/InnerDashboard/manageProducts.dart';
+import 'package:destock/PostAnAd/paymentSuccess.dart';
 import 'package:destock/PostAnAd/postAd.dart';
 import 'package:destock/PostAnAd/postAd_2.dart';
 import 'package:destock/PostAnAd/postAd_3.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: "Poppins",
       ),
-      home: renewalBilling()
+      home: paymentSuccess()
     );
   }
 }
