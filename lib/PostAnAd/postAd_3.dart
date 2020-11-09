@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:developer';
 import 'package:destock/PostAnAd/postAd_4.dart';
+import 'package:destock/PostAnAd/reviewNameDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -257,18 +258,22 @@ class _PostAd3State extends State<PostAd3> {
                                print(respJson["Details"]);
                              }
                         },
-
-                            child: Container(
-                                height: 50,
-                                margin: EdgeInsets.symmetric(horizontal: 30),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Color(0xFFFC0151),
+                            child: GestureDetector(
+                              onTap: (){
+                                _buildEditDialogue(context);
+                              },
+                              child: Container(
+                                  height: 50,
+                                  margin: EdgeInsets.symmetric(horizontal: 30),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: Color(0xFFFC0151),
+                                  ),
+                                  child: Center(
+                                    child: Text("Save and add a new product", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
+                                  ),
                                 ),
-                                child: Center(
-                                  child: Text("Save and add a new product", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
-                                ),
-                              ),
+                            ),
                       ),
                       SizedBox(height:20),
                       GestureDetector(
@@ -304,4 +309,22 @@ class _PostAd3State extends State<PostAd3> {
       )
     );
   }
+
+  void _buildEditDialogue(BuildContext context) {
+   
+    var alertDialog = AlertDialog(
+      content : reviewNameDialog(),
+      shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.all(Radius.circular(5.0))
+               ),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      }
+    );
+  }
+
 }
