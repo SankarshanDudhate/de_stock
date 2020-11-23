@@ -48,15 +48,16 @@ class product_card_home extends StatelessWidget {
             ),
             Container(
               width: 150,
-              height: 30,
+              // height: 40,
               child: Text(
                 product_name,
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: Colors.black),
                 maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             SizedBox(
@@ -81,9 +82,9 @@ class product_card_home extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
           ],
         ),
       ),

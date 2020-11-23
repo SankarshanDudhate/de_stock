@@ -1,41 +1,42 @@
+import 'package:destock/PostAnAd/postAd.dart';
+import 'package:destock/PostAnAd/postAd_4.dart';
+import 'package:destock/PostAnAd/postAd_5.dart';
+import 'package:destock/PostAnAd/postAd_Category.dart';
 import 'package:destock/ProductPages/editProduct.dart';
 import 'package:destock/ProductPages/productPage.dart';
 import 'package:destock/ProductPages/productPageSeller.dart';
 import 'package:destock/category/category_page.dart';
 import 'package:destock/dashboard/dashboard.dart';
 import 'file:///C:/Users/Sankarshan%20Dudhate/StudioProjects/de_stock/lib/Signup/getstarted.dart';
-import 'package:destock/notification_buyer/notification_buyer.dart';
 import 'package:destock/notification_seller/notification_seller.dart';
 import 'package:destock/profile/my_profile.dart';
 import 'package:destock/wishlist/wishlist_and_enquiry.dart';
 import 'package:flutter/material.dart';
 import 'package:destock/home_buyer/home_buyer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
-class HomeBuyer extends StatefulWidget {
+class HomeSeller extends StatefulWidget {
   @override
-  _HomeBuyerState createState() => _HomeBuyerState();
+  _HomeSellerState createState() => _HomeSellerState();
 }
 
-class _HomeBuyerState extends State<HomeBuyer> {
+class _HomeSellerState extends State<HomeSeller> {
   // Properties & Variables needed
-
-  int currentTab = 0; // to keep track of active tab index
-  final List<Widget> buyerScreens = [
-    homebuyer(),
+  final List<Widget> sellerScreens = [
+    dashboard(),
     category_page(),
-    Profile(),
     notification_seller(),
-  ];
-// to store nested tabs
+    Profile(),
+  ];// to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
   PageStorageKey _pageStorageKey = new PageStorageKey("bottomBarPageStorage");
   // Widget currentScreen = homebuyer(); // Our first view in viewport
-  Widget currentScreen;
+  int currentTab = 0;
+  Widget currentScreen = dashboard();
 
   @override
-  Widget build(BuildContext context) {
-    currentScreen = buyerScreens[0]; // Our first view in viewport
+  Widget build(BuildContext context) { // Our first view in viewport
     return Scaffold(
       body: PageStorage(
         child: currentScreen,
@@ -44,11 +45,12 @@ class _HomeBuyerState extends State<HomeBuyer> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xffD84764),
-        child: Icon(Icons.favorite),
+        child: Icon(Icons.add),
         onPressed: () {
           setState(() {
-            currentScreen =
-                WishlistAndEnquiry();
+            // currentScreen = PostAd();
+            // Get.to(PostAd()); //TODO uncomment this line
+            Get.to(PostAd5());
           });
         },
       ),
@@ -73,9 +75,9 @@ class _HomeBuyerState extends State<HomeBuyer> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen =
-                            homebuyer(); // if user taps on this dashboard tab will be active
                         currentTab = 0;
+                        // currentScreen = dashboard(); // if user taps on this dashboard tab will be active
+                        currentScreen = sellerScreens[currentTab]; // if user taps on this dashboard tab will be active
                       });
                     },
                     child: Column(
@@ -97,9 +99,8 @@ class _HomeBuyerState extends State<HomeBuyer> {
                     minWidth: 80,
                     onPressed: () {
                       setState(() {
-                        currentScreen =
-                            category_page();
                         currentTab = 1;
+                        currentScreen = sellerScreens[currentTab];
                       });
                     },
                     child: Column(
@@ -129,10 +130,9 @@ class _HomeBuyerState extends State<HomeBuyer> {
                   MaterialButton(
                     minWidth: 40,
                     onPressed: () {
-                      setState(() {
-                        currentScreen =
-                            notification_seller(); // if user taps on this dashboard tab will be active
+                      setState(() {; // if user taps on this dashboard tab will be active
                         currentTab = 2;
+                        currentScreen = sellerScreens[currentTab];
                       });
                     },
                     child: Column(
@@ -153,10 +153,9 @@ class _HomeBuyerState extends State<HomeBuyer> {
                   MaterialButton(
                     minWidth: 40,
                     onPressed: () {
-                      setState(() {
-                        currentScreen =
-                            Profile(); // if user taps on this dashboard tab will be active
+                      setState(() { // if user taps on this dashboard tab will be active
                         currentTab = 3;
+                        currentScreen = sellerScreens[currentTab];
                       });
                     },
                     child: Column(

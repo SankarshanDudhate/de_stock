@@ -15,9 +15,6 @@ class category_list extends StatefulWidget {
 }
 class _category_listState extends State<category_list> {
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

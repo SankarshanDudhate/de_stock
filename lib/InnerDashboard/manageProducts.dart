@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:destock/CONSTANTS.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -115,7 +116,7 @@ class _manageProductsState extends State<manageProducts> {
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 4),
-              blurRadius: 10,
+              blurRadius: 5,
               color: Colors.black.withOpacity(.16),
             ),
           ],
@@ -128,13 +129,7 @@ class _manageProductsState extends State<manageProducts> {
           hintStyle: TextStyle(
           color: Colors.grey[400]
         ),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(60),),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                borderSide: BorderSide(color: Colors.grey),
-                //color:Colors.grey,
-              ),
+          border: InputBorder.none,
           suffixIcon: Icon(Icons.search,color: Colors.black87,),
         ),
         controller: searchController,
@@ -157,7 +152,7 @@ class _manageProductsState extends State<manageProducts> {
                       //margin: EdgeInsets.fromLTRB(20,0,50,0),
                       padding: EdgeInsets.fromLTRB(0, 30, 0, 50),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           IconButton(
                               icon: Icon(Icons.arrow_back_ios), onPressed: (){
@@ -166,6 +161,9 @@ class _manageProductsState extends State<manageProducts> {
                             });
                           }),
                           //SizedBox(width: 50,),
+                          SizedBox(width: 20,),
+                          SvgPicture.asset("assets/icons/money.svg",height: 40,width: 40,),
+                          SizedBox(width: 20,),
                           Column(
                             children: [
                               Text("Manage your products", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),

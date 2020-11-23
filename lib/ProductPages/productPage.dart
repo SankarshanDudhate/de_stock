@@ -4,6 +4,7 @@ import 'package:destock/CONSTANTS.dart';
 import 'package:destock/GoogleMapWidget.dart';
 import 'package:destock/ProductPages/ImageCarousel.dart';
 import 'package:destock/ProductPages/requestQuote.dart';
+import 'package:destock/utils/bg_clip_purple.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,7 @@ class _productPageState extends State<productPage> {
   // String productCategory = 'Cutting tools';
   // String location = 'your location';
   String publishDate = 'August 19, 2020';
+
   //
   // List<String> specName = [
   //   'Brand',
@@ -68,124 +70,145 @@ class _productPageState extends State<productPage> {
     var specJson = Map<String, String>.from(jsonDecode(specificationData));
     // print( specJson );
     specJson.forEach((key, value) {
-      _specs.add({"name": key, "details": value,});
+      _specs.add({
+        "name": key,
+        "details": value,
+      });
     });
 
     return Container(
       padding: EdgeInsets.only(top: 10, left: 5),
       child: Column(
-        children: _specs.map<Widget>((spec) => Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+          children: _specs
+              .map<Widget>(
+                (spec) => Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          spec['name'],
-                          style:
-                              TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                spec['name'],
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                spec['details'],
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          spec['details'],
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
+                ),
               )
-            ],
-          ),
-        ).toList()),
+              .toList()),
     );
   }
 
-  Widget _buildContactSeller(String companyName, String contactPersonName, String address, String contactPersonEmail, String contactPhoneNo, dynamic coords) {
+  Widget _buildContactSeller(
+      String companyName,
+      String contactPersonName,
+      String address,
+      String contactPersonEmail,
+      String contactPhoneNo,
+      dynamic coords) {
     Map jsonLatLongs = jsonDecode(coords);
     LatLng LatLongs = LatLng(jsonLatLongs['lat'], jsonLatLongs['long']);
     _contactInfo.clear();
-    _contactInfo.addAll(
-      [
-        {
-          "name": "Company Name",
-          "details": companyName,
-        },
-        {
-          "name": "Contact Person",
-          "details": contactPersonName,
-        },
-        {
-          "name": "Address",
-          "details": address,
-        },
-        {
-          "name": "Email Id",
-          "details": contactPersonEmail,
-        },
-        {
-          "name": "Contact No.",
-          "details": contactPhoneNo,
-        },
-      ]
-    );
+    _contactInfo.addAll([
+      {
+        "name": "Company Name",
+        "details": companyName,
+      },
+      {
+        "name": "Contact Person",
+        "details": contactPersonName,
+      },
+      {
+        "name": "Address",
+        "details": address,
+      },
+      {
+        "name": "Email Id",
+        "details": contactPersonEmail,
+      },
+      {
+        "name": "Contact No.",
+        "details": contactPhoneNo,
+      },
+    ]);
 
     return Container(
       padding: EdgeInsets.only(top: 10, left: 5),
       child: Column(
-        children: _contactInfo.map<Widget>((contactDetail) => Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        children: _contactInfo
+            .map<Widget>(
+              (contactDetail) => Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        contactDetail['name'],
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              contactDetail['name'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              contactDetail['details'],
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        contactDetail['details'],
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            (contactDetail['name'] == 'Address') ? Container(height: 300, child: GoogleMapWidget(picker: false, initialLocation: LatLongs,),) : SizedBox.shrink(),
-            SizedBox(
-              height: 20,
+                  (contactDetail['name'] == 'Address')
+                      ? Container(
+                          height: 300,
+                          child: GoogleMapWidget(
+                            picker: false,
+                            initialLocation: LatLongs,
+                          ),
+                        )
+                      : SizedBox.shrink(),
+                  SizedBox(
+                    height: 20,
+                  )
+                ],
+              ),
             )
-          ],
-        ),
-        ).toList(),
+            .toList(),
       ),
     );
   }
@@ -204,40 +227,36 @@ class _productPageState extends State<productPage> {
     );
   }
 
-
   Widget buildBody() {
     return SingleChildScrollView(
       child: Stack(
         children: [
           Image.asset("assets/images/Group_166.png"),
           FutureBuilder(
-            future: getProductData(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData)
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+              future: getProductData(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData)
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
 
-              // log(snapshot.data.toString());
-              // return Container();
-              return buildProductDetails(snapshot.data);
-            }
-          ),
+                // log(snapshot.data.toString());
+                // return Container();
+                return buildProductDetails(snapshot.data);
+              }),
         ],
       ),
     );
   }
 
-
   Future getProductData() async {
-    String url = localhostAddress+'/products/1/';
+    String url = localhostAddress + '/products/1/';
     var resp = await http.get(url);
     var respJson = jsonDecode(resp.body);
     log(resp.body);
     // log(respJson['images'][0]);
     return respJson;
   }
-
 
   Widget buildProductDetails(Map data) {
     return Column(
@@ -265,7 +284,7 @@ class _productPageState extends State<productPage> {
                     style: TextStyle(fontSize: 26),
                   ),
                   Text(
-                    ' /'+data['unit'],
+                    ' /' + data['unit'],
                     style: TextStyle(fontSize: 14),
                   ),
                 ],
@@ -379,7 +398,8 @@ class _productPageState extends State<productPage> {
                     ),
                   ),
                   Text(
-                    publishDate, //TODO change it to publish date later, it is NULL right now
+                    publishDate,
+                    //TODO change it to publish date later, it is NULL right now
                     style: TextStyle(
                       fontSize: 16,
                       color: Color(0xFF6F6F6F),
@@ -466,29 +486,42 @@ class _productPageState extends State<productPage> {
         SizedBox(
           height: 10,
         ),
-        Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-                color: Color(0xFFFFF9FA),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 1),
-                    blurRadius: 10,
-                    color: Colors.black.withOpacity(.16),
+        Stack(children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: BgClipPurple(
+              height: 360,
+            ),
+          ),
+          Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
                   ),
-                ]),
-            child: _buildContactSeller(data['company_name'], data['contact_person_name'], data['address'], data['contact_person_email'], data['contact_person_phone_no'], data['latLongs'])),
+                  color: Color(0xFFFFF9FA),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 1),
+                      blurRadius: 10,
+                      color: Colors.black.withOpacity(.16),
+                    ),
+                  ]),
+              child: _buildContactSeller(
+                  data['company_name'],
+                  data['contact_person_name'],
+                  data['address'],
+                  data['contact_person_email'],
+                  data['contact_person_phone_no'],
+                  data['latLongs']))
+        ]),
         SizedBox(
           height: 100,
         )
       ],
     );
   }
-
 
   Widget buildHeader(String productName) {
     return Padding(
@@ -510,7 +543,6 @@ class _productPageState extends State<productPage> {
       ),
     );
   }
-
 
   Widget buildBottomBar(BuildContext context) {
     return Stack(
@@ -561,7 +593,7 @@ class _productPageState extends State<productPage> {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.5,
                         padding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                         decoration: BoxDecoration(
                             color: Color(0xFF0B868A),
                             borderRadius: BorderRadius.circular(30)),

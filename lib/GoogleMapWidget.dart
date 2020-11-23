@@ -26,7 +26,7 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   LatLng
   location; //use location.latitude and .longitude to push it into database
   GoogleMapController mapController;
-  LatLng _center;// = LatLng(45.521563, -122.677433);
+  LatLng _center = LatLng(45.521563, -122.677433);
   Set<Marker> markerSet = {};
   Geolocator locator;
   Marker initMarker;
@@ -36,7 +36,7 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   @override
   void initState() {
     super.initState();
-    log("Initial: "+widget.initialLocation.toString());
+    // log("Initial: "+widget.initialLocation.toString());
     setState(() {
       if(widget.initialLocation != null) _center = widget.initialLocation;
       locator = Geolocator();
@@ -91,7 +91,6 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      color: Colors.amber,
       child: renderMap(),
     );
   }

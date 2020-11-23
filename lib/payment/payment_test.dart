@@ -8,22 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class Payment extends StatefulWidget {
+class PaymentTest extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => PaymentState();
+  State<StatefulWidget> createState() => PaymentTestState();
 }
 
-class PaymentState extends State<Payment> {
+class PaymentTestState extends State<PaymentTest> {
   String paymentToken = '';
   String orderId = '';
-  String stage = "PROD"; //change it to PROD later
+  String stage = "TEST"; //change it to PROD later
   String orderAmount = "1";
-  String customerName = "Sankarshan Dudhate";
-  String orderNote = "Mention the customer id and some other details here";
+  String customerName = "Customer Name";
+  String orderNote = "Mention the product id and some other details here";
   String orderCurrency = "INR";
-  String appId = "793036fb9dc8738c0d594aa4530397";
-  String customerPhone = "9881266239";
-  String customerEmail = "sandudhate@gmail.com";
+  String appId = "34637a696651117db77e9bdc673643";
+  String customerPhone = "9999999999";
+  String customerEmail = "sample@gmail.com";
   // String notifyUrl = "https://test.gocashfree.com/notify"; //prod.gocash...
   String notifyUrl = "https://destock.in/payments/webhook/";
 
@@ -39,7 +39,7 @@ class PaymentState extends State<Payment> {
             paymentFutureBuilder(),
             RaisedButton(
               child: Text(
-                  "Pay"
+                "Pay"
               ),
               onPressed: makeCardPayment,
             ),
@@ -62,7 +62,7 @@ class PaymentState extends State<Payment> {
   Future getTokenId() async {
     this.orderId = 'order2'+DateTime.now().millisecondsSinceEpoch.toString();
 
-    String url = localhostAddress + '/payments/getToken/';
+    String url = localhostAddress + '/payments/getTestToken/';
     // log("$orderId $url");
     // var resp = await http.get(url);
     var resp = await http.post(url, body: {
@@ -103,12 +103,10 @@ class PaymentState extends State<Payment> {
   Future<void> handlePaymentCompletion(Map paymentResponse) async {
     log("Payment Response: "+paymentResponse.toString());
 
-    if(paymentResponse["txStatus"] == "CANCELLED" || paymentResponse["txStatus"] == "FAILED") {
+    if(paymentResponse["txStatus"] == "CANCELLED") {
       Get.snackbar("Payment Cancelled", "Please try again!");
       return;
     }
-
-    //TODO handle PENDING payments and other payment statuses
 
     String orderId = paymentResponse["orderId"];
     String orderAmount = paymentResponse["orderAmount"];
@@ -118,7 +116,7 @@ class PaymentState extends State<Payment> {
     String txMsg = paymentResponse["txMsg"];
     String txTime = paymentResponse["txTime"];
 
-    var resp = await http.post(localhostAddress+'/payments/verifySignature/', body: {
+    var resp = await http.post(localhostAddress+'/payments/verifyTestSignature/', body: {
       "orderId" : orderId,
       "orderAmount" : orderAmount.toString(),
       "referenceId" : referenceId.toString(),
@@ -135,7 +133,7 @@ class PaymentState extends State<Payment> {
       // await Future.delayed(Duration(seconds: 3));
       Get.back(result: true);
     } else {
-      Get.snackbar("Payment failed", "Unable to validate payment signature. Please try again!");
+      Get.snackbar("Payment failed", "Unable to validate hash. Please try again!");
       await Future.delayed(Duration(seconds: 3));
       Get.back(result: false);
     }

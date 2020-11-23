@@ -5,6 +5,7 @@ import 'package:destock/CONSTANTS.dart';
 import 'package:destock/profile/my_profile.dart';
 import 'package:destock/utils/bg_clip.dart';
 import 'package:destock/utils/input_card.dart';
+import 'package:destock/utils/onOffSwitchSlider.dart';
 import 'package:destock/utils/profile_header.dart';
 import 'package:destock/utils/raised_container.dart';
 import 'package:destock/validatons.dart';
@@ -14,7 +15,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class EditContactPersonDetails extends StatefulWidget {
-  EditContactPersonDetails({Key key}) : super(key: key);
+  String contactPersonName;
+  String contactPersonEmail;
+  String contactPersonPhone;
+  EditContactPersonDetails({Key key, this.contactPersonName='', this.contactPersonEmail='', this.contactPersonPhone=''}) : super(key: key);
 
   @override
   _EditContactPersonDetailsState createState() =>
@@ -26,11 +30,13 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
-  bool contactPersonExists =
-      true; //Change it to false if user enables the latch
+  bool contactPersonExists = true; //Change it to false if user enables the latch
 
   @override
   Widget build(BuildContext context) {
+    _nameController.text = widget.contactPersonName;
+    _emailController.text = widget.contactPersonEmail;
+    _phoneController.text = widget.contactPersonPhone;
     final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: ProfileHeader(),
@@ -41,24 +47,39 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Contact Person Details ",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black.withOpacity(0.5),
-                    ),
+            child: Row(
+              children: [
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Contact Person Details ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                      ),
+                      TextSpan(
+                          text: " ( 3/3 ) ",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 10,
+                          ))
+                    ],
                   ),
-                  TextSpan(
-                      text: " ( 3/3 ) ",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10,
-                      ))
-                ],
-              ),
+                ),
+                onOffSwitchSlider(onTap: (bool state) {
+                  if(state) {
+                    setState(() {
+                      contactPersonExists = true;
+                    });
+                  } else {
+                    setState(() {
+                      contactPersonExists = false;
+                    });
+                  }
+                })
+              ],
             ),
           ),
           Form(
@@ -91,6 +112,7 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                             InputCard(
                               title: "NAME",
                               controller: _nameController,
+                              enabled: contactPersonExists,
                               placeholder: "Atul Mittal",
                               subtitle:
                                   "Enter name of the person with whom the buyer will connect",
@@ -101,6 +123,7 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                             InputCard(
                               title: "E-MAIL ID",
                               controller: _emailController,
+                              enabled: contactPersonExists,
                               placeholder: "mittal@mittalcorp.com",
                               subtitle:
                                   "Enter email ID of the above mentioned contact person",
@@ -111,6 +134,7 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                             InputCard(
                               title: "PHONE NUMBER",
                               controller: _phoneController,
+                              enabled: contactPersonExists,
                               placeholder: "89898 89898",
                               subtitle:
                                   "Enter phone number of the above mentioned contact person",
@@ -177,10 +201,15 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                             return;
                           }
 
+                          Map<String, dynamic> profileData = {};
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          Map<String, dynamic> profileData =
-                              jsonDecode(prefs.getString("profileEditDetails"));
+                          if(prefs.containsKey("profileEditDetails")) {
+                            profileData = jsonDecode(prefs.getString("profileEditDetails"));
+                          } else {
+                            profileData["personal_details_edited"] = true.toString();
+                            profileData["company_edited"] = true.toString();
+                          }
                           profileData["contact_person_exists"] =
                               contactPersonExists.toString();
                           profileData["contact_person_name"] = name;
@@ -200,15 +229,16 @@ class _EditContactPersonDetailsState extends State<EditContactPersonDetails> {
                               "/edit/profile/";
                           print(url);
 
-                          // var resp = await http.post(url, body: profileData);
-                          // print(resp.body);
-                          // if (jsonDecode(resp.body)["Status"] == "Success")
-                          //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          //       builder: (context) => Profile()));
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                builder: (context) => Profile()));
-                          // else
-                          //   Get.snackbar("Error!", "Could not update profile... Please try again later!");
+                          var resp = await http.post(url, body: profileData);
+                          print(resp.body);
+                          if (jsonDecode(resp.body)["Status"] == "Success") {
+                            log("Status: "+ jsonDecode(resp.body)["Status"]);
+                            // Navigator.of(context).pushReplacement(
+                            //     MaterialPageRoute(
+                            //         builder: (context) => Profile()));
+                          }
+                          else
+                            Get.snackbar("Error!", "Could not update profile... Please try again later!");
                         }
                       },
                       child: Text(

@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:destock/CONSTANTS.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:http/http.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
-class category_page_2 extends StatelessWidget {
+// ignore: camel_case_types
+class category_page_dynamic extends StatelessWidget {
   final iconBg = [
     Color(0xff4B69FF),
     Color(0xff0B868A),
@@ -15,13 +17,13 @@ class category_page_2 extends StatelessWidget {
   ];
 
   _getTopCategories() async {
-    var body = await get('http://192.168.43.188:5000/products/top_categories')
+    var body = await get('$localhostAddress/products/top_categories')
         .then((value) => value.body);
     return jsonDecode(body);
   }
 
   _getAllCategories() async {
-    var body = await get('http://192.168.43.188:5000/products/all_categories')
+    var body = await get('$localhostAddress/products/all_categories')
         .then((value) => value.body);
     return jsonDecode(body);
   }
@@ -174,10 +176,12 @@ class header extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Image.asset("assets/images/destocklogo.png", height: 50),
+            SizedBox(width: 20,),
+            Image.asset("assets/images/destock_logo.png", width: 100, height: 60,),
+            SizedBox(width: 40,),
             Container(
               width: 250,
-              height: 40,
+              height: 60,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -191,7 +195,7 @@ class header extends StatelessWidget {
                 decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(0),
-                      child: SizedBox(height: 3, child: Icon(Icons.search)),
+                      child: SizedBox(height: 4, child: Icon(Icons.search)),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),

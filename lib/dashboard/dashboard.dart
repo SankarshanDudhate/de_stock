@@ -27,10 +27,21 @@ class _dashboardState extends State<dashboard> {
 
   int activeProductsCount = 0;
 
-  _getMyProducts() async {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  _readUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userId =
-        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    (prefs.getString('user_id') == null) ? '10' : prefs.getString('user_id');
+    return userId;
+  }
+
+  _getMyProducts() async {
+    String userId = await _readUserId();
     var response = await get(
       localhostAddress + '/users/$userId/products/',
     ).then((value) => value.body);
@@ -42,9 +53,7 @@ class _dashboardState extends State<dashboard> {
   }
 
   getTotalViews() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId =
-        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    String userId = await _readUserId();
     var response = await get(
       localhostAddress + '/users/$userId/getTotalViews/',
     ).then((value) => value.body);
@@ -53,9 +62,7 @@ class _dashboardState extends State<dashboard> {
   }
 
   getActiveProductsCount() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId =
-    (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    String userId = await _readUserId();
     var response = await get(
       localhostAddress + '/users/$userId/getActiveProductsCount/',
     ).then((value) => value.body);
@@ -64,9 +71,7 @@ class _dashboardState extends State<dashboard> {
   }
 
   _getLatestEnquiries() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId =
-        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    String userId = await _readUserId();
     var response = await get(
       '$localhostAddress/users/sellerEnquiries/?user_id=$userId',
     ).then((value) => value.body);
@@ -79,9 +84,7 @@ class _dashboardState extends State<dashboard> {
   }
 
   _getUpcomingRenewals() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId =
-        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
+    String userId = await _readUserId();
     var response =
         await get('$localhostAddress/users/upcoming_renewals?user_id=$userId')
             .then((value) => value.body);
@@ -94,288 +97,294 @@ class _dashboardState extends State<dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xF8F9FF),
-              ),
-              child: Column(
-                children: <Widget>[
-                  FutureBuilder(
-                      future: getUserId(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData)
-                          return header(
-                            headline1: 'Hello Ajay', //TODO Change to user's name
-                            headline2: 'Welcome to your dashboard !',
-                            headline3: 'Complete you profile for better reach!',
-                            image:
-                                "/static/images/users/${snapshot.data}/user.jpg",
-                          );
-                        else
-                          return Container();
-                      }),
-                  SizedBox(
-                    height: 70,
-                  ),
-                  option_cards(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => WishlistAndEnquiry()));
-                    },
-                    child: options_like(
-                      title: "Products I would like to buy",
-                      image: "assets/images/product_like.png",
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xF8F9FF),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    FutureBuilder(
+                        future: getSavedUserData(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData)
+                            return header(
+                              headline1: 'Hello ${snapshot.data['user_name'].toString().split(' ')[0]}', //TODO Change to user's name
+                              headline2: 'Welcome to your dashboard !',
+                              headline3: 'Complete you profile for better reach!',
+                              image: "/static/images/users/${snapshot.data['user_id']}/user.jpg",
+                            );
+                          else
+                            return Container();
+                        }),
+                    SizedBox(
+                      height: 70,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FutureBuilder(
-                    future: _getMyProducts(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                          children: [
-                            Title_with_no(
-                              title: "Your Products",
-                              number: "(${snapshot.data.length})",
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            (snapshot.data.length == 0)
-                                ? Column(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/dashboard_sapien1.png",
-                                        width: 300,
+                    option_cards(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WishlistAndEnquiry()));
+                      },
+                      child: options_like(
+                        title: "Products I would like to buy",
+                        image: "assets/images/product_like.png",
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    FutureBuilder(
+                      future: _getMyProducts(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          return Column(
+                            children: [
+                              Title_with_no(
+                                title: "Your Products",
+                                number: "(${snapshot.data.length})",
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              (snapshot.data.length == 0)
+                                  ? Column(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/dashboard_sapien1.png",
+                                          width: 300,
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          "All the products which you will add to\nDe-stock will come here",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        submitButton(
+                                          title: "START ADDING YOUR PRODUCTS",
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      children: List.generate(
+                                        (snapshot.data.length > 3)
+                                            ? 3
+                                            : snapshot.data.length,
+                                        (index) {
+                                          return product_card(
+                                            product_id: "#786GFHDR",
+                                            //TODO change to randomId
+                                            product_name: snapshot.data[index]
+                                                ["name"],
+                                            product_price: snapshot.data[index]
+                                                    ["price"]
+                                                .toString(),
+                                            views: snapshot.data[index]["views"]
+                                                .toString(),
+                                            favorite: snapshot.data[index]
+                                                    ["wishlisted"]
+                                                .toString(),
+                                            enquiries: List.from(jsonDecode(
+                                                    snapshot.data[index]
+                                                        ["enquiries"]))
+                                                .length
+                                                .toString(),
+                                            expiry_date: "12 August 2020",
+                                            // expiry_date: dateToMMMddyyyy(snapshot.data[index]["expiryDate"]), //TODO
+                                            image:
+                                                "assets/images/product image.png",
+                                          );
+                                        },
                                       ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      Text(
-                                        "All the products which you will add to\nDe-stock will come here",
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      submitButton(
-                                        title: "START ADDING YOUR PRODUCTS",
-                                      ),
-                                    ],
-                                  )
-                                : Column(
-                                    children: List.generate(
-                                      (snapshot.data.length > 3)
-                                          ? 3
-                                          : snapshot.data.length,
-                                      (index) {
-                                        return product_card(
-                                          product_id: "#786GFHDR",
-                                          //TODO change to randomId
-                                          product_name: snapshot.data[index]
-                                              ["name"],
-                                          product_price: snapshot.data[index]
-                                                  ["price"]
-                                              .toString(),
-                                          views: snapshot.data[index]["views"]
-                                              .toString(),
-                                          favorite: snapshot.data[index]
-                                                  ["wishlisted"]
-                                              .toString(),
-                                          enquiries: List.from(jsonDecode(
-                                                  snapshot.data[index]
-                                                      ["enquiries"]))
-                                              .length
-                                              .toString(),
-                                          expiry_date: "12 August 2020",
-                                          // expiry_date: dateToMMMddyyyy(snapshot.data[index]["expiryDate"]), //TODO
-                                          image:
-                                              "assets/images/product image.png",
-                                        );
-                                      },
+                                    )
+                            ],
+                          );
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    FutureBuilder(
+                      future: _getLatestEnquiries(),
+                      builder: (BuildContext context, snapshot) {
+                        if (snapshot.hasData) {
+                          List prodList = snapshot.data;
+                          return Column(
+                            children: [
+                              Title_with_no(
+                                title: "Latest Enquiries",
+                                number: "(${snapshot.data.length})",
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              (snapshot.data.length == 0)
+                                  ? Column(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/dashboard_sapien2.png",
+                                          width: 300,
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          "All enquiries for your products will\ncome here",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      children: prodList
+                                          .sublist(0, 3)
+                                          .map(
+                                            (prod) => Column(
+                                              children: [
+                                                enquiry_card(
+                                                  product_id:
+                                                      prod["id"].toString(),
+                                                  product_name: prod['name'],
+                                                  product_price:
+                                                      prod['price'].toString(),
+                                                  image: prod['image'],
+                                                  enquiry_data: prod['enquiries'],
+                                                ),
+                                                SizedBox(
+                                                  height: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                          .toList(),
+                                    )
+                            ],
+                          );
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    FutureBuilder(
+                      future: _getUpcomingRenewals(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          return Column(
+                            children: [
+                              Title_with_no(
+                                title: "Upcoming Renewals",
+                                number: "(${snapshot.data.length})",
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              (snapshot.data.length == 0)
+                                  ? Column(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/dashboard_sapien3.png",
+                                          width: 300,
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          "Renewal for your ads will come here",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          "Post your first ad",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xffD84764)),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        submitButton(
+                                          title: "VIEW ALL PLANS",
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      children: [
+                                        renewal_card(
+                                          data: snapshot.data,
+                                        ),
+                                        SizedBox(
+                                          height: 40,
+                                        ),
+                                        footer(),
+                                      ],
                                     ),
-                                  )
-                          ],
+                            ],
+                          );
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(),
                         );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  FutureBuilder(
-                    future: _getLatestEnquiries(),
-                    builder: (BuildContext context, snapshot) {
-                      if (snapshot.hasData) {
-                        List prodList = snapshot.data;
-                        return Column(
-                          children: [
-                            Title_with_no(
-                              title: "Latest Enquiries",
-                              number: "(${snapshot.data.length})",
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            (snapshot.data.length == 0)
-                                ? Column(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/dashboard_sapien2.png",
-                                        width: 300,
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      Text(
-                                        "All enquiries for your products will\ncome here",
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
-                                  )
-                                : Column(
-                                    children: prodList
-                                        .sublist(0, 3)
-                                        .map(
-                                          (prod) => Column(
-                                            children: [
-                                              enquiry_card(
-                                                product_id:
-                                                    prod["id"].toString(),
-                                                product_name: prod['name'],
-                                                product_price:
-                                                    prod['price'].toString(),
-                                                image: prod['image'],
-                                                enquiry_data: prod['enquiries'],
-                                              ),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                        .toList(),
-                                  )
-                          ],
-                        );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  FutureBuilder(
-                    future: _getUpcomingRenewals(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return Column(
-                          children: [
-                            Title_with_no(
-                              title: "Upcoming Renewals",
-                              number: "(${snapshot.data.length})",
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            (snapshot.data.length == 0)
-                                ? Column(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/dashboard_sapien3.png",
-                                        width: 300,
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      Text(
-                                        "Renewal for your ads will come here",
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      Text(
-                                        "Post your first ad",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xffD84764)),
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      submitButton(
-                                        title: "VIEW ALL PLANS",
-                                      ),
-                                    ],
-                                  )
-                                : Column(
-                                    children: [
-                                      renewal_card(
-                                        data: snapshot.data,
-                                      ),
-                                      SizedBox(
-                                        height: 40,
-                                      ),
-                                      footer(),
-                                    ],
-                                  ),
-                          ],
-                        );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                ],
+                      },
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Positioned(
-              top: 150,
-              left: 71.5,
-              child: product_view_card(
-                products: this.activeProductsCount.toString(),
-                pro_text: 'Active\nProducts',
-                views: this.totalProductViews.toString(),
-                view_text: "Total\nviews",
+              Positioned(
+                top: 150,
+                left: 71.5,
+                child: product_view_card(
+                  products: this.activeProductsCount.toString(),
+                  pro_text: 'Active\nProducts',
+                  views: this.totalProductViews.toString(),
+                  view_text: "Total\nviews",
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Future<String> getUserId() async {
+  Future<Map> getSavedUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId =
-        (prefs.getString('user_id') == null) ? '1' : prefs.getString('user_id');
-    return userId;
+    String userId = prefs.getString('user_id');
+    String userName = '';
+    if(userId == null) {
+      userId = '1';
+      userName = 'Ajay';
+    } else {
+      userName = prefs.getString('name');
+    }
+    return {'user_id': userId, 'user_name': userName,};
   }
 
-  Widget product_view_card(
-      {String products, String pro_text, String views, String view_text}) {
+  Widget product_view_card({String products, String pro_text, String views, String view_text}) {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 20),
         width: 250,
@@ -478,6 +487,7 @@ class options_like extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 43),
         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -570,9 +580,34 @@ class header extends StatelessWidget {
                 ),
               ],
             ),
-            Image.network(localhostAddress + image, height: 70),
+            profileImage(),
             // Image.asset(image, height: 50),
           ],
         ));
+  }
+
+  Widget profileImage() {
+    Widget returnedImage = Container();
+    try {
+      returnedImage = FadeInImage(
+          placeholder: AssetImage("assets/images/userDummy.jpg"),
+          image: NetworkImage(localhostAddress+image),
+          height: 70,
+      );
+      // return CachedNetworkImage(
+      //   useOldImageOnUrlChange: true,
+      //   imageUrl: localhostAddress+image,
+      //   placeholder: (context, url) => CircularProgressIndicator(),
+      //   errorWidget: (context, url, error) {
+      //     return Image(
+      //       image: AssetImage("assets/images/userDummy.jpg"),
+      //     );
+      //   },
+      // );
+      // return Image.network(localhostAddress + image, height: 70);
+    } catch(e) {
+      log("Error caught!");
+    }
+    return returnedImage;
   }
 }

@@ -3,8 +3,10 @@ import 'package:destock/InnerDashboard/manageProducts.dart';
 import 'package:destock/ProductPages/editProduct.dart';
 import 'package:destock/ProductPages/productPage.dart';
 import 'package:destock/ProductPages/productPageSeller.dart';
+import 'package:destock/Signup/SignupScreen1.dart';
+import 'package:destock/Signup/getstarted.dart';
 import 'package:destock/home_buyer/home_buyer.dart';
-import 'package:destock/loginscreen1.dart';
+import 'file:///C:/Users/Sankarshan%20Dudhate/StudioProjects/de_stock/lib/Login/loginscreen1.dart';
 import 'package:destock/home_buyer/recently_viewed.dart';
 import 'dart:async';
 import 'dart:developer';
@@ -16,16 +18,15 @@ import 'package:destock/account_setting/confirm_deactivate_account.dart';
 import 'package:destock/account_setting/payment_details.dart';
 import 'package:destock/notification_buyer/notification_buyer.dart';
 import 'package:destock/notification_seller/notification_seller.dart';
-import 'package:destock/payment/payment.dart';
+import 'package:destock/payment/payment_test.dart';
 import 'package:destock/post_an_ad 4.dart';
 import 'package:destock/widgets/home.dart';
 import 'package:destock/wishlist/wishlist_and_enquiry.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:destock/getstarted.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'post_an_ad 4.dart';
-import 'widgets/home2.dart';
+import 'widgets/HomeSeller.dart';
 import 'profile/edit_company_details.dart';
 import 'profile/edit_contact_person_details.dart';
 import 'profile/edit_personal_details.dart';
@@ -56,6 +57,7 @@ class _MyAppState extends State<MyApp> {
   StreamSubscription uriStream;
   final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  Widget firstScreen;
 
   @override
   void dispose() {
@@ -67,8 +69,22 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     firebaseMessagingInit();
+    initFirstScrren();
     initUniLinks();
     initNotificationsPlugin();
+  }
+
+  void initFirstScrren() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userId = prefs.getString('user_id');
+    if(userId == null) {
+      firstScreen = getstarted();
+    } else {
+      // String userType = prefs.getString('user_type');
+      // if(userType == "buyer") firstScreen = HomeBuyer();
+      // if(userType == "seller") firstScreen = HomeSeller();
+      firstScreen = HomeSeller();
+    }
   }
 
   void initUniLinks() async {
@@ -130,7 +146,7 @@ class _MyAppState extends State<MyApp> {
               navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
             } else if (message["data"]["user_type"] == "buyer") {
               log('notification payload: ' + message["data"]["user_type"]);
-              navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_buyer()));
+              navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
             }
           }
         );
@@ -199,7 +215,9 @@ class _MyAppState extends State<MyApp> {
           // body: WishlistAndEnquiry(),
           // body: Enquiries(),
           // body: manageProducts(),
-          body: Home(),
+          // body: getstarted(),
+        body: HomeSeller(),
+          // body: firstScreen,
       ),
     );
   }
@@ -272,7 +290,7 @@ class _MyAppState extends State<MyApp> {
       navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
     } else if (payload == "buyer") {
       log('notification payload: ' + payload);
-      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_buyer()));
+      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => notification_seller()));
     }
   }
 

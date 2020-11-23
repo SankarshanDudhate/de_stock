@@ -13,37 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'my_profile.dart';
 
-class EditPersonalProfile extends StatelessWidget {
-  String name;
-  String email;
-  String phoneNo;
-  String companyName = '';
-  String companyPan = '';
-  String companyGst = '';
-  String companyFactoryAddress = '';
-  var factoryLatLongs;
-  String officeAddress = '';
-  String whatYouSell = '';
-  String contactPersonName;
-  String contactPersonEmail;
-  String contactPersonPhone;
-
-  EditPersonalProfile(
-      {Key key,
-      this.name = '',
-      this.email = '',
-      this.phoneNo = '',
-      this.companyName,
-      this.companyPan,
-      this.companyGst,
-      this.companyFactoryAddress,
-      this.officeAddress,
-      this.factoryLatLongs,
-      this.whatYouSell,
-      this.contactPersonName = '',
-      this.contactPersonEmail = '',
-      this.contactPersonPhone = ''})
-      : super(key: key);
+class profileSetupPersonalDetails extends StatelessWidget {
+  profileSetupPersonalDetails({Key key}) : super(key: key);
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -51,9 +22,6 @@ class EditPersonalProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    _nameController.text = name;
-    _emailController.text = email;
-    _phoneController.text = phoneNo;
     return Scaffold(
       appBar: ProfileHeader(),
       body: Stack(
@@ -146,32 +114,15 @@ class EditPersonalProfile extends StatelessWidget {
                       height: 20,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         FlatButton(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18)),
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => Profile()));
-                          },
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                                color: Color(0xffD84764),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        ),
-                        FlatButton(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           color: Color(0xffD84764),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18)),
+                          child: Icon(Icons.arrow_forward),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               print(_nameController.value.text);
@@ -201,8 +152,6 @@ class EditPersonalProfile extends StatelessWidget {
                               }
 
                               Map<String, dynamic> profileData = {};
-                              profileData["personal_details_edited"] =
-                                  true.toString();
                               profileData["user_name"] = name;
                               profileData["user_email"] = email;
                               profileData["user_phoneNo"] = phoneNo;
@@ -212,27 +161,9 @@ class EditPersonalProfile extends StatelessWidget {
                               prefs.setString("profileEditDetails",
                                   jsonEncode(profileData));
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => EditCompanyDetails(
-                                        companyName: companyName,
-                                        companyPan: companyPan,
-                                        companyGst: companyGst,
-                                        companyFactoryAddress:
-                                            companyFactoryAddress,
-                                        factoryLatLongs: factoryLatLongs,
-                                        officeAddress: officeAddress,
-                                        whatYouSell: whatYouSell,
-                                        contactPersonName: contactPersonName,
-                                        contactPersonEmail: contactPersonEmail,
-                                        contactPersonPhone: contactPersonPhone,
-                                      )));
-                              // EditCompanyDetails()));
-
+                                  builder: (context) => EditCompanyDetails()));
                             }
                           },
-                          child: Text(
-                            'Update',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
                         ),
                       ],
                     )

@@ -105,7 +105,7 @@ class recent_view extends StatelessWidget {
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return product_card_home(
-                  product_name: snapshot.data[index].name,
+                  product_name: snapshot.data[index].profileName,
                   product_price: snapshot.data[index].price.toString(),
                   image: "assets/images/product image.png",
                 );

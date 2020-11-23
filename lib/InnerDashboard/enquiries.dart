@@ -2,6 +2,7 @@ import 'package:destock/CONSTANTS.dart';
 import 'package:destock/InnerDashboard/enquiries_enquiry_card.dart';
 import 'package:destock/search/search_home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
@@ -140,6 +141,9 @@ class _EnquiriesState extends State<Enquiries> {
                             });
                           }),
                           //SizedBox(width: 50,),
+                          SizedBox(width: 20,),
+                          SvgPicture.asset("assets/icons/money.svg",height: 40,width: 40,),
+                          SizedBox(width: 20,),
                           Column(
                             children: [
                               Text("Enquiries", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),

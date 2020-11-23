@@ -24,100 +24,7 @@ class ProfileSeller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFFD84764),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Hello ' + this.profileName.split(' ')[0]),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.home,
-                          size: 14,
-                        ),
-                        Container(
-                          width: 200,
-                          padding: EdgeInsets.all(4),
-                          child: Text(
-                            this.companyName,
-                            maxLines: 3,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          size: 14,
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(4),
-                          width: 200,
-                          child: Text(
-                            this.companyFactoryAddress,
-                            maxLines: 3,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                IconButton(
-                  icon: Icon(Icons.account_circle),
-                  onPressed: () {},
-                  iconSize: 64,
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FlatButton.icon(
-                    onPressed: () {},
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    icon: Icon(
-                      Icons.edit,
-                      color: Color(0xffD84764),
-                    ),
-                    label: Text(
-                      'Edit Profile',
-                      style: TextStyle(color: Color(0xffD84764)),
-                    )),
-                FlatButton.icon(
-                    onPressed: () {},
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    icon: Icon(Icons.settings),
-                    label: Text('Account Settings'))
-              ],
-            )
-          ],
-        ),
-        toolbarHeight: 200,
-      ),
+      appBar: appBarSeller(),
       body: Stack(
         children: [
           Container(
@@ -459,6 +366,103 @@ class ProfileSeller extends StatelessWidget {
           ])
         ],
       ),
+    );
+  }
+
+  Widget appBarSeller() {
+    return AppBar(
+      backgroundColor: Color(0xFFD84764),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Hello ' + this.profileName.split(' ')[0]),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.home,
+                        size: 14,
+                      ),
+                      Container(
+                        width: 200,
+                        padding: EdgeInsets.all(4),
+                        child: Text(
+                          this.companyName,
+                          maxLines: 3,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        size: 14,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        width: 200,
+                        child: Text(
+                          this.companyFactoryAddress,
+                          maxLines: 3,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              IconButton(
+                icon: Icon(Icons.account_circle),
+                onPressed: () {},
+                iconSize: 64,
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FlatButton.icon(
+                  onPressed: () {},
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  icon: Icon(
+                    Icons.edit,
+                    color: Color(0xffD84764),
+                  ),
+                  label: Text(
+                    'Edit Profile',
+                    style: TextStyle(color: Color(0xffD84764)),
+                  )),
+              FlatButton.icon(
+                  onPressed: () {},
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  icon: Icon(Icons.settings),
+                  label: Text('Account Settings'))
+            ],
+          )
+        ],
+      ),
+      toolbarHeight: 200,
     );
   }
 }

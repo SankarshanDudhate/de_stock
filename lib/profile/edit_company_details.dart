@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:destock/GoogleMapWidget.dart';
 import 'package:destock/profile/edit_contact_person_details.dart';
 import 'package:destock/profile/my_profile.dart';
+import 'package:destock/utils/onOffSwitchSlider.dart';
 import 'package:destock/utils/profile_header.dart';
 import 'package:destock/validatons.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,19 @@ import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditCompanyDetails extends StatefulWidget {
+  String companyName = '';
+  String companyPan = '';
+  String companyGst = '';
+  String companyFactoryAddress = '';
+  var factoryLatLongs;
+  String officeAddress = '';
+  String whatYouSell = '';
+  String contactPersonName;
+  String contactPersonEmail;
+  String contactPersonPhone;
+
+  EditCompanyDetails({Key key, this.companyName, this.companyPan, this.companyGst, this.companyFactoryAddress, this.officeAddress, this.factoryLatLongs, this.whatYouSell, this.contactPersonName='', this.contactPersonEmail='', this.contactPersonPhone=''}) :super(key: key);
+
   @override
   _EditCompanyDetailsState createState() => _EditCompanyDetailsState();
 }
@@ -52,7 +68,8 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
       onTap: (LatLng latlong) async {
         LocationResult loc = await showLocationPicker(
           context, "AIzaSyBc6qcBEICmGINDtMUTqewxzylvhOCw0Eo",
-          initialCenter: LatLng(31.1975844, 29.9598339),
+          // initialCenter: LatLng(31.1975844, 29.9598339),
+          initialCenter: location,
           myLocationButtonEnabled: true,
           layersButtonEnabled: true,
           // countries: ['AE', 'NG'],
@@ -76,6 +93,13 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
   @override
   void initState() {
     super.initState();
+    _companyNameController.text = widget.companyName;
+    _panNumberController.text = widget.companyPan;
+    _gstNumberController.text = widget.companyGst;
+    _factoryAddressController.text = widget.companyFactoryAddress;
+    _officeAddressController.text = widget.officeAddress;
+    _sellController.text = widget.whatYouSell;
+    location = LatLng(double.parse(widget.factoryLatLongs['lat']), double.parse(widget.factoryLatLongs['long']));
     locator = Geolocator();
     initMarker =
         Marker(markerId: MarkerId("current_location"), position: _center);
@@ -179,19 +203,53 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                                 SizedBox(
                                   height: 32,
                                 ),
-                                Container(
-                                  child: Text("Set your location on map"),
+                                // Container(
+                                //   child: Text("Set your location on map", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),
+                                // ),
+                                RichText(
+                                  text: TextSpan(
+                                    text: "Set your location on map",
+                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                                    children: [
+                                      TextSpan(text: '*', style: TextStyle(color: Colors.red)),
+                                    ],
+                                  ),
                                 ),
+                                SizedBox(height: 8,),
                                 Container(
                                   height: 300,
                                   color: Colors.amber,
-                                  child: renderMap(), //TODO change it to user GoogleMapWidget class that we created
+                                  // child: renderMap(), //TODO change it to user GoogleMapWidget class that we created
+                                  child: GoogleMapWidget(picker: true, initialLocation: location, onResult: (LatLng loc, String address){},), //TODO change it to user GoogleMapWidget class that we created
                                 ),
                                 SizedBox(
                                   height: 32,
                                 ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 280,
+                                      child: RichText(
+                                        text: TextSpan(
+                                          text: "OFFICE ADDRESS",
+                                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                          children: [
+                                            TextSpan(text: '*', style: TextStyle(color: Colors.red)),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    onOffSwitchSlider(onTap: (bool state) {
+                                      if(state) {
+                                        _officeAddressController.text = _factoryAddressController.text;
+                                      } else {
+                                        _officeAddressController.text = '';
+                                      }
+                                    }),
+                                  ],
+                                ),
                                 InputCard(
-                                  title: "OFFICE ADDRESS",
+                                  // title: "OFFICE ADDRESS",
                                   controller: _officeAddressController,
                                   placeholder:
                                       "Plot No. - 123, Sector – III, Industrial Area, Pithampur, Dist.: Dhar – 454 775, Madhya Pradesh",
@@ -206,6 +264,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
                                   placeholder:
                                       "we sell all types of steel goods which include Steel, flat steel products, coated steel, tubes and pipes.",
                                   maxlines: 5,
+                                  isRequired: false,
                                 ),
                                 SizedBox(
                                   height: 32,
@@ -272,6 +331,7 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
 
                         //TODO implement the latch for factory and office address to be same and make changes accordingly
                         Map<String, dynamic> profileData = jsonDecode(prefs.getString("profileEditDetails"));
+                        profileData["company_edited"] = true.toString();
                         profileData["company_name"] = companyName;
                         profileData["panNo"] = panNumber;
                         profileData["gstNo"] = gstNumber;
@@ -283,8 +343,9 @@ class _EditCompanyDetailsState extends State<EditCompanyDetails> {
 
                         prefs.setString(
                             "profileEditDetails", jsonEncode(profileData));
+                        log("Contact Person Name: ${widget.contactPersonName}\n");
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => EditContactPersonDetails()));
+                            builder: (context) => EditContactPersonDetails(contactPersonName: widget.contactPersonName, contactPersonEmail:  widget.contactPersonEmail, contactPersonPhone: widget.contactPersonPhone,)));
                       },
                       child: Text(
                         'Update',

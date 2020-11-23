@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:destock/otpscreen.dart';
+import 'file:///C:/Users/Sankarshan%20Dudhate/StudioProjects/de_stock/lib/utils/otpscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,10 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'validatons.dart';
+import '../validatons.dart';
 
-//Just a test comment
-//another one
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);

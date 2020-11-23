@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:destock/cards/latest_products.dart';
-import 'package:destock/categories_page.dart';
+import 'file:///C:/Users/Sankarshan%20Dudhate/StudioProjects/de_stock/lib/category/category_page_dynamic.dart';
 import 'package:destock/category/category_list.dart';
 import 'package:destock/category/category_page.dart';
 import 'package:destock/models/RecentProducts.dart';

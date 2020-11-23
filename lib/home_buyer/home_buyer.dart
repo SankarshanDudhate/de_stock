@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:destock/CONSTANTS.dart';
 import 'package:destock/cards/latest_products.dart';
-import 'package:destock/categories_page.dart';
+import 'package:destock/category/category_page_dynamic.dart';
 import 'package:destock/category/category_list.dart';
 import 'package:destock/category/category_page.dart';
 import 'package:destock/models/RecentProducts.dart';
@@ -53,19 +53,17 @@ class _homebuyerState extends State<homebuyer> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-
                     Text("Top categories",
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),),
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => category_page()));
+                            builder: (context) => category_page_dynamic()));
                       },
                       child: Text("View all",
                         style: TextStyle(fontSize: 14, color: Colors.blue),),
                     ),
                   ],
-
                 ),
               ),
               SizedBox(height: 20,),
@@ -321,9 +319,7 @@ class header extends StatelessWidget {
           children: <Widget>[
             SizedBox(width: 20,),
             Image.asset("assets/images/destock_logo.png", width: 100, height: 60,),
-            SizedBox(
-              width: 40,
-            ),
+            SizedBox(width: 40,),
             Container(
               width: 260,
               height: 60,
@@ -368,11 +364,16 @@ class header extends StatelessWidget {
 
 class recent_view extends StatelessWidget {
   Future<List<RecentProduct>> _getRecentViews() async {
-    var response =
-        await post('$localhostAddress/users/suggestions', body: {"id": "1"})
-            .then((value) => value.body);
-    // print(recentProductFromJson(response));
-    return recentProductFromJson(response);
+    try {
+      var response =
+      await post('$localhostAddress/users/recent', body: {"id": "1"})
+          .then((value) => value.body);
+      log("Recent length: " +
+          recentProductFromJson(response).length.toString());
+      return recentProductFromJson(response);
+    } catch (e, trace) {
+      log("Recent error: \n"+e+",\n"+trace.toString());
+    }
   }
 
   @override
@@ -394,7 +395,7 @@ class recent_view extends StatelessWidget {
               itemCount: 4,
               itemBuilder: (context, index) {
                 return product_card_home(
-                  product_name: snapshot.data[index].name,
+                  product_name: snapshot.data[index].profileName,
                   product_price: snapshot.data[index].price.toString(),
                   image: "assets/images/product image.png",
                 );
@@ -412,6 +413,8 @@ class suggest_you extends StatelessWidget {
   _getSuggested() async {
     var response = await post('$localhostAddress/users/suggestions',
         body: {"id": "1"}).then((value) => value.body);
+
+    log("Suggestions length: "+suggestionFromJson(response).length.toString());
     return suggestionFromJson(response);
   }
 
@@ -454,21 +457,21 @@ class suggest_you extends StatelessWidget {
                 return Column(
                   children: <Widget>[
                     product_card_suggest(
-                      product_name: snapshot.data[0].name,
+                      product_name: snapshot.data[0].profileName,
                       product_price: snapshot.data[0].price.toString(),
                       description: snapshot.data[0].description,
                       image: "assets/images/product image.png",
                     ),
                     Divider(color: Colors.black),
                     product_card_suggest(
-                      product_name: snapshot.data[1].name,
+                      product_name: snapshot.data[1].profileName,
                       product_price: snapshot.data[1].price.toString(),
                       description: snapshot.data[1].description,
                       image: "assets/images/product image.png",
                     ),
                     Divider(color: Colors.black),
                     product_card_suggest(
-                      product_name: snapshot.data[2].name,
+                      product_name: snapshot.data[2].profileName,
                       product_price: snapshot.data[2].price.toString(),
                       description: snapshot.data[2].description,
                       image: "assets/images/product image.png",
@@ -519,6 +522,7 @@ class latest extends StatelessWidget {
   _getLatest() async {
     var response = await post('$localhostAddress/products/latest',
         body: {"id": "1"}).then((value) => value.body);
+    log("Latest length: "+suggestionFromJson(response).length.toString());
     return suggestionFromJson(response);
   }
 
@@ -532,21 +536,21 @@ class latest extends StatelessWidget {
             children: [
               latest_products(
                 color: Color(0xff2DDDB7).withOpacity(.07),
-                product_name: snapshot.data[0].name,
+                product_name: snapshot.data[0].profileName,
                 product_price: snapshot.data[0].price.toString(),
                 description: snapshot.data[0].description,
                 image: "assets/images/product image.png",
               ),
               latest_products(
                 color: Color(0xffD84764).withOpacity(.07),
-                product_name: snapshot.data[1].name,
+                product_name: snapshot.data[1].profileName,
                 product_price: snapshot.data[1].price.toString(),
                 description: snapshot.data[1].description,
                 image: "assets/images/product image.png",
               ),
               latest_products(
                 color: Color(0xff4060B8).withOpacity(.07),
-                product_name: snapshot.data[2].name,
+                product_name: snapshot.data[2].profileName,
                 product_price: snapshot.data[2].price.toString(),
                 description: snapshot.data[2].description,
                 image: "assets/images/product image.png",
@@ -567,6 +571,7 @@ class trending_now extends StatelessWidget {
     var response = await post('$localhostAddress/products/trending',
         body: {"id": "1"}).then((value) => value.body);
     // print(response);
+    log("Trending length: "+trendingFromJson(response).length.toString());
     return trendingFromJson(response);
   }
 
@@ -589,7 +594,7 @@ class trending_now extends StatelessWidget {
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return product_card_trending(
-                  product_name: snapshot.data[index].name,
+                  product_name: snapshot.data[index].profileName,
                   product_price: snapshot.data[index].price.toString(),
                   image: "assets/images/product image.png",
                 );

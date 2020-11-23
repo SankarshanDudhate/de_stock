@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:destock/SignupScreen1.dart';
+import 'file:///C:/Users/Sankarshan%20Dudhate/StudioProjects/de_stock/lib/Signup/SignupScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'validatons.dart';
+import '../validatons.dart';
 import 'otpscreen.dart';
 
 class getstarted extends StatefulWidget {
@@ -68,11 +68,11 @@ class _getstartedState extends State<getstarted> {
     String dataString = jsonEncode(dataMap);
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString("userData", dataString);
+    await sharedPreferences.setString("signupData", dataString);
 
     Navigator.of(context).push(
       new MaterialPageRoute(builder: (BuildContext context) {
-        return OtpPage(signup: true);
+        return SignupOtpPage(signup: true);
         //return Signup(); //use this if you wanna skip otp
       })
     );

@@ -1,62 +1,262 @@
+//import 'dart:html';
+
+import 'dart:convert';
 import 'dart:io';
-import 'dart:developer';
+import 'dart:math';
+
 import 'package:destock/PostAnAd/postAd_4.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-// import 'package:file/file.dart';
 
+
+// ignore: camel_case_types
 class PostAd3 extends StatefulWidget {
   @override
   _PostAd3State createState() => _PostAd3State();
 }
 
+// ignore: camel_case_types
 class _PostAd3State extends State<PostAd3> {
+  SharedPreferences prefs;
 
-  final GlobalKey<FormState> _formKeyProductPrice = GlobalKey<FormState>();
+  File _image;
+  int status;
+  final _picker = ImagePicker();
+  List<String> allFiles = new List();
+  Map<String, String> filePathsMap;
+  List<String> filePaths = new List();
 
-  String productPrice;
+  _fileOpener() async {
+    filePathsMap = await FilePicker.getMultiFilePath( type: FileType.custom, allowedExtensions: ['jpg','png','jpeg'],);
+    // print(files.toString());
+    for(var filePath in filePathsMap.values ) {
+      filePaths.add(filePath);
+    }
+    print(filePaths.toString());
+    setState(() {
+      this.allFiles.addAll(filePaths);
+    }
+    );
+    filePaths.clear();
+    //print(allFiles);
+    //Navigator.of(context).pop();
+  }
 
-   Widget _buildProductPrice() {
-    return TextFormField(
-      maxLines: 1,
-      decoration: new InputDecoration(
-          hintText: "₹ eg. 45,000",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          )),
-          keyboardType: TextInputType.number,
-      inputFormatters: <TextInputFormatter>[
-        WhitelistingTextInputFormatter.digitsOnly
+  Future _getImage(BuildContext context) async {
+    PickedFile image = await _picker.getImage(source: ImageSource.camera);
+    if(image != null)
+      setState(() {
+        // _image = File(image.path);
+        // this.allFiles.add(_image);
+        this.allFiles.add(image.path);
+        //print(allFiles);
+      });
+  }
+
+  // Widget _showSelectedImages(BuildContext context) {
+  //   if(allFiles.isEmpty){
+  //     return _chooseMethod();
+  //   }
+  //   else {
+  //     return _addMore();
+  //   }
+  // }
+
+  Widget _addMore() {
+    return Column(
+      children: [
+        _buildImageCard(),
+        SizedBox(height: 20,),
+        GestureDetector(
+          onTap: () {
+              _buildDialogue(context);
+            },
+          child: Text('Add More..',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold))),
       ],
-      // ignore: missing_return
-      validator: (String details) {
-        if (details.isEmpty) {
-          return "Required";
-        }
-      },
-      onSaved: (String str) {
-        productPrice = str;
-      },
     );
   }
+
+  void _buildDialogue(BuildContext context) {
+
+    var alertDialog = AlertDialog(
+      content :
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _chooseMethod(),
+            ],
+          ),
+      shape: RoundedRectangleBorder(
+               borderRadius: BorderRadius.all(Radius.circular(10.0))
+           ),
+      actions: <Widget>[
+        FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Icon(Icons.cancel),
+        )
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      }
+    );
+  }
+
+  Widget _chooseMethod() {
+    return Column(
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: GestureDetector(
+                      onTap: () {
+                        _getImage(context);
+                      },
+                        child: Container(
+                            //height: 50,
+                            padding: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(60),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: Offset(0, 4),
+                                    blurRadius: 10,
+                                    color: Colors.black.withOpacity(.16),
+                                  ),
+                                    ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                 Icon(Icons.camera_enhance , color: Colors.black,size: 30,),
+                                //SizedBox(width:30),
+                                Flexible(child: Text("Take Pictures", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold))),
+                              ],
+                            ),
+                          ),
+                    ),
+                  ),
+                  SizedBox(height:50),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "OR",
+                style: TextStyle(
+                    color: Color(0xFF4B69FF),
+                    fontSize: 20.0,
+                    fontFamily: "Arial",
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+            ),
+            SizedBox(height:50),
+              Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: GestureDetector(
+                      onTap: () {
+                        _fileOpener();
+                      },
+                          child: Container(
+                            //height: 50,
+                            padding: EdgeInsets.symmetric(horizontal: 0,vertical: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(60),
+                                color: Colors.white,
+                                 boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(0, 4),
+                                      blurRadius: 10,
+                                      color: Colors.black.withOpacity(.16),
+                                    ),
+                                    ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Icon(Icons.photo , color: Colors.black,size: 30,),
+                                //SizedBox(width:30),
+                                Flexible(child: Text("Select From Gallery", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold))),
+                              ],
+                            ),
+                          ),
+                    ),
+                  )]);
+  }
+
+  _removeFromList(BuildContext context,index){
+    setState(() {
+      this.allFiles.removeAt(index);
+    });
+  }
+
+  Widget _buildImageCard(){
+    return ListView.builder(
+      itemCount: allFiles.length,
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, index) => Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        margin: EdgeInsets.symmetric(vertical:10),
+        decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(5),),
+          color: Color(0xffffffff),
+          // boxShadow: [
+          //   BoxShadow(
+          //     offset: Offset(2, 2),
+          //     blurRadius: 40,
+          //     color: Colors.black.withOpacity(.16),
+          //   ),
+          // ],
+      ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              child: Image.file(File(allFiles[index]),height: 60, width:60),
+            ),
+            //SizedBox(width: 10,),
+            Text("PIC" + (index+1).toString(), style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:[
+                InkWell(
+                  onTap: () {
+                    _removeFromList(context,index);
+                    print(allFiles);
+                  },
+                  child: Icon(Icons.cancel,color: Color(0xFFD3E3FF),)
+                  ),
+              ]
+            )
+          ]
+        )
+      )
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: _formKeyProductPrice,
-              child: Container(
-          padding: EdgeInsets.symmetric(horizontal:20),
+      body: SingleChildScrollView(
+              child: Padding(
+          padding: const EdgeInsets.all(20.0),
           child: Column(
-            children:[
-              SizedBox(height:50),
-              Center(
+        children: [
+          SizedBox(height:50),
+          Center(
               child: Text(
-                "3 Out of 4",
+                "3 Out of 5",
                 style: TextStyle(
                     color: Color(0xff979797),
                     fontWeight: FontWeight.w400,
@@ -65,174 +265,120 @@ class _PostAd3State extends State<PostAd3> {
             ),
             SvgPicture.asset("assets/icons/progress_step_3.svg"),
             SizedBox(height:20),
-              Row(
-              children: [
-                Text(
-                  "Step 3",
-                  style: TextStyle(
-                      color: Color(0xFF4B69FF),
-                      fontSize: 20.0,
-                      fontFamily: "Arial",
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
+          Row(
+          children: [
+        Text(
+          "Step 3",
+          style: TextStyle(
+              color: Color(0xFF4B69FF),
+              fontSize: 20.0,
+              fontFamily: "Arial",
+              fontWeight: FontWeight.bold),
+        ),
+          ],
+          ),
+          SizedBox(height:10),
+          Row(
+        children: [
+          Text('UPLOAD PRODUCT IMAGES',
+          style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          )),
+        ],
+        ),
+        SizedBox(height: 50),
+        //_showSelectedImages(context),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal:30),
+          child: Column(
+            children: [
+              allFiles.isEmpty ? _chooseMethod()
+              : _addMore(),
+            ],
+          ),
+        ),
+        SizedBox(height: 20,),
+            SizedBox(height:50),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+        Text(
+           "Instructions\n1.Ensure the image is clear\n2. Maximum 10 images can be\nuploaded for a single product",
+          style: TextStyle(
+              color: Colors.grey,
+              fontSize: 14.0,
+              fontFamily: "Arial",
+              //fontWeight: FontWeight.bold
               ),
-              SizedBox(height:10),
-              Row(
-                children: [
-                  Text('PRODUCT PRICE',
-                  style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  )),
-                ],
-                ),
-                SizedBox(height: 50),
-                Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 10,
-                          color: Colors.black.withOpacity(.16),
-                        ),
-                      ],
+        ),
+          ],
+          ),
+          SizedBox(height:30),
+          GestureDetector(
+              onTap: () async {
+                if(allFiles.isNotEmpty && allFiles.length<=10){
+                  //Use allFiles to store image paths into database
+                  prefs = await SharedPreferences.getInstance();
+                  var adData = prefs.getString("postAnAdData");
+                  //print(adData);
+                  var adDataJson = jsonDecode(adData);
+                  adDataJson["images"] = jsonEncode(allFiles);
+                  print(adDataJson);
+                  adData = jsonEncode(adDataJson);
+                  prefs.setString("postAnAdData", adData);
+                  Navigator.push(context, new MaterialPageRoute(
+                      builder: (BuildContext context) => new PostAd4() ),
+                  );
+                }
+                else{
+                  if(allFiles.isEmpty){
+                    status = 0;
+                  }
+                  else{
+                    status = 1;
+                  }
+                  _buildErrorDialogue(context,status);
+                }
+              },
+                  child: Container(
+                      height: 50,
+                      margin: EdgeInsets.symmetric(horizontal: 30),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Color(0xFFFC0151),
+                      ),
+                      child: Center(
+                        child: Text("NEXT", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
+                      ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(22, 22, 22, 12),
-                      child: Column(
-                        children: <Widget>[
-              SizedBox(
-              height: 10.0,
-              ),
-              Row(
-              children: [
-                Text(
-                  "ENTER SELLING PRICE",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: "Arial",
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-              ),
-              SizedBox(
-              height: 10.0,
-              ),
-              _buildProductPrice(),
-              SizedBox(height: 30,),
-              Row(
-              children: [
-                Text(
-                  "Disclose price to customers?",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: "Arial",
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-              ),
-              SizedBox(height:30),
-              GestureDetector(
-                      onTap: () async {
-                           if(!_formKeyProductPrice.currentState.validate()){
-                            return;
-                          }
-                          _formKeyProductPrice.currentState.save();
-                           SharedPreferences prefs = await SharedPreferences.getInstance();
-                           var adData = prefs.getString("postAnAdData");
-                           //print(adData);
-                           var adDataJson = jsonDecode(adData);
-                           //print(adDataJson);
-                           adData = jsonEncode(adDataJson);
-                           prefs.setString("postAnAdData", adData);
-                           List imageStrings = [];
-                           File imageFile;
-                           var fileBytes,fileString;
-
-                           print(adDataJson);
-
-                           //This loop converts file paths into base64 string and adds them in imageStrings list
-                           for ( var image in jsonDecode(adDataJson["images"]) ) {
-                             imageFile = new File(image.toString());
-                             fileBytes = await imageFile.readAsBytesSync();
-                             fileString = base64Encode(fileBytes);
-                             imageStrings.add(fileString);
-                           }
-
-                           // log(imageStrings.toString());
-                           String url = "http://192.168.43.167:5000/products/add/";
-                           var resp = await http.post(url, body: {
-                             "name": adDataJson["name"],
-                             "quantity": adDataJson["quantity"],
-                             "unit": adDataJson["unit"],
-                             "description": adDataJson["description"],
-                             "dimension": adDataJson["dimensions"],
-                             "material": adDataJson["material"],
-                             "weight": adDataJson["weight"],
-                             "images": imageStrings[0],
-                             "price": productPrice.toString()
-                           });
-                           print(resp.body);
-                           var respJson = jsonDecode(resp.body);
-                           if( respJson["Status"] == "Success" ) {
-                              print("faf");
-                             Navigator.pushReplacement(context, new MaterialPageRoute(
-                                 builder: (BuildContext context) => new PostAd4() ),
-                             );
-                           } else {
-                             print(respJson["Details"]);
-                           }
-                      },
-
-                          child: Container(
-                              height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 30),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Color(0xFFFC0151),
-                              ),
-                              child: Center(
-                                child: Text("Save and add a new product", style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold)),
-                              ),
-                            ),
-                    ),
-                    SizedBox(height:20),
-                    GestureDetector(
-                          onTap: () {
-                                if(!_formKeyProductPrice.currentState.validate()){
-                                return;
-                              }
-                              _formKeyProductPrice.currentState.save();
-                                Navigator.pushReplacement(context, new MaterialPageRoute(
-                                    builder: (BuildContext context) => new PostAd4() ),
-                                );
-                          },
-                          child: Container(
-                              height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 80),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(60),
-                                  border: Border.all(
-                                    color: Color(0xFFFC0151),
-                                  )
-                              ),
-                              child: Center(
-                                child: Text("CHECKOUT", style: TextStyle(color:  Color(0xFFFC0151), fontSize: 18,fontWeight: FontWeight.bold)),
-                              ),
-                            ),
-                    ),
-                    SizedBox(height:30)
-
-            ]
-          )
-        ),)])),
-      )
+            ),
+            SizedBox(height:30)
+        ],
+          ),
+        ),
+      ),
     );
   }
 }
+
+
+void _buildErrorDialogue(BuildContext context,int status) {
+
+    var alertDialog = AlertDialog(
+      content : status == 0 ? Text("Enter at least 1 image")
+      : status == 1? Text("Only 10 Images are Allowed.\nCancel excess images")
+      : Text(''),
+      shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.all(Radius.circular(10.0))
+               ),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      }
+    );
+  }
