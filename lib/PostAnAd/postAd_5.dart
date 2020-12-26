@@ -216,7 +216,7 @@ class _PostAd5State extends State<PostAd5> {
             log(jsonEncode(productsList));
 
             Get.defaultDialog(content: Text("Pushing ads to server..."));
-
+            
             String url = "$localhostAddress/payments/save_temp_products/";
             var resp = await post(url, body: {
               'user_id': user_id,
