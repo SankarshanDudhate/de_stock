@@ -6,7 +6,7 @@ import 'package:destock/ProductPages/productPageSeller.dart';
 import 'package:destock/Signup/SignupScreen1.dart';
 import 'package:destock/Signup/getstarted.dart';
 import 'package:destock/home_buyer/home_buyer.dart';
-import 'file:///C:/Users/Sankarshan%20Dudhate/StudioProjects/de_stock/lib/Login/loginscreen1.dart';
+import 'package:destock/Login/loginscreen1.dart';
 import 'package:destock/home_buyer/recently_viewed.dart';
 import 'dart:async';
 import 'dart:developer';

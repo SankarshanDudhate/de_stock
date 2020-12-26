@@ -3,7 +3,7 @@ import 'package:destock/ProductPages/productPage.dart';
 import 'package:destock/ProductPages/productPageSeller.dart';
 import 'package:destock/category/category_page.dart';
 import 'package:destock/dashboard/dashboard.dart';
-import 'file:///C:/Users/Sankarshan%20Dudhate/StudioProjects/de_stock/lib/Signup/getstarted.dart';
+import 'package:destock/Signup/getstarted.dart';
 import 'package:destock/notification_buyer/notification_buyer.dart';
 import 'package:destock/notification_seller/notification_seller.dart';
 import 'package:destock/profile/my_profile.dart';

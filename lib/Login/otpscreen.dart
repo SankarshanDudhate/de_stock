@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import 'otpscreen.dart';
-import 'file:///C:/Users/Sankarshan%20Dudhate/StudioProjects/de_stock/lib/Signup/SignupScreen1.dart';
+import 'package:destock/Signup/SignupScreen1.dart';
 
 class OtpPage extends StatefulWidget {
   //OtpPage({Key key, this.title}) : super(key: key);

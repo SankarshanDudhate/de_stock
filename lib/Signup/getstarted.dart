@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'file:///C:/Users/Sankarshan%20Dudhate/StudioProjects/de_stock/lib/Signup/SignupScreen1.dart';
+import 'package:destock/Signup/SignupScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
