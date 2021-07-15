@@ -287,7 +287,13 @@ List<Map<String,String>> _specs= new List();
                     child: Row(
                       //mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(Icons.arrow_back_ios),
+                        IconButton(
+                              icon: Icon(Icons.arrow_back_ios), onPressed: (){
+                            setState(() {
+                              //Navigate
+                              Navigator.of(context).pop();
+                            });
+                          }),
                         SizedBox(width: 20,),
                         Flexible(child: Text('EDIT PRODUCT DETAILS', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
                         //Icon(Icons.share)

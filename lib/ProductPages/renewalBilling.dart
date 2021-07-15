@@ -138,7 +138,13 @@ class _renewalBillingState extends State<renewalBilling> {
                     child: Row(
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(Icons.arrow_back_ios),
+                        IconButton(
+                              icon: Icon(Icons.arrow_back_ios), onPressed: (){
+                            setState(() {
+                              //Navigate
+                              Navigator.of(context).pop();
+                            });
+                          }),
                         SizedBox(width: 20,),
                         SvgPicture.asset("assets/icons/money.svg",height: 40,width: 40,),
                         SizedBox(width: 20,),
