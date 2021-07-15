@@ -122,6 +122,7 @@ class _EnquiriesState extends State<Enquiries> {
                               icon: Icon(Icons.arrow_back_ios), onPressed: (){
                             setState(() {
                               //Navigate
+                              Navigator.of(context).pop();
                             });
                           }),
                           SizedBox(width: 20,),

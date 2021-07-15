@@ -141,6 +141,7 @@ class _manageProductsState extends State<manageProducts> {
                               icon: Icon(Icons.arrow_back_ios), onPressed: (){
                             setState(() {
                               //Navigate
+                              Navigator.of(context).pop();
                             });
                           }),
                           SizedBox(width: 20,),
